@@ -1,0 +1,256 @@
+// Copyright 2018 Campbell Crowley. All rights reserved.
+// Author: Campbell Crowley (web@campbellcrowley.com) {}
+body {
+  font-family: 'Ubuntu', sans-serif;
+  width: 100%;
+  margin: auto;
+  background: #18191C;
+  z-index: 0;
+}
+#mainheader, #mainfooter {
+  display: block;
+  background: #0af;
+  margin: auto;
+  margin-top: 0px;
+  z-index: 900;
+}
+#mainheader {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 40px;
+}
+#mainfooter {
+  position: fixed;
+  box-shadow: 0px -20px 110px rgba(0, 0, 0, 1.0);
+  text-align: center;
+  font-size: 0.8em;
+  width: 100%;
+  bottom: 0;
+}
+#maincontent {
+  position: absolute;
+  text-align: center;
+  top: 0;
+  margin: auto;
+  padding-bottom: 45px;
+  width: 100%;
+  max-width: 100%;
+  background: #18191C;
+  z-index: 90;
+  overflow: auto;
+}
+#content {
+  text-align: left;
+  display: inline-block;
+  width: calc(100% - 20px);
+  max-width: 1200px;
+  overflow: auto;
+  z-index: 100;
+  padding-left: 10px;
+  padding-right: 10px;
+  margin-bottom: auto;
+  background: white;
+  box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.5);
+}
+#fixedNotification {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  border: 2px solid red;
+  margin: 3em;
+  padding: 1em;
+  background: #18191C;
+  color: white;
+  cursor: pointer;
+}
+.contentsection {
+  padding: 4px;
+  margin-bottom: 25px;
+  background: #bdf;
+  box-shadow: 2px 7px 20px rgba(0, 0, 0, 0.2), -2px 7px 20px rgba(0, 0, 0, 0.2);
+}
+.transparentcontent {
+  background-color: transparent;
+  text-align: center;
+  box-shadow: 0 0 0;
+  margin-top: 25px;
+}
+.greycontent {
+  background: #36393F;
+  color: white;
+  margin: 0 -10px;
+  box-shadow: inset 0 0 10px black;
+  padding: 1.25em;
+}
+.line {
+  position: relative;
+  display: inline-block;
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 100%;
+  height: 0;
+  border-bottom: 2px solid black;
+}
+.pageList {
+  position: relative;
+  z-index: 1;
+  margin: 5px;
+  color: black;
+  display: block;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 5px;
+  transition: all 0.4s;
+  text-align: justify;
+  -moz-text-align-last: center;
+  text-align-last: center;
+}
+.pageList li {
+  display: inline-block;
+  border-bottom: 2px solid #F0F;
+  border-radius: 2px;
+  transition: all 0.4s;
+  margin: 5px;
+  vertical-align: top;
+  height: 1.1em;
+}
+.pageList li.nounderline {
+  border-color: transparent;
+}
+.pageList li.currentPageTab {
+  border-bottom: 2px solid #0F0;
+}
+.pageList li:hover {
+  color: black;
+  border-bottom: 4px solid #0F0;
+  border-radius: 10px;
+  box-shadow: 2px 9px 20px rgba(0, 0, 0, 0.1), -2px 9px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 3px;
+}
+.pageList li.nounderline:hover {
+  border-color: transparent;
+}
+li.menuDropdownTitle {
+  margin-top: 0;
+  border-bottom: none !important;
+}
+.menuDropdownContainer {
+  position: relative;
+  padding-left: 0;
+}
+li.menuDropdownRow {
+  display: block;
+}
+.menuDropdownContainer li.menuDropdownRow:not(.menuDropdownTitle) {
+  height: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: white;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0), 0 0 0 rgba(0, 0, 0, 0);
+}
+.menuDropdownContainer:hover li.menuDropdownRow:not(.menuDropdownTitle) {
+  height: 1.2em;
+  margin: 0;
+  padding: 0.25em;
+  opacity: 1;
+  pointer-events: auto;
+  box-shadow: 2px 9px 20px rgba(0, 0, 0, 0.1), -2px 9px 20px rgba(0, 0, 0, 0.1);
+}
+
+#inviteTab {
+  font-size: 0.9em;
+  background: #0C0;
+  color: white;
+  border-radius: 6px;
+  padding: 4px;
+}
+#joinTab {
+  font-size: 0.9em;
+  background: #C0C;
+  color: white;
+  border-radius: 6px;
+  padding: 4px;
+}
+.pageTab {
+  background: transparent;
+  color: black;
+  text-decoration: none;
+}
+.links {
+  margin: 5px;
+  border: 2px solid #0af;
+  border-radius: 2px;
+  background: #07f;
+  color: black;
+  display: inline-block;
+  cursor: pointer;
+  font-size: 1.2em;
+  width: 140px;
+  height: 65px;
+  padding: 5px;
+  transition: all 0.4s;
+  text-align: center;
+}
+.links:not(.nohover):not(disabled):not([disabled]):hover {
+  background-color: white;
+  color: black;
+  border: 2px solid #07f;
+  border-radius: 10px;
+  box-shadow: 2px 7px 20px rgba(0, 0, 0, 0.2), -2px 7px 20px rgba(0, 0, 0, 0.2);
+}
+.links span {
+  height: 100%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.5s;
+}
+.links[disabled],
+.links:disabled {
+  background-color: grey;
+  border: 2px solid #f00;
+  color: #909090;
+}
+.tiny {
+  width: 54px;
+  height: 18px;
+  font-size: 0.8em;
+}
+.mini {
+  width: 60px;
+  height: 20px;
+  font-size: 0.8em;
+}
+.small {
+  width: 140px;
+  height: 40px;
+  font-size: 0.9em;
+}
+.smaller {
+  width: 110px;
+  height: 30px;
+  font-size: 0.85em;
+}
+.square {
+  width: 40px;
+  height: 40px;
+  font-size: 0.85em;
+}
+.wide {
+  width: 175px;
+}
+.larger {
+  width: 300px;
+  height: 130px;
+  font-size: 1.8em;
+}
+.dropzone {
+  transition: background 0.5s ease-out;
+}
+@media screen and (max-width: 720px) {
+}

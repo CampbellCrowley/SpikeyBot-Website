@@ -1,0 +1,5 @@
+# Please report security issues to me.
+Contact: web@campbellcrowley.com
+Encryption: https://www.campbellcrowley.com/gpg-pubkey.txt
+Signature: https://www.campbellcrowley.com/.well-known/security.txt.sig
+

@@ -1,0 +1,105 @@
+<script>
+(function() {
+  var isDev = location.pathname.indexOf('/dev') == 0 || location.search.match(/[?&]debug=1/);
+  // console.log('%cSTOP', 'font-size: 128px; color: red;');
+  // console.log('%cIf someone told you to copy/paste something here you have an 11/10 chance you\'re being scammed.', 'font-size: 16px;');
+  // console.log('%cUnless you understand exactly what you are doing, close this window and stay safe.', 'font-size: 16px;');
+  if (isDev) return;
+  window.console.log = function(){};
+})();
+</script>
+<style>
+#copyright {
+  text-align: center;
+  font-size: 0.8em;
+  background: #18191C;
+  color: #AAA;
+  margin: 0 -10px;
+}
+#copyright a:link {
+  color: #00b0f4;
+}
+#cookieAlert {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+  width: auto;
+  color: black;
+  border: 4px solid red;
+  border-radius: 1em;
+  padding: 1em;
+  background: white;
+  z-index: 1000;
+}
+#cookieAlert button {
+  background: lightblue;
+  border: 2px solid blue;
+  border-radius: 1em;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+@media screen and (max-width: 550px) {
+  #cookieAlert {
+    right: 0;
+    bottom: 0;
+  }
+}
+</style>
+<footer id="copyright">
+  <small>Website Contact: <a href="mailto:web@spikeybot.com">web@spikeybot.com</a>.</small>
+  <br>
+  <small>&copy; Copyright 2019-2020, Campbell Crowley. <a href="https://docs.google.com/document/d/1SAC2aPxxeNqRjlZzjwrnCyyWWyt09ZP-AP7BDBjjQDg/edit?usp=sharing">Privacy Policy</a></small>
+</footer>
+<div id="cookieAlert">
+  <p>We use cookies.</p>
+  <button onclick="cookieAgree()">I Understand</button>
+  <a target="__blank" style="font-size: 0.9em" href="https://www.cookiesandyou.com/">More Info</a>
+  <script>
+    window.cookieAgree = function() {
+      setCookie('cookieAgree', true, Date.now() + 365 * 24 * 60 * 60 * 1000);
+      document.getElementById('cookieAlert').remove();
+    };
+    if (getCookie('cookieAgree') == 'true') cookieAgree();
+
+    /**
+     * Sets a browser cookie.
+     * @private
+     * @param {string} name The name of the cookie.
+     * @param {string} value The value of the cookie.
+     * @param {string|number} expiresAt Date value to pass into `Date`.
+     * @param {string} [path=/] Path value of the cookie.
+     */
+    function setCookie(name, value, expiresAt, path = '/') {
+      if (expiresAt) {
+        let d = new Date(expiresAt);
+        let expires = 'expires=' + d.toUTCString();
+        document.cookie =
+            name + '=' + value + ';' + expires + ';path=' + path + ';secure';
+      } else {
+        document.cookie = name + '=' + value + ';path=' + path + ';secure';
+      }
+    }
+    /**
+     * Fetches the value of a cookie.
+     * @private
+     * @param {string} name The name of the cookie to fetch the value of.
+     * @return {string} The cookie value.
+     */
+    function getCookie(name) {
+      name += '=';
+      let decodedCookie = decodeURIComponent(document.cookie);
+      let ca = decodedCookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return '';
+    }
+  </script>
+</div>
+

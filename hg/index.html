@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!-- Copyright 2019-2020 Campbell Crowley. All rights reserved. -->
+<!-- Author: Campbell Crowley (web@campbellcrowley.com) -->
+<html lang="en">
+<head>
+
+  <title>Hungry Games - SpikeyBot - Discord Bot</title>
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <meta name="description" content="Hungry Games online management for SpikeyBot"/>
+  <meta name="keywords" content="Campbell,Crowley,Spikey,SpikeyBot,Discord,SpikeyRobot,Hungry,Hunger,Games,HG"/>
+  <meta name="author" content="Campbell Crowley"/>
+  <meta name="revised" content="Campbell Crowley, April 14, 2020"/>
+
+  <style></style>
+
+  <link rel="stylesheet" href="https://www.spikeybot.com/hg/style.css" type="text/css" media="all">
+</head>
+<body>
+<div class="container">
+<div id="maincontent">
+<div id="content">
+  <div id="mainheader"></div>
+  <header>
+    <div id="loginParent">
+      <button id="loginButton" class="invite" onclick="login();"><span>Login</span></button>
+      <br>
+      <a id="sessionState"></a>
+    </div>
+    <div class="contentsection transparentcontent" id="titleParent">
+      <h1 id="title">Hungry Games</h1>
+      <h3 id="subtitle">Webview</h3>
+    </div>
+  </header>
+  <div id="noIE" class="contentsection">
+    Internet Explorer is not supported. Things may not work.<br>
+    I HIGHLY recommend Chrome or Firefox instead.
+  </div>
+  <div id="patreonRow">
+    <div id="patreonButton">
+      <a href="https://www.patreon.com/bePatron?u=12105522" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async defer src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+    </div>
+    <div id="patreonStatus" class="">
+      <span id="patreonProgress"></span>
+      <span id="patreonProgressBack"></span>
+    </div>
+    <div id="patreonThanks" class="hidden">
+      <a>Thank you for supporting SpikeyBot!</a>
+    </div>
+  </div>
+  <div id="notSignedIn" class="contentsection">
+    <h4>Login to manage the games.</h4>
+    <p>You must be logged into Discord in this browser first for this to work.</p>
+    <p>Your mutual servers with SpikeyBot will appear hear after you have logged in.</p>
+  </div>
+  <div id="loadingView" class="contentsection">
+    <h4>Loading...</h4>
+  </div>
+  <div id="errorView" class="contentsection">
+    <h4>An error occurred while loading the page.</h4>
+    <img src="https://cdn.discordapp.com/emojis/565068400347578388.png" alt="Gasp Cat Emoji" title="Gasp!">
+    <h5>Oh noes, you shouldn't ever see this. Unless you were trying to break something... Either way, please report this on the Support server, with as much information as possible.</h5>
+    <h5>If you can include any messages in the developer console (F12 then click Console), that would be very helpful.</h5>
+    <div id="stackTraceContainer"></div>
+  </div>
+  <div id="mainBody" class="contentsection">
+  </div>
+  <div id="messageBoxWrapper">
+    <div id="messageBoxParent">
+      <button id="messageBoxCloseButton" onclick="hideMessageBox();">X</button>
+      <button id="messageBox" onclick="hideMessageBox();"></button>
+    </div>
+  </div>
+  <div id="mainfooter"></div>
+</div>
+</div>
+</div>
+<script>
+const ua = window.navigator.userAgent;
+if (ua.indexOf('MSIE ') > -1 || ua.indexOf('Trident/') > -1) {
+  console.error(
+      'INTERNET EXPLORER IS NOT SUPPORTED. DO NOT USE INTERNET EXPLORER.');
+  const ie = document.getElementById('noIE');
+  ie.style.display = 'block';
+}
+</script>
+<script src="https://www.spikeybot.com/socket.io.js" type="text/javascript"></script>
+<script src="https://www.spikeybot.com/hg/drag.js" type="text/javascript"></script>
+<script src="https://www.spikeybot.com/hg/pagecontroller.js" type="text/javascript"></script>
+<script async defer src="https://www.spikeybot.com/patreonBar.js" type="text/javascript"></script>
+<script async defer src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" type="text/javascript"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-89923351-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
