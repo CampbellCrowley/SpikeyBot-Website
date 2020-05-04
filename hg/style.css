@@ -1,0 +1,1521 @@
+// Copyright 2019 Campbell Crowley. All rights reserved.
+// Author: Campbell Crowley (web@campbellcrowley.com) {}
+body, body * {
+  scrollbar-color: #505050 #36393F;
+}
+::-webkit-scrollbar {
+  width: 0.8em;
+}
+::-webkit-scrollbar-track {
+  background: #36393F;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+input[type=button], button {
+  background: #36393F;
+  color: white;
+  border-radius: 4px;
+  border: 2px solid #555;
+  cursor: pointer;
+}
+input[type=button]:hover:not(:disabled):not([disabled]),
+button:hover:not(:disabled):not([disabled]) {
+  color: #36393F;
+  background-color: white;
+  border-radius: 8px;
+}
+button.selected {
+  background-color: white;
+  color: #7289DA;
+  border: 2px solid #36393F;
+  border-radius: 8px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.5), inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+input[type=number], input[type=text], select {
+  font-size: 1.17em;
+  border: 0;
+  border-bottom: 2px solid #0F0;
+  cursor: pointer;
+  text-align: center;
+  background: #36393F;
+  color: #AAA;
+}
+input[type=number]:focus, input[type=number][focus], input[type=text]:focus, input[type=text][focus] {
+  cursor: initial;
+  text-align: left;
+  outline: none;
+}
+select {
+  border: 0;
+  border-bottom: 2px solid #F0F;
+}
+select:focus {
+  outline: none;
+  border-color: #0F0;
+}
+option:checked {
+  background-color: #18191C;
+}
+#content {
+  position: relative;
+  overflow: visible;
+  box-shadow: none;
+  max-width: 100%;
+  min-width: 100%;
+  width: 100%;
+  padding: 0;
+}
+#maincontent {
+  overflow: hidden;
+  padding: 0;
+}
+#title {
+  margin-top: 0;
+}
+#subtitle {
+  margin-top: 0.2em;
+}
+#title, #subtitle {
+  margin-bottom: 0.2em;
+}
+#patreonRow {
+  text-align: right;
+  position: relative;
+  display: block;
+  height: 35px;
+}
+#patreonButton {
+  position: relative;
+  display: block;
+  margin-left: auto;
+  width: 175px;
+  height: 100%;
+  bottom: 0;
+  overflow: hidden;
+}
+#patreonStatus {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin-left: 4px;
+  text-align: left;
+  width: 50%;
+  width: calc(100% - 175px - 8px);
+  height: 100%;
+  height: calc(100% - 3px);
+}
+#patreonProgress, #patreonProgressBack {
+  position: absolute;
+  height: 100%;
+  border-radius: 17px;
+  background: #E85B46;
+  border: 1px solid black;
+}
+#patreonProgress {
+  width: 0px;
+  max-width: 100%;
+  transition: width ease-in-out 5s;
+  transition: width cubic-bezier(0.25, 0, 0, 1) 5s;
+}
+#patreonProgressBack {
+  padding-top: 7px;
+  height: calc(100% - 7px);
+  background: transparent;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+}
+#patreonThanks {
+  padding-right: 1em;
+  position: absolute;
+  right: 0;
+  max-width: 175px;
+  font-style: italic;
+}
+#patreonRow .hidden {
+  display: none;
+}
+.tab {
+  display: inline-block;
+  position: relative;
+  top: -4px;
+  background: #36393F;
+  color: white;
+  text-decoration: none;
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+  padding: 4px;
+  border: 2px solid #555;
+  border-radius: 4px;
+  transition: background 0.2s ease-in-out;
+  cursor: pointer;
+}
+.tab:hover {
+  border-radius: 12px;
+  background: white;
+  color: #36393F;
+}
+.line {
+  box-shadow: 2px 7px 20px rgba(0, 0, 0, 0.5), -2px 7px 20px rgba(0, 0, 0, 0.5);
+}
+.thinline {
+  box-shadow: 2px 5px 15px rgba(0, 0, 0, 0.3), -2px 5px 15px rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid darkgrey;
+  margin-top: 2px;
+  margin-bottom: 2px;
+}
+.contentsection {
+  text-align: center;
+}
+.insetcontent {
+  box-shadow: inset 2px 7px 20px rgba(0, 0, 0, 0.2), inset -2px 7px 20px rgba(0, 0, 0, 0.2);
+}
+.transparentcontent2 {
+  background-color: transparent;
+  text-align: center;
+  box-shadow: 0 0 0;
+  margin-top: 25px;
+}
+header {
+  text-align: center;
+}
+#titleParent {
+  margin-top: 0;
+  display: inline-block;
+  padding-left: 200px;
+}
+#invite {
+  font-size: 1em;
+  font-weight: normal;
+  background: #7289DA;
+  border-color: #7289DA;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.3), inset 0px 0px 0px rgba(0, 0, 0, 0);
+}
+#invite:hover {
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), inset 0px 0px 10px rgba(0, 0, 0, 0.5);
+  color: #7289DA;
+}
+#gameNameInput {
+  max-width: 800px;
+  width: 100%;
+}
+#gameNameInput:not(:focus) {
+  border-bottom: 2px solid transparent;
+}
+.invite {
+  font-size: 2em;
+  background: #36393F;
+  border: 2px solid #36393F;
+  border-radius: 8px;
+  color: white;
+  margin: 5px;
+  display: inline-block;
+  cursor: pointer;
+  padding: 5px;
+  transition: all 0.4s;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 2px 7px 40px rgba(0, 0, 0, 0.5), inset 0 0 0 transparent;
+}
+.invite:hover {
+  background-color: white;
+  color: #36393F;
+  border-radius: 14px;
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+.helpTip {
+  margin-left: 1em;
+}
+.helpIcon {
+  background-color: transparent;
+  color: white;
+  font-size: 0.8em;
+  border: 1px solid #666;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 transparent;
+  position: relative;
+  padding-right: 0.4em;
+  padding-left: 0.4em;
+  z-index: 1;
+}
+.helpTip:hover .helpIcon {
+  color: #7289DA;
+  background-color: white;
+}
+.helpTip span {
+  opacity: 0.0;
+  pointer-events: none;
+  position: absolute;
+  color: white;
+  background-color: #36393F;
+  border: 2px solid #444;
+  border-radius: 4px;
+  padding: 0.2em;
+  z-index: 2;
+  margin-left: -1em;
+  max-height: 0;
+  max-width: 0;
+}
+.helpTip:hover span {
+  opacity: 1.0;
+  max-height: 1000%;
+  max-width: 200%;
+  margin-left: 1em;
+}
+.guildListRow {
+  cursor: pointer;
+  height: 32px;
+  transition: all 0.2s ease-in-out;
+  transition: all 0.4s cubic-bezier(0.53, 0.06, 0.17, 1.99);
+  overflow: hidden;
+}
+.guildListRow:hover {
+  box-shadow: 2px 7px 20px rgba(0, 0, 0, 0.2), -2px 7px 20px rgba(0, 0, 0, 0.2);
+}
+.guildListRow.selected {
+  margin: 0;
+  font-weight: bold;
+}
+.guildListName {
+  font-size: 21px;
+  vertical-align: top;
+  position: relative;
+  left: 0.5em;
+  top: 3px;
+}
+.guildListIcon {
+  width: 32px;
+  height: 100%;
+  background: #18191C;
+  border-radius: 50%;
+  transition: border-radius 0.2s ease-in-out;
+  transition: border-radius 0.4s cubic-bezier(0.53, 0.06, 0.17, 1.99);
+}
+.dbggid {
+  font-size: 12px;
+  float: right;
+}
+.guildListRow:hover .guildListIcon {
+  border-radius: 30%;
+}
+#loginParent {
+  float: right;
+  display: inline-block;
+  text-align: right;
+  width: 200px;
+}
+#sessionState {
+  margin-right: 10px;
+}
+#notSignedIn {
+  background: #36393F;
+  color: white;
+  margin: 0 -10px;
+}
+#loadingView, #noIE, #errorView {
+  display: none;
+  background: #36393F;
+  color: white;
+  margin: 0 -10px;
+}
+#mainBody {
+  display: none;
+  text-align: left;
+  position: relative;
+  background: #36393F;
+  color: white;
+  margin: 0 -10px;
+  box-shadow: none;
+  padding: 1em;
+}
+#guildRefreshButton {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+#mainBody h2 {
+  transition: all 0.2s ease-in-out;
+  transition: all 0.4s cubic-bezier(0.53, 0.06, 0.57, 1.46);
+  background: #36393F;
+  color: #888;
+  margin: 0.4em -4px;
+}
+#guildBody, #guildBody * {
+  transition: all 0.2s ease-in-out;
+  transition: all 0.4s cubic-bezier(0.53, 0.06, 0.57, 1.46);
+}
+#guildBody {
+  /* padding-bottom: 30px; */
+  padding-bottom: 0;
+  position: relative;
+  /* color: black; */
+  color: #DDD;
+  background: #36393F;
+}
+#eventList:not(.folded) {
+  padding-bottom: 1em;
+}
+.userInfoSection {
+  font-size: 1.5em;
+}
+.userRolesList {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  line-height: 1.5em;
+}
+.guildSection .member {
+  text-align: left;
+  position: relative;
+  z-index: 1;
+}
+.guildSection .title {
+  cursor: pointer;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+  background: #464b54;
+  position: relative;
+  z-index: 2;
+}
+.guildSection.folded .title {
+  margin-bottom: -0.83em;
+  background: #36393F;
+  box-shadow: 2px 7px 20px rgba(0, 0, 0, 0.2), -2px 7px 20px rgba(0, 0, 0, 0.2);
+}
+.guildSection .title:hover {
+  box-shadow: 2px 7px 20px rgba(0, 0, 0, 0.1), -2px 7px 20px rgba(0, 0, 0, 0.1);
+}
+.guildSubSection .title {
+  margin-bottom: 0;
+  box-shadow: 0px 2.5px 5px rgba(0, 0, 0, 0.1);
+}
+.guildSubSection.folded .title {
+  box-shadow: 0px 1px 2.5px rgba(0, 0, 0, 0.1);
+}
+.guildSubSection .title:hover {
+  box-shadow: 1px 3.5px 10px rgba(0, 0, 0, 0.1), -1px 3.5px 10px rgba(0, 0, 0, 0.1);
+}
+.guildMiniSubSection .title {
+  box-shadow: 0 0 0;
+}
+.guildMiniSubSection.folded .title {
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+}
+.guildMiniSubSection .title:hover {
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1), 0px 2px 50px rgba(0, 0, 0, 0.1);
+}
+.guildSection.folded .guildSubSection .title {
+  height: 0;
+  margin: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.guildSection {
+  position: relative;
+}
+.hidden, #guildBody.hidden div {
+  height: 0;
+  margin: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.member {
+  min-height: 28px;
+}
+.member img {
+  height: 28px;
+  width: 28px;
+  margin-bottom: 0.3em;
+}
+.playerCell.selected {
+  background: #6af;
+}
+#playerContainer {
+  white-space: nowrap;
+  position: relative;
+  display: table;
+  width: 100%;
+}
+.folded #playerContainer {
+  display: block;
+}
+.botTag {
+  background: #7289DA;
+  border-radius: 6px;
+  margin-left: 4px;
+  padding: 2px;
+}
+.name .npcName {
+  max-width: 100%;
+  text-align: left;
+  border-bottom: 0;
+}
+.npcName:focus {
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.5);
+}
+.npcDeleteButton {
+  margin-left: 4px;
+  cursor: pointer;
+  color: #a00;
+  font-weight: bold;
+  vertical-align: top;
+}
+.npcTag {
+  margin-left: 0;
+  line-height: 1.25em;
+}
+.npcTag:not(:hover) .npcDeleteButton {
+  font-size: 0;
+  padding: 0;
+  margin: 0;
+}
+.createNPCOverlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 10000000;
+  margin: 0;
+  border: 0;
+  padding: 0;
+  background: rgba(24, 25, 28, 0.95);
+  color: white;
+  text-align: center;
+}
+#npcNameInput {
+  margin: 1em;
+}
+#npcAvatarPreview {
+  display: block;
+  width: 128px;
+  height: 128px;
+  border: none;
+  margin: auto;
+}
+#npcCreateSubmitButton {
+  display: block;
+  margin: auto;
+  padding: 0.5em;
+  font-size: 1.25em;
+}
+#npcCreateSubmitButton:disabled,
+#npcCreateSubmitButton[disabled] {
+  cursor: not-allowed;
+  opacity: 0.7;
+  color: black;
+}
+#npcCreateCancelButton {
+  margin-top: 1em;
+}
+.createNPCOverlay .uploadForm {
+  display: inline-block;
+}
+#playerLeft {
+  text-align: right;
+  transition: resize 0s;
+  resize: horizontal;
+  width: 50%;
+}
+#playerRight {
+  text-align: left;
+}
+.playerHalf {
+  white-space: pre-wrap;
+  display: inline-block;
+  overflow: auto;
+  display: table-cell;
+}
+#playerList .member {
+  max-width: 300px;
+  display: block;
+  margin: 0;
+  width: 100%;
+  overflow: hidden;
+}
+#leftPlayerColumn {
+  margin-top: 1.6em;
+}
+#leftPlayerColumn .playerCell {
+  float: right;
+}
+.playerColumn {
+  text-align: center;
+  height: 500px;
+  width: 100%;
+  overflow: auto;
+  display: inline-block;
+}
+.playerAllButton {
+  margin-top: 4px;
+}
+.eventMessageCell {
+  box-shadow: inset 0 0 4px rgba(0, 0, 0, 0.4);
+  padding: 0.2em;
+  color: #BBB;
+}
+.avCell {
+  font-size: 0.85em;
+}
+.creatorInfo {
+  font-size: 0.75em;
+  color: #AAA;
+}
+.playerCell {
+  display: inline-block;
+  white-space: nowrap;
+  height: 37px;
+  line-height: 13px;
+}
+.playerCell.hidden {
+  display: none !important;
+}
+.playerCell.draggable:hover {
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+}
+.playerListTeam {
+  vertical-align: top;
+  padding-bottom: 2em;
+  float: right;
+}
+.playerListTeamName {
+  display: block;
+  font-size: 1.17em;
+  margin-top: 0;
+  margin-bottom: 1em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+  border: 0;
+  cursor: pointer;
+  color: #555;
+  background-color: transparent;
+}
+.playerListTeamName:focus,
+.playerListTeamName:[focus] {
+  cursor: initial;
+}
+.guildSection.folded .member:not(.playerCell):not(.playerListTeam),
+.guildSection.folded .guildSubSection,
+#optionList.folded .member {
+  height: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+  overflow: hidden;
+  border: 0;
+}
+#playerList .member .name {
+  margin-left: 0.5em;
+  font-size: 14px;
+  display: inline-block;
+  /* white-space: pre-line; */
+  vertical-align: top;
+}
+#playerList .member .checkbox {
+  vertical-align: top;
+  width: 28px;
+  height: 28px;
+  display: inline-block;
+}
+#playerList .member .checkbox input {
+  vertical-align: top;
+  position: relative;
+  top: 5px;
+  left: 4px;
+  /* -webkit-appearance: none;
+  -moz-appearance: none;
+  pointer-events: none; */
+}
+/* #playerList .member .checkbox input:disabled,
+#playerList .member .checkbox input[disabled] {
+  border: solid gray 4px;
+  border-radius: 4px;
+}
+#playerList .member .checkbox input:active,
+#playerList .member .checkbox input:checked,
+#playerList .member .checkbox input:checked:active {
+  border: 4px solid white;
+  border-radius: 4px;
+} */
+#playerListTutorial {
+  position: absolute;
+  right: 1em;
+  top: 2em;
+  margin-bottom: 0;
+}
+#playerListTutorial .title {
+  font-weight: bold;
+  margin: 1em;
+  display: block;
+  padding: 0.25em;
+}
+#playerListTutorial .section {
+  display: inline-block;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  padding-bottom: 0;
+  background: rgba(54, 57, 63, 0.95);
+  z-index: 100000;
+}
+#playerListTutorial.folded .section {
+  height: 0;
+  width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.descriminator {
+  color: #808080;
+}
+#eventList:not(.folded) #claimLegacyParent:not(.hidden) {
+  border: 1px solid white;
+  padding: 1em;
+}
+#optionList .member {
+  border-bottom: 1px solid #444;
+}
+.commandRow {
+  display: inline-grid;
+  padding: 1em;
+  border: 1px solid #444;
+  vertical-align: top;
+  margin: 0.5em;
+  min-width: 200px;
+  min-height: 75px;
+}
+.commandRow .name {
+  margin-left: 0.5em;
+  font-size: 14px;
+  display: inline-block;
+}
+.commandRow .hidden {
+  position: absolute;
+}
+/* .optionsCategoryTitle {
+  display: block;
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-top: 0.5em;
+  color: #72767d;
+} */
+.optionsCategoryTitle {
+  min-width: 200px;
+  display: inline-block;
+  vertical-align: top;
+  margin-left: 4px !important;
+  margin-right: 4px !important;
+}
+.optionsCategorySection.folded {
+  max-height: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+}
+#optionSection .optionsCategoryTitle.folded {
+  box-shadow: 2px 7px 20px rgba(0, 0, 0, 0.2), -2px 7px 20px rgba(0, 0, 0, 0.2);
+}
+label.name {
+  cursor: pointer;
+}
+#optionList .member .default {
+  margin-left: 0.5em;
+  font-size: 12px;
+  display: inline-block;
+  color: #72767d;
+}
+#optionList .member .checkbox {
+  vertical-align: top;
+  width: 28px;
+}
+.member .input, .member .submit {
+  margin-left: 0.5em;
+  max-width: 200px;
+}
+.commandRow .submit {
+  padding: 4px;
+  font-size: 1.1em;
+  max-width: none;
+  width: 96%;
+}
+.member .input[type=number] {
+  width: 75px;
+}
+#createEventsContainer select {
+  font-size: 1.1em;
+  vertical-align: bottom;
+}
+#messageBoxWrapper {
+  position: fixed;
+  bottom: -100px;
+  transition: all 0.4s ease-in-out;
+  transition: all 0.6s cubic-bezier(0.53, 0.06, 0.17, 1.99);
+  opacity: 0;
+  pointer-events: none;
+  text-align: center;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+#messageBoxParent:hover button {
+  background: #555;
+}
+#messageBoxWrapper.visible {
+  bottom: 3em;
+  opacity: 1;
+}
+#messageBoxParent {
+  display: inline-block;
+  background: #7289DA;
+  border: 2px solid #7289DA;
+  border-radius: 8px;
+  box-shadow: 2px 7px 20px rgba(0, 0, 0, 0.2), -2px 7px 20px rgba(0, 0, 0, 0.2);
+  pointer-events: auto;
+}
+#messageBox {
+  display: inline-block;
+  padding: 1em;
+  text-decoration: none;
+  color: white;
+  font-size: 1.1em;
+}
+#messageBoxCloseButton {
+  position: absolute;
+  margin: 0;
+  border: none;
+  border-right: 2px solid white;
+  border-bottom: 2px solid white;
+  border-radius: 4px 0;
+  text-decoration: none;
+  color: white;
+}
+.notDraggable, .notDraggable * {
+  cursor: not-allowed;
+}
+.notDraggable img {
+  pointer-events: none;
+}
+[draggable=true], [draggable] {
+  -khtml-user-drag: element;
+}
+[draggable], .droppable {
+  user-select: none;
+}
+.draggable {
+  cursor: move;
+}
+.draggable *:not(input), .droppable *:not(.draggable, input) {
+  pointer-events: none;
+  user-select: none;
+}
+.draggable.over, .droppable.over {
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+#teamNew {
+  max-height: 0;
+  max-width: 0;
+  opacity: 0;
+}
+#teamNew.dragging {
+  max-height: 1000px;
+  max-width: 300px;
+  opacity: 1;
+}
+.tag {
+  /* background: lightgray; */
+  background: gray;
+  /* border: 2px solid gray; */
+  border: 2px solid darkgray;
+  border-radius: 10px;
+  color: #DDD;
+}
+.tag.blue {
+  /* background: lightblue; */
+  background: darkblue;
+  border-color: blue;
+}
+.tag.red {
+  /* background: pink; */
+  background: darkred;
+  border-color: red;
+}
+.tag.orange {
+  /* background: bisque; */
+  background: darkorange;
+  border-color: orange;
+}
+.tag.gray {
+  /* background: lightgray; */
+  background: grey;
+  /* border-color: gray; */
+  border-color: darkgray;
+}
+.tag.thin {
+  border: 0;
+}
+.tag.thinblue {
+  /* background: lightblue; */
+  background: darkblue;
+  border: 0;
+}
+.tag.thinred {
+  /* background: pink; */
+  background: darkred;
+  border: 0;
+}
+.tag.thinorange {
+  /* background: bisque; */
+  background: darkorange;
+  border: 0;
+}
+.tag.thingray {
+  /* background: lightgray; */
+  background: grey;
+  border: 0;
+}
+.eventRow {
+  height: 100%;
+  border-bottom: 1px solid #eee;
+  padding: 0.2em;
+  margin: 0.2em;
+}
+.eventRow.deleted {
+  pointer-events: none;
+  opacity: 0.25;
+}
+.eventPageTitle {
+  font-weight: bold;
+  text-transform: capitalize;
+  font-size: 1.25em;
+}
+.section {
+  /* max-height: 500px;
+  max-height: 75vh;
+  overflow: auto; */
+  padding-bottom: 16px;
+  position: relative;
+  /* background: white; */
+}
+/* .minisection {
+  // max-height: 450px;
+  // max-height: 60vh;
+  // max-height: calc(75vh - 110px);
+} */
+.folded .section {
+  max-height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  padding: 0;
+}
+.dayEventRow {
+  padding: 0.5em;
+  border: 1px solid transparent;
+  border-bottom: 1px dashed #ddd;
+}
+.dayEventRow.previous {
+  background: #18191C;
+}
+.dayEventRow.current {
+  background: #505050;
+}
+.dayEventRow.battle {
+  border: 1px solid red;
+}
+.dayEventRow.future,
+.dayEventRow.future img,
+.dayEventRow.future .tag {
+  height: 0;
+  max-height: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  font-size: 0;
+  pointer-events: none;
+}
+.battleDayEventRow {
+  position: relative;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 6px;
+  text-align: left;
+}
+.battleDayEventRow .bar {
+  display: inline-block;
+  position: absolute;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: red;
+}
+.dayEventRowIcons img {
+  height: 64px;
+  width: 64px;
+  border-bottom: 4px solid transparent;
+  border-top: 4px solid transparent;
+  margin-left: 4px;
+  margin-right: 4px;
+}
+.dayEventRowIcons img.red {
+  border-bottom-color: red;
+}
+.dayEventRowIcons img.yellow {
+  border-bottom-color: yellow;
+}
+.dayEventRowIcons img.cyan {
+  border-bottom-color: cyan;
+}
+.dayEventRowIcons img.green {
+  border-bottom-color: lime;
+}
+.iconContainer {
+  display: inline-block;
+  position: relative;
+}
+.tooltip {
+  opacity: 0;
+  position: absolute;
+  z-index: 1;
+  max-width: 500px;
+  left: -3em;
+  padding: 0.25em;
+  background-color: #333;
+  color: white;
+  text-align: center;
+  border-radius: 6px;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+}
+span:hover .tooltip, .tooltip:hover{
+  opacity: 1;
+  pointer-events: auto;
+}
+.dayEventStatusIcon img {
+  width: 100%;
+}
+.dayEventStatusIcon {
+  display: inline-block;
+  position: relative;
+  height: 32px;
+  width: 32px;
+  text-align: center;
+  overflow: visible;
+  border-bottom: 4px solid transparent;
+}
+#dayStatusIcons:not(.future) .dayEventStatusIcon.red {
+  border-color: red;
+}
+#dayStatusIcons:not(.future) .dayEventStatusIcon.yellow {
+  border-color: yellow;
+}
+#dayStatusIcons:not(.future) .dayEventStatusIcon.cyan {
+  border-color: cyan;
+}
+#dayStatusIcons.future .dayEventStatusIcon {
+  border-color: grey;
+}
+#dayStatusIcons {
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
+
+.onOffSwitch {
+  display: inline-block;
+  position: relative;
+  width: 55px;
+  vertical-align: text-bottom;
+  margin-left: 0.3em;
+  margin-top: 0.3em;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+.onOffSwitch-Checkbox {
+  display: none;
+}
+.onOffSwitch-Label {
+  display: block;
+  overflow: hidden;
+  cursor: pointer;
+  border: 2px solid #555;
+  border-radius: 8px;
+}
+.onOffSwitch-Inner {
+  display: block;
+  margin-left: -100%;
+  width: 200%;
+  font-size: 0.7em;
+  // transition: margin 0.3s ease-in 0s;
+}
+.onOffSwitch-Inner:before, .onOffSwitch-Inner:after {
+  display: block;
+  float: left;
+  width: 50%;
+  height: 13px;
+  padding: 0;
+  padding-bottom: 16px;
+  line-height: 17px;
+  color: #FFFFFF;
+  box-sizing: border-box;
+}
+.onOffSwitch-Inner:before {
+  content: "True";
+  padding-left: 7px;
+  background-color: #30B830;
+  color: #FFFFFF;
+}
+.onOffSwitch-Inner:after {
+  content: "False";
+  padding-right: 7px;
+  background-color: #888;
+  color: #000;
+  text-align: right;
+}
+.onOffSwitch-Switch {
+  display: block;
+  width: 11px;
+  margin: 3px;
+  background: #555;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 34px;
+  border: 2px solid #999999;
+  border-radius: 8px;
+}
+.onOffSwitch-Checkbox:checked + .onOffSwitch-Label .onOffSwitch-Inner {
+  margin-left: 0;
+}
+.onOffSwitch-Checkbox:checked + .onOffSwitch-Label .onOffSwitch-Switch {
+  right: 0;
+}
+.multiValueSliderParent {
+  display: inline-block;
+  position: relative;
+  width: 400px;
+  height: 20px;
+  text-align: center;
+  vertical-align: top;
+  margin-left: 0.3em;
+  color: black;
+}
+.multiValueSliderParent input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background: transparent;
+  position: absolute;
+  pointer-events: none;
+  overflow: hidden;
+  left: 0;
+  top: 0;
+  width: 400px;
+  height: 100%;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+.multiValueSliderParent input::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  pointer-events: all;
+  height: 36px;
+  width: 4px;
+  background: black;
+  cursor: ew-resize;
+  position: relative;
+  // z-index: 1;
+  outline: none;
+}
+.multiValueSliderParent input::-moz-range-thumb {
+  -moz-appearance: none;
+  pointer-events: all;
+  height: 36px;
+  width: 4px;
+  background: black;
+  cursor: ew-resize;
+  position: relative;
+  // z-index: 1;
+  outline: none;
+}
+.multiValueSliderParent input::-moz-range-track {
+  -moz-appearance: none;
+}
+.multiValueSliderBackground {
+  pointer-events: none;
+  height: 100%;
+  position: absolute;
+  background: gray;
+  z-index: -1;
+  transition: width 0s !important;
+}
+.multiValueSliderBackground.green {
+  background: lightgreen;
+}
+.multiValueSliderBackground.yellow {
+  background: yellow;
+}
+.multiValueSliderBackground.cyan {
+  background: cyan;
+}
+.multiValueSliderBackground.red {
+  background: red;
+}
+.yesNoBoxParent {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(100, 100, 100, 0.4);
+  top: 0;
+  margin: auto;
+  z-index: 1000;
+  text-align: center;
+}
+.yesNoBox {
+  display: inline-block;
+  position: relative;
+  margin-top: 10%;
+  background: #7289DA;
+  border-radius: 14px;
+  min-height: 150px;
+  max-height: 80%;
+  min-width: 300px;
+  max-width: 600px;
+  color: white;
+  text-align: justify;
+  padding: 1em;
+}
+.yesNoBox a {
+  display: inline-block;
+  margin-bottom: 6em;
+}
+.yesNoBox-Yes {
+  font-size: 2em;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  color: #7289DA;
+  background: white;
+  margin: 1.5em;
+  width: 3em;
+}
+.yesNoBox-No {
+  font-size: 2em;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  color: #7289DA;
+  background: white;
+  margin: 1.5em;
+  width: 3em;
+}
+.eventTypeParent {
+  display: inline-block;
+  max-width: 250px;
+  min-width: 100px;
+  border: 1px solid lightgray;
+  margin: 1em;
+  padding: 1em;
+  vertical-align: top;
+}
+.eventTypeParent button {
+  width: 100%;
+  font-size: 1.5em;
+  margin-bottom: 0.5em;
+}
+.eventTypeParent button:hover {
+  background: white;
+}
+.eventBackButton {
+  display: block;
+  width: 140px;
+  height: 40px;
+  font-size: 0.9em;
+}
+.eventButtonRow {
+  font-size: 1.0em;
+  display: inline-block;
+}
+.disableEventButton {
+  display: inline-block;
+  border-radius: 8px;
+  vertical-align: top;
+}
+.addEventButton {
+  vertical-align: top;
+}
+.addEventButton[disabled],
+.addEventButton:disabled {
+  border-color: red;
+  cursor: not-allowed;
+}
+.tagInfoLink {
+  color: #00b0f4;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.tagInfoList a {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+.singleEventContainer {
+  width: 80%;
+  margin: 0.3em;
+  margin-left: 10%;
+  border: 1px solid lightgray;
+}
+.majorEventButtons {
+  margin-left: 0.5em;
+}
+img.deleteButton,
+img.removeButton,
+img.editButton,
+a.downloadButton img {
+  height: 15px;
+  width: 15px;
+  padding-top: 3px;
+  padding-bottom: 1px;
+  cursor: pointer;
+}
+.downloadButton {
+  color: white;
+  margin: 0 0.5em;
+}
+.removeButton,
+.editButton {
+  color: white;
+  margin-left: 0.5em;
+}
+.deleteButton {
+  color: white;
+}
+.deleteButton:disabled,
+.removeButton:disabled,
+.editButton:disabled,
+.deleteButton[disabled],
+.removeButton[disabled],
+.editButton[disabled],
+.removeButton.disabled,
+.editButton.disabled,
+.deleteButton.disabled {
+  color: initial;
+  cursor: not-allowed;
+  -webkit-filter: brightness(50%);
+  -moz-filter: brightness(50%);
+  -o-filter: brightness(50%);
+  -ms-filter: brightness(50%);
+  filter: brightness(50%);
+}
+#createEventsContainer .singleEventContainer:last-of-type {
+  margin-bottom: 6em;
+}
+#eventStartMessageInput, #eventStartMessageSelect, #eventConsumableNameInput {
+  width: 90%;
+  margin-left: 5%;
+  text-align: left;
+}
+#submitArenaEventButton {
+  font-size: 2em;
+  padding: 0.3em;
+  margin-left: 5%;
+  margin-top: 0.3em;
+  width: 90%;
+  position: absolute;
+  bottom: 0;
+}
+#eventSearchBar {
+  width: 90%;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-size: 1.25em;
+  color: inherit;
+  background: inherit;
+  border: inherit;
+}
+#memberSearchBar {
+  width: 275px;
+  font-size: 1.25em;
+  color: inherit;
+  background: inherit;
+  border: inherit;
+}
+#dayControlRowFiller {
+  width: 100%;
+  height: 40px;
+}
+#dayControlRow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  margin: 0;
+}
+#dayControlRow.sticky {
+  position: fixed;
+  margin-top: 7px;
+}
+.currentDayControls {
+  margin: 4px;
+}
+#currentDayLeftControls {
+  text-align: left;
+  float: left;
+  display: inline-block;
+  overflow: hidden;
+}
+.uploadDropZone {
+  text-align: center;
+}
+.uploadForm.enabled {
+  margin: 0.5em -8px;
+  padding: 1em;
+  background: #464b54;
+}
+.uploadDropZone.enabled {
+  padding: 1em;
+  font-size: 2em;
+  background: #464b54;
+  border: 2px dashed black;
+}
+.uploadDropZone.dragover {
+  background: gray;
+  cursor: copy;
+}
+.uploadDropZone.dragover input[type=file] {
+  opacity: 0;
+}
+.actionButtonOption {
+  display: inline-block;
+  border: 1px solid white;
+  padding: 0.25em;
+  margin: 0.25em;
+}
+.triggerContainer {
+  display: inline-block;
+  max-width: 500px;
+  width: 100%;
+  margin: 0.5em;
+  vertical-align: top;
+  border: 1px solid white;
+}
+.triggerContainer.event,
+.actionButtonOption.event {
+  border-color: lightblue;
+}
+.triggerContainer.day,
+.actionButtonOption.day {
+  border-color: yellow;
+}
+.triggerContainer.game,
+.actionButtonOption.game {
+  border-color: orange;
+}
+.triggerContainer .title {
+  margin: 0;
+}
+.triggerContainer .section {
+  padding-bottom: 0;
+}
+.triggerContainer .types {
+  color: gray;
+}
+.triggerContainer .description {
+  border-bottom: 1px solid black;
+}
+.triggerContainer .types,
+.triggerContainer .description {
+  margin-top: 0.1em;
+  margin-bottom: 0.1em;
+}
+.triggerActionRow,
+.createTriggerActionRow {
+  border-top: 1px dashed black;
+  padding: 0.25em;
+}
+.createTriggerActionRow {
+  border-top: 4px double black;
+}
+.triggerActionRow .type,
+.triggerActionRow .delay {
+  font-size: 0.8em;
+  vertical-align: top;
+}
+.triggerActionRow button {
+  font-size: 0.5em;
+  margin-left: 0.5em;
+}
+.triggerActionRow .delay:not(:focus),
+.argRows .arg {
+  border-bottom-color: transparent;
+}
+.triggerActionRow .delay {
+  font-family: monospace;
+  font-size: 1em;
+  width: 3em;
+  text-align: left;
+  -moz-appearance: textfield;
+}
+.triggerActionRow .delay::-webkit-outer-spin-button,
+.triggerActionRow .delay::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.createTriggerActionRow .arg,
+.argRows .arg,
+.createTriggerActionRow .actionList {
+  max-width: 100%;
+}
+#statGroupListContainer {
+  border: 1px solid black;
+  display: inline-block;
+  margin: 0.5em;
+  vertical-align: top;
+}
+#statGroupListTitle, .statTitle {
+  margin: 0.5em;
+  border-bottom: 1px solid white;
+}
+#statGroupListSection {
+  text-align: left;
+  margin: 0.5em;
+}
+.statGroupBox {
+  display: inline-block;
+  border: 1px solid black;
+  margin: 0.5em;
+  vertical-align: top;
+  width: 300px;
+  white-space: nowrap;
+}
+.statGroupRow {
+  text-align: left;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  width: 100%;
+  max-height: 2em;
+}
+#createStatGroupRow {
+  border-top: 1px dashed white;
+}
+
+@media screen and (max-width: 720px) {
+  .helpTip {
+    display: block;
+  }
+}
+@media screen and (max-width: 630px) {
+  #titleParent {
+    padding-left: 0;
+  }
+}

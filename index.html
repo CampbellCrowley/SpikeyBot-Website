@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<!-- Copyright 2018-2020 Campbell Crowley. All rights reserved. -->
+<!-- Author: Campbell Crowley (web@campbellcrowley.com) -->
+<html lang="en">
+<head>
+
+  <title>SpikeyBot - Discord Bot</title>
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <meta name="description" content="SpikeyBot's Homepage"/>
+  <meta name="keywords" content="Campbell,Crowley,Spikey,SpikeyBot,Discord,SpikeyRobot,Hunger,Games,Bot,Simuator,Generator,Hungry,Raid,Block,Moderator,Mod"/>
+  <!-- <meta name="keywords" content="Campbell,Crowley,Spikey,SpikeyBot,Discord,SpikeyRobot,Hunger,Games,Music,Bot,Simuator,Generator,Hungry,Raid,Block,Moderator,Mod"/> -->
+  <meta name="author" content="Campbell Crowley"/>
+  <meta name="revised" content="Campbell Crowley, April 19 2020"/>
+  <meta name="charset" content="utf-8"/>
+  <meta name="robots" content="noindex">
+
+<style></style>
+<style>
+#guildCount {
+  margin-top: 0.65em;
+  margin-bottom: 0.65em;
+}
+#guildCount a {
+  color: white;
+  background: #444;
+  /* background: #7289DA; */
+  border-radius: 8px;
+  padding: 4px;
+}
+#discordIframe {
+  box-shadow: 2px 7px 20px rgba(0, 0, 0, 0.2), -2px 7px 20px rgba(0, 0, 0, 0.2);
+}
+#title, #subtitle {
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+}
+#subtitle {
+  color: #777;
+}
+.line {
+  box-shadow: 2px 7px 20px rgba(0, 0, 0, 0.5), -2px 7px 20px rgba(0, 0, 0, 0.5);
+}
+.thinline {
+  border-bottom: 1px solid gray;
+}
+.contentsection {
+  background: white;
+  text-align: center;
+}
+.transparentcontent2 {
+  background-color: transparent;
+  text-align: center;
+  box-shadow: none;
+  margin-top: 25px;
+}
+.greycontent {
+  background: #36393F;
+  color: white;
+  margin: 0 -10px;
+  box-shadow: inset 0 0 10px black;
+  padding: 1.25em;
+}
+#botListWidgets {
+  background: #36393F;
+  padding: 1em;
+}
+#botListWidgets * {
+  vertical-align: top;
+}
+.leftCol {
+  width: 49%;
+  min-width: 260px;
+  margin: 0;
+  display: inline-block;
+  vertical-align: top;
+  text-shadow: none;
+  position: relative;
+  float: left;
+  margin-bottom: 25px;
+}
+.leftCol a {
+  text-decoration: none;
+}
+.rightCol {
+  width: 49%;
+  min-width: 260px;
+  height: 300px;
+  margin: 0;
+  display: inline-block;
+  vertical-align: top;
+  float: right;
+  margin-bottom: 90px;
+}
+.invite {
+  font-size: 2em;
+  background: #444;
+  border: 2px solid #333;
+  color: #DDD;
+  border-radius: 8px;
+  margin: 0.5em;
+  display: inline-block;
+  cursor: pointer;
+  padding: 5px;
+  transition: all 0.4s;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 2px 7px 10px rgba(0, 0, 0, 0.3);
+  width: 90%;
+}
+.invite:hover {
+  background-color: #454545;
+  color: #FFF;
+  border: 2px solid #7289DA;
+  border-radius: 14px;
+  box-shadow: 2px 7px 20px rgba(255, 0, 255, 0.2), -2px 7px 20px rgba(255, 0, 255, 0.2);
+}
+.inviteCount {
+  display: table;
+  margin-top: -18px;
+  margin-bottom: 18px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.inviteCount a,
+.inviteCount span {
+  background: #444;
+  color: #C5C5C5;
+  box-shadow: 2px 7px 10px rgba(0, 0, 0, 0.3);
+  border: 2px solid #333;
+  border-radius: 0 0 0.5em 0.5em;
+  border-top: none;
+  transition: all 0.4s;
+  padding: 4px;
+}
+.halfInvite {
+  width: 40.5%;
+}
+.bigInvite {
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+}
+.bigInvite:hover .invite {
+  background-color: #454545;
+  color: #FFF;
+  border-radius: 14px;
+  box-shadow: 2px 7px 20px rgba(255, 0, 255, 0.2), -2px 7px 20px rgba(255, 0, 255, 0.2);
+}
+.bigInvite:hover .inviteCount a {
+  color: #EEE;
+  background-color: #454545;
+  border-color: #7289DA;
+  border-radius: 0 0 0.75em  0.75em;
+  box-shadow: 2px 10px 20px rgba(255, 0, 255, 0.2), -2px 10px 20px rgba(255, 0, 255, 0.2);
+}
+.github {
+  font-size:0.8em;
+  background: #444;
+  border: 2px solid #444;
+  color: white;
+  border-radius: 8px;
+  margin: 5px;
+  display: inline-block;
+  cursor: pointer;
+  padding: 5px;
+  transition: all 0.4s;
+  text-align: center;
+  text-decoration: none;
+  box-shadow: 2px 7px 10px rgba(0, 0, 0, 0.5);
+}
+.github:hover {
+  background-color: white;
+  color: #F0F;
+  border: 2px solid #0F0;
+  border-radius: 14px;
+  box-shadow: 2px 7px 20px rgba(0, 0, 0, 0.2), -2px 7px 20px rgba(0, 0, 0, 0.2);
+}
+#helpTOC {
+  text-align: center;
+  color: #000;
+}
+#helpTOC *:visited {
+  color: #000;
+}
+#helpTOC *:hover {
+  color: #666;
+}
+.toc1 {
+  color: #000;
+  text-align: left;
+  vertical-align: top;
+  font-size: 1.25em;
+  margin: 4px;
+  width: 205px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+}
+.toc1 .title {
+  text-decoration: underline;
+}
+.toc2 {
+  color: #000;
+  font-size: 0.90em;
+  margin: 0;
+  padding-left: 1em;
+  text-decoration: none;
+  display: block;
+}
+.toc3 {
+  color: #000;
+  font-size: 0.75em;
+  margin: 0;
+  padding-left: 1em;
+  text-decoration: none;
+  display: block;
+}
+.moduleHeader, .sectionTitle {
+  text-decoration: none;
+  color: black;
+  outline: none;
+}
+.sectionLink {
+  font-size: 0.75em;
+  margin-left: 0.25em;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+}
+.moduleHeader:hover .sectionLink, .sectionTitle:hover .sectionLink {
+  opacity: 1;
+}
+.moduleHeader {
+  display: block;
+  font-size: 1.5em;
+  font-weight: bold;
+  border-bottom: 1px solid #ddd;
+}
+.sectionTitle {
+  display: block;
+  font-size: 1.17em;
+  font-weight: bold;
+}
+.commandList {
+  text-align: left;
+  text-shadow: 0 0 0;
+}
+.exampleParent {
+  margin: 2em;
+  margin-top: 1em;
+  padding: 0.5em;
+  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.1), -2px 3px 10px rgba(0, 0, 0, 0.1);
+}
+.exampleParentTitle {
+  font-weight: bold;
+}
+.example {
+  margin-bottom: 0.75em;
+}
+.exampleDescription {
+  margin-bottom: 0.5em;
+  font-style: italic;
+}
+.exampleCommandParent, .exampleResultParent {
+  padding-left: 5px;
+  border-left: 3px solid #CCCCCC;
+}
+.exampleCommand {
+  background: #F5F5F5;
+  border-radius: 4px;
+  border: 1px solid #E0E0E0;
+  display: inline-block;
+  vertical-align: top;
+  padding: 4px;
+  font-family: 'Ubuntu Mono', monospace;
+}
+.exampleResult {
+}
+.exampleCodeBlock {
+  display: inline-block;
+  background: #CCCCCC;
+  border-radius: 0.6em;
+  border: 1px solid #E0E0E0;
+  font-family: 'Ubuntu Mono', monospace;
+  padding: 6px;
+}
+.exampleCodeLine {
+  display: inline-block;
+  background: #DDDDDD;
+  border-radius: 0.3em;
+  border: 1px solid #F0F0F0;
+  font-family: 'Ubuntu Mono', monospace;
+  padding: 3px;
+}
+#copyright {
+  text-align: center;
+  font-size: 0.8em;
+}
+#patreon {
+  text-align: left;
+  position: relative;
+  display: inline-block;
+  width: 175px;
+  height: 35px;
+  bottom: 0;
+  overflow: hidden;
+}
+#paypal {
+  display: inline-block;
+}
+.slideshow-container {
+  position: relative;
+  height: 150px;
+}
+.slide {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 150px;
+  transition: opacity 1.5s ease-in-out;
+}
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  margin-top: -22px;
+  padding: 16px;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  transition: 0.6s ease;
+  user-select: none;
+}
+.prev {
+  left: 0;
+  border-radius: 0 3px 3px 0;
+}
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+.slideText {
+  color: #aaa;
+  font-size: 15px;
+  padding: 8px 0px;
+  position: absolute;
+  top: -32px;
+  width: 100%;
+  text-align: center;
+}
+.dotParent {
+  margin-top: 1em;
+}
+.dot {
+  cursor: pointer;
+  height: 15px;
+  width: 15px;
+  margin: 0 2px;
+  background-color: #f0f;
+  opacity: 0.2;
+  border-radius: 50%;
+  display: inline-block;
+  transition: all 0.6s ease;
+}
+.dot.active, .dot:hover {
+  background-color: #0f0;
+  opacity: 1;
+}
+.dot:hover {
+  opacity: 0.7;
+}
+.slide.active {
+  opacity: 1;
+}
+
+.featureParent {
+  background: #36393F;
+  color: #DDD;
+  width: auto;
+  margin: 0px -14px;
+  padding-bottom: 15px;
+}
+.featureHeader {
+  display: block;
+  text-decoration: none;
+  color: #36393F;
+  background: white;
+  margin-bottom: 20px;
+  box-shadow: 0 0 10px black;
+  transition: box-shadow 0.2s ease-in-out;
+}
+#hungerGamesParent .featureHeader {
+  margin-bottom: 40px;
+}
+#hungerGamesParent {
+  height: 330px;
+}
+.featureHeader:hover {
+  box-shadow: 0 0 20px #F0F;
+}
+.featureHelp {
+  display: inline-block;
+  vertical-align: top;
+  width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  opacity: 0;
+  transition: all 0.2s ease-in-out;
+}
+.featureHeader:hover .featureHelp {
+  width: 50px;
+  opacity: 1;
+}
+.featureTitle {
+  /* margin-bottom: 1.25em; */
+  display: inline-block;
+}
+#cookieAlert {
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
+  width: auto;
+  color: black;
+  border: 4px solid red;
+  border-radius: 1em;
+  padding: 1em;
+  background: white;
+}
+#cookieAlert button {
+  background: lightblue;
+  border: 2px solid blue;
+  border-radius: 1em;
+  font-size: 1.1em;
+  cursor: pointer;
+}
+.alert {
+  /* background: rgba(65, 60, 40, 1); */
+  background: rgba(65, 40, 40, 1);
+}
+.alert a:link {
+  color: #00b0f4;
+}
+#patreonRow {
+  text-align: right;
+  position: relative;
+  display: block;
+  height: 35px;
+}
+#patreonButton {
+  position: relative;
+  display: block;
+  margin-left: auto;
+  width: 175px;
+  height: 100%;
+  bottom: 0;
+  overflow: hidden;
+}
+#patreonStatus {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin-left: 4px;
+  text-align: left;
+  width: 50%;
+  width: calc(100% - 175px - 8px);
+  height: 100%;
+  height: calc(100% - 3px);
+}
+#patreonProgress, #patreonProgressBack {
+  position: absolute;
+  height: 100%;
+  border-radius: 17px;
+  background: #E85B46;
+  border: 1px solid black;
+}
+#patreonProgress {
+  width: 0px;
+  max-width: 100%;
+  transition: width ease-in-out 5s;
+  transition: width cubic-bezier(0.25, 0, 0, 1) 5s;
+}
+#patreonProgressBack {
+  padding-top: 7px;
+  height: calc(100% - 7px);
+  background: transparent;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+}
+#patreonThanks {
+  padding-right: 1em;
+  position: absolute;
+  right: 0;
+  max-width: 175px;
+  font-style: italic;
+}
+#patreonRow .hidden {
+  display: none;
+}
+@media screen and (max-width: 550px) {
+  .leftCol, .rightCol {
+    width: 100%;
+  }
+  #cookieAlert {
+    right: 0;
+    bottom: 0;
+  }
+}
+</style>
+<script data-ad-client="ca-pub-8686819159582535" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+</head>
+<body>
+<div class="container">
+<div id="maincontent">
+<div id="content">
+  <div id="mainheader"></div>
+  <div id="patreonRow">
+    <div id="patreonButton">
+      <a href="https://www.patreon.com/bePatron?u=12105522" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async defer src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+    </div>
+    <div id="patreonStatus" class="">
+      <span id="patreonProgress"></span>
+      <span id="patreonProgressBack"></span>
+    </div>
+    <div id="patreonThanks" class="hidden">
+      <a>Thank you for supporting SpikeyBot!</a>
+    </div>
+  </div>
+  <header>
+    <div class="contentsection transparentcontent">
+      <h1 id="title">SpikeyBot for Discord</h1>
+      <h3 id="subtitle">by SpikeyRobot</h3>
+      <div id="guildCount">#</div>
+      <img alt="SB Profile Picture" src="https://www.spikeybot.com/SBIconCropped-128.png">
+    </div>
+    <div class="contentsection greycontent">
+      SpikeyBot is a Bot for Discord that has grown to become a sort of all-in-one bot. Admin commands, raid protection, random stuff, and even a Hunger Games simulator that includes people on the server. The bot is still being worked on, so if you don't see a feature you want, tell SpikeyRobot!
+    </div>
+    <!-- <div class="contentsection greycontent">
+      SpikeyBot is a Bot for Discord that has grown to become a sort of all-in-one bot. Music, admin commands, raid protection, random stuff, and even a Hunger Games simulator that includes people on the server. The bot is still being worked on, so if you don't see a feature you want, tell SpikeyRobot!
+    </div> -->
+  </header>
+  <!-- <div class="contentsection greycontent alert">
+    <h1>Scheduled Downtime for Maintenance</h1>
+    <h2>Tuesday, November 5th</h2>
+    <h3>12pm to 1pm PST</h3>
+    <small id="localTime" style="display: none"></small>
+      <script>
+        const date = new Date('Tue Nov 05 2019 12:00:00 GMT-0800');
+        const end = new Date('Tue Nov 05 2019 13:00:00 GMT-0800');
+        if (date.getTimezoneOffset() != 480) {
+          const el = document.getElementById('localTime');
+          el.style.display = '';
+          el.appendChild(document.createTextNode(date.toDateString()));
+          el.appendChild(document.createElement('br'));
+          el.appendChild(document.createTextNode(date.toTimeString()));
+          el.appendChild(document.createTextNode(' to'));
+          el.appendChild(document.createElement('br'));
+          el.appendChild(document.createTextNode(end.toTimeString()));
+        }
+      </script>
+    <p>The bot may go offline during this period in order to perform necessary hardware upgrades. For more information, <a href="https://discord.gg/u6U2WRD">join our Discord server</a>.</p>
+  </div> -->
+  <!-- <div id="fixedNotification" onclick="this.remove()">Apologies for the recent bot downtime.<br>I am investigating the issue still.</div> -->
+  <!-- <div id="fixedNotification" onclick="this.remove()">Apologies for the recent bot downtime.<br>Aparently my router thought the bot was a virus...</div> -->
+  <div style="width:100%;display:inline-block;text-align:center;margin-top:1em;">
+    <div class="leftCol">
+      Join the public discord server if you have any questions, feedback, requests, or if you just want to hangout!
+      <br><br>
+      <div class="thinline"></div>
+      <br>
+      SpikeyBot is created by Campbell Crowley (aka SpikeyRobot) in his free time while he is at school. If you have any issues or feedback, feel free to contact him via discord or email.
+      <br><br>
+      <div class="thinline"></div>
+      <br>
+      If you love the bot, or want to get access to special stuff, please consider becoming a patron. You can also donate money through <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=Q7562F5GT7WFE&source=url" title="Donate to SpikeyBot">PayPal</a>.
+      <br>
+      <div id="patreon">
+        <a href="https://www.patreon.com/bePatron?u=12105522" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async defer src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+      </div>
+      <div id="paypal">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+          <input type="hidden" name="cmd" value="_s-xclick" />
+          <input type="hidden" name="hosted_button_id" value="7MS6EKJPPRZWN" />
+          <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+          <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+        </form>
+      </div>
+      <br><br>
+      <div class="thinline"></div>
+      <br>
+      <a href="https://discord.gg/u6U2WRD">
+        <img src="https://discordapp.com/api/guilds/420045052690169856/embed.png" alt="Discord Support Server">
+      </a>
+      <a href="https://github.com/CampbellCrowley/SpikeyBot-Discord">
+        <img alt="SpikeyBot-Discord on GitHub" src="https://img.shields.io/github/package-json/v/CampbellCrowley/SpikeyBot-Discord.svg">
+      </a>
+      <a href="https://github.com/CampbellCrowley/SpikeyBot-Discord">
+        <img alt="Last GitHub Commit" src="https://img.shields.io/github/last-commit/CampbellCrowley/SpikeyBot-Discord.svg">
+      </a>
+      <a href="https://travis-ci.com/CampbellCrowley/SpikeyBot-Discord">
+        <img alt="Build Status" src="https://travis-ci.org/CampbellCrowley/SpikeyBot-Discord.svg?branch=master">
+      </a>
+      <a href="https://david-dm.org/CampbellCrowley/SpikeyBot-Discord">
+        <img alt="Dependencies Status" src="https://david-dm.org/CampbellCrowley/SpikeyBot-Discord.svg">
+      </a>
+      <a href="https://www.patreon.com/CampbellCrowley/">
+        <img alt="Patreon" src="https://img.shields.io/badge/donate-patreon-F96854.svg">
+      </a>
+      <a href="https://www.paypal.me/SpikeyBot">
+        <img alt="PayPal" src="https://img.shields.io/badge/donate-paypal-0070ba.svg">
+      </a>
+    </div>
+    <div class="rightCol">
+      <a class="bigInvite" href="https://www.spikeybot.com/dev/invite/" target="_blank">
+        <span class="invite">Invite to your Discord server</span>
+        <span class="inviteCount" id="guildInviteCount"><span>??? servers</span></span>
+      </a>
+      <a class="bigInvite" href="https://discord.gg/u6U2WRD" target="_blank">
+        <span class="invite">Join our Discord server</span>
+        <span class="inviteCount" id="serverInviteCount"><span>?? online</span></span>
+      </a>
+      <a class="invite halfInvite" href="https://docs.spikeybot.com/">Code Docs</a>
+      <!-- <a class="invite halfInvite" href="https://campbellcrowley.github.io/SpikeyBot-Discord/">Code Docs</a> -->
+      <a class="invite halfInvite" href="https://github.com/CampbellCrowley/SpikeyBot-Discord/">GitHub</a>
+      <!-- <iframe id="discordIframe" src="https://discordapp.com/widget?id=420045052690169856&theme=light" width="100%" height="100%" allowtransparency="true" frameborder="0"></iframe> -->
+    </div>
+  </div>
+  <!-- <div style="display: inline-block; width: 100%;"></div> -->
+  <div class="contentsection transparentcontent">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- HorizontalBar -->
+    <ins class="adsbygoogle" style="display:block;height:90px;width:100%" data-ad-client="ca-pub-8686819159582535" data-ad-slot="5269181276"></ins>
+    <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+  </div>
+  <div class="contentsection transparentcontent">
+    <div id="hungerGamesParent" class="featureParent">
+      <a class="featureHeader" href="help/#Hungry%20Games">
+        <h1 class="featureTitle">
+          Hunger Games
+          <div class="featureHelp">&gt;&gt;</div>
+        </h1>
+      </a>
+      <div id="hgImages" class="slideshow-container">
+        <div class="slide">
+          <img alt="Multiple players per HG event" src="https://res.cloudinary.com/spikeybot/image/upload/v1546192043/H0vThKo.png">
+          <div class="slideText">Multiple players per events</div>
+        </div>
+        <div class="slide">
+          <img alt="Configurable player resurrections in HG events" src="https://res.cloudinary.com/spikeybot/image/upload/v1546192028/mOjK1ja.png">
+          <div class="slideText">Configurable player resurrections</div>
+        </div>
+        <div class="slide">
+          <img alt="HG players have a configurable chance of surviving" src="https://res.cloudinary.com/spikeybot/image/upload/v1546192017/qd6X0FQ.png">
+          <div class="slideText">Chances of survival</div>
+        </div>
+        <div class="slide">
+          <img alt="The number of kills each player in an HG game is tracked" src="https://res.cloudinary.com/spikeybot/image/upload/v1546192008/ojWts3N.png">
+          <div class="slideText">Number of kills are tracked</div>
+        </div>
+        <div class="slide">
+          <img alt="Players have a weapon and resource inventory" src="https://res.cloudinary.com/spikeybot/image/upload/v1546191996/MMIqsVX.png">
+          <div class="slideText">Weapon inventory system with ammo count</div>
+        </div>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      </div>
+      <br>
+      <div class="dotParent">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+      </div>
+    </div>
+    <div id="raidsParent" class="featureParent">
+      <a class="featureHeader" href="help/#Raids_and_Logging">
+        <h1 class="featureTitle">
+          Raid Protection
+          <div class="featureHelp">&gt;&gt;</div>
+        </h1>
+      </a>
+      <img alt="Example of RaidBlock protecting a server from a detected raid." src="https://res.cloudinary.com/spikeybot/image/upload/v1557092566/131VzXg.png">
+    </div>
+    <div id="pollsParent" class="featureParent">
+      <a class="featureHeader" href="help/#Polls_and_Voting">
+        <h1 class="featureTitle">
+          Voting and Polls
+          <div class="featureHelp">&gt;&gt;</div>
+        </h1>
+      </a>
+      <img alt="An example of a customizable voting and poll system." src="https://res.cloudinary.com/spikeybot/image/upload/v1546212266/tQj7Yq2.png">
+    </div>
+    <!-- <div id="musicParent" class="featureParent">
+      <a class="featureHeader" href="help/#Music_and_Voice">
+        <h1 class="featureTitle">
+          Music Player
+          <div class="featureHelp">&gt;&gt;</div>
+        </h1>
+      </a>
+      <img alt="Example of the music commands" src="https://res.cloudinary.com/spikeybot/image/upload/v1546217215/qhJS17W.png">
+    </div> -->
+    <div id="permissionsParent" class="featureParent">
+      <a class="featureHeader" href="help/#Command_Settings">
+        <h1 class="featureTitle">
+          Configurable Command Permissions
+          <div class="featureHelp">&gt;&gt;</div>
+        </h1>
+      </a>
+      <img alt="Example of a user not having permission to use a certain command." src="https://res.cloudinary.com/spikeybot/image/upload/v1546217558/hzuODyn.png">
+    </div>
+  </div>
+  <div class="contentsection transparentcontent">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- HorizontalBar -->
+    <ins class="adsbygoogle" style="display:block;height:90px;width:100%" data-ad-client="ca-pub-8686819159582535" data-ad-slot="5269181276"></ins>
+    <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+  </div>
+  <div class="line"></div>
+  <div class="contentsection transparentcontent">
+    <h2>Commands List</h2>
+    <div id="helpTOC" class="contentsection transparentcontent"></div>
+  </div>
+  <div id="botListWidgets" class="contentsection">
+    <!-- <a href="https://discordbotlist.com/bots/318552464356016131">
+      <img height="150" src="https://discordbotlist.com/bots/318552464356016131/widget" alt="SpikeyBot stats on Discord Bot List">
+    </a> -->
+    <a href="https://discordbots.org/bot/318552464356016131" >
+      <img height="150" src="https://discordbots.org/api/widget/318552464356016131.svg" alt="SpikeyBot stats on discordbots.org" />
+    </a>
+    <a href="https://bots.ondiscord.xyz/bots/318552464356016131">
+      <img height="150" src="https://bots.ondiscord.xyz/bots/318552464356016131/embed?theme=dark&showGuilds=true" alt="SpikeyBot stats on bots.ondiscord.xyz" />
+    </a>
+  </div>
+  <div id="mainfooter"></div>
+</div>
+</div>
+</div>
+<script async defer src="https://www.spikeybot.com/dev/patreonBar.js" type="text/javascript"></script>
+<script>
+(function() {
+var slideIndex = 1;
+
+var interval = setInterval(autoRotate, 10000);
+
+var userInterrupt = 0;
+
+function autoRotate() {
+  showSlides(slideIndex + 1, false);
+}
+
+window.plusSlides = function(n) {
+  showSlides(slideIndex + n, true);
+};
+
+window.currentSlide = function(n) {
+  showSlides(n, true);
+};
+
+function showSlides(n, isUser) {
+  if (userInterrupt > 0 && !isUser) {
+    userInterrupt--;
+    return;
+  }
+  if (isUser) userInterrupt = 2;
+  var slides = document.getElementsByClassName('slide');
+  var dots = document.getElementsByClassName('dot');
+  if (n > slides.length) slideIndex = 1;
+  else if (n < 1) slideIndex = slides.length;
+  else slideIndex = n;
+  for (var i = 0; i < slides.length; i++) {
+    slides[i].classList.remove('active');
+  }
+  for (var i = 0; i < dots.length; i++) {
+    dots[i].classList.remove('active');
+  }
+  slides[slideIndex - 1].classList.add('active');
+  dots[slideIndex - 1].classList.add('active');
+}
+
+showSlides(slideIndex);
+})();
+</script>
+<script>
+(function() {
+const modules =
+    [ 'mainHelp.json', 'hgHelp.json', 'adminHelp.json', /*'musicHelp.json',*/
+      'searchHelp.json' ];
+const helpPage = 'help/';
+var responses = 0;
+
+function fetchHelpObjects() {
+  for (var url of modules) {
+    requestFile(`https://www.spikeybot.com/docs/${url}`);
+  }
+}
+fetchHelpObjects();
+
+function requestFile(url) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  xhr.setRequestHeader('Content-Type', 'text/json');
+  xhr.onload = function() {
+    responses++;
+    if (xhr.status != 200) {
+      console.log(xhr.status, xhr.response);
+    } else {
+      newHelpOpject(JSON.parse(xhr.responseText));
+    }
+  };
+  xhr.send();
+}
+
+var toc = document.getElementById('helpTOC');
+toc.innerHTML = '';
+function newHelpOpject(helpObj) {
+  console.log(helpObj);
+  var postPrefix = (helpObj.prefix || '');
+  var prefix = '?' + postPrefix;
+
+  var tocUL = document.createElement('a');
+  tocUL.href = helpPage + '#' + makeId(helpObj.title);
+  tocUL.classList.add('toc1');
+  var tocTitle = document.createElement('a');
+  tocTitle.textContent = helpObj.title;
+  tocTitle.classList.add('title');
+  tocUL.appendChild(tocTitle);
+
+  helpObj.sections.forEach(function(section) {
+    var title = document.createElement('h2');
+    title.innerHTML = section.title;
+    title.id = makeId(postPrefix + section.title);
+    title.classList.add('sectionTitle');
+    var titleLink = document.createElement('a');
+    titleLink.innerHTML = '&#x1F517;';
+    titleLink.href = helpPage + '#' + title.id;
+    titleLink.classList.add('sectionLink');
+    title.appendChild(titleLink);
+
+    var tocUL2 = document.createElement('a');
+    tocUL2.href = helpPage + '#' + title.id;
+    tocUL2.classList.add('toc2');
+    tocUL2.appendChild(document.createTextNode(section.title));
+    tocUL.appendChild(tocUL2);
+
+    var list = document.createElement('ul');
+    list.classList.add('contentsection');
+    list.classList.add('commandList');
+    section.rows.forEach(function(row) {
+      var aliases = '';
+      var help = '';
+      var commandText = '';
+      var examples = [];
+
+      if (typeof row === 'string') {
+        var splitCmd = row.match(/(.*?) \/\/(.*?)$/)
+        var splitHelp = splitCmd[2].match(/([^\[]*?)\[([^\]]*?)\](.*?)/);
+        help = splitCmd[2];
+        if (splitHelp) {
+          aliases = splitHelp.splice(2, 1);
+          help = splitHelp.slice(1).join('');
+        }
+        commandText = splitCmd[1];
+      } else if (typeof row === 'object') {
+        commandText = row.command;
+        help = row.description;
+        aliases = row.aliases;
+        examples = row.examples;
+      }
+
+      var tocUL3 = document.createElement('a');
+      tocUL3.href = helpPage + '#' +
+                      makeId(postPrefix + commandText.match(/^\W*?\w*/));
+      tocUL3.classList.add('toc3');
+      tocUL3.textContent = prefix + commandText.replace(/{prefix}/g, prefix);
+      tocUL2.appendChild(tocUL3);
+    });
+  });
+
+  var before = toc.children.length;
+  for (var i = 0; i < toc.children.length; i++) {
+    if (toc.children[i].innerHTML.localeCompare(tocUL.innerHTML) > 0) {
+      before = i;
+      break;
+    }
+  }
+
+  toc.insertBefore(tocUL, toc.children[before]);
+}
+
+function fetchGuildCount() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'https://www.spikeybot.com/stats/');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = function() {
+    if (xhr.status != 200) {
+      console.log(xhr.status, xhr.response);
+    } else {
+      newGuildCount(JSON.parse(xhr.responseText));
+    }
+  };
+  xhr.send();
+}
+fetchGuildCount();
+
+function newGuildCount(stats) {
+  console.log(stats);
+  var guildCountDom = document.getElementById('guildCount');
+  guildCountDom.innerHTML = '';
+  var newCount = document.createElement('a');
+  newCount.appendChild(
+      document.createTextNode('On ' + stats.numGuilds + ' servers'));
+  guildCountDom.appendChild(newCount);
+
+  var guildInviteCountDom = document.getElementById('guildInviteCount');
+  guildInviteCountDom.innerHTML = '';
+  newCount = document.createElement('a');
+  newCount.appendChild(document.createTextNode(stats.numGuilds + ' servers'));
+  guildInviteCountDom.appendChild(newCount);
+}
+
+function fetchMemberCount() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET',
+           'https://discordapp.com/api/guilds/420045052690169856/widget.json');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = function() {
+    if (xhr.status != 200) {
+      console.log(xhr.status, xhr.response);
+    } else {
+      newMemberCount(JSON.parse(xhr.responseText));
+    }
+  };
+  xhr.send();
+}
+fetchMemberCount();
+
+function newMemberCount(stats) {
+  console.log(stats);
+  var memberCountDom = document.getElementById('serverInviteCount');
+  memberCountDom.innerHTML = '';
+  var newCount = document.createElement('a');
+  newCount.appendChild(
+      document.createTextNode(stats.members.length + ' online'));
+  memberCountDom.appendChild(newCount);
+}
+
+function makeId(title) {
+  return encodeURIComponent(title.replace(/\s/g, '_'));
+}
+
+})();
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-89923351-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>

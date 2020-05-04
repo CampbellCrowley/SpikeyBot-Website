@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!-- Copyright 2018-2020 Campbell Crowley. All rights reserved. -->
+<!-- Author: Campbell Crowley (web@campbellcrowley.com) -->
+<html lang="en">
+<head>
+
+  <title>FAQs - SpikeyBot - Discord Bot</title>
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <meta name="description" content="SpikeyRobot Frequently Asked Questions"/>
+  <meta name="keywords" content="Campbell,Crowley,Spikey,SpikeyBot,Discord,SpikeyRobot,FAQ,Frequently,Asked,Questions,Help"/>
+  <meta name="author" content="Campbell Crowley"/>
+  <meta name="revised" content="Campbell Crowley, April 25, 2020"/>
+  <meta name="charset" content="utf-8"/>
+
+<style></style>
+<style>
+#content {
+  padding-left: 0;
+  padding-right: 0;
+}
+#title {
+  margin: 0;
+}
+#faqParent {
+  background: #36393F;
+  /* color: #DDD; */
+  color: white;
+  margin: 0;
+  padding: 18px;
+}
+#faqParent a:-webkit-any-link {
+  /* color: #0096cf; */
+  color: #1ec1ff;
+  text-decoration: none;
+}
+#faqParent a:-webkit-any-link:hover {
+  text-decoration: underline;
+}
+.question {
+  text-align: left;
+  margin-bottom: 1em;
+  box-shadow: 2px 7px 20px rgba(0, 0, 0, 0.2), -2px 7px 20px rgba(0, 0, 0, 0.2);
+  padding: 4px;
+}
+.Q {
+  font-size: 2em;
+  font-weight: bold;
+  color: white;
+  display: inline-block;
+  border-bottom: 2px solid #AA00AA;
+  margin-top: 0;
+  margin-bottom: 4px;
+  text-shadow: none;
+  vertical-align: top;
+}
+.A {
+  text-shadow: none;
+}
+.command {
+  background: #2f3136;
+  color: #839496;
+  border-radius: 4px;
+  border: 1px solid rgba(32,34,37,.3);
+  display: inline-block;
+  padding: 4px;
+  font-family: 'Ubuntu Mono', monospace;
+}
+.sectionLink {
+  text-decoration: none;
+  opacity: 0;
+  font-size: 0.5em;
+}
+.question:hover .sectionLink {
+  opacity: 0.7;
+}
+#copyright {
+  margin: 0 !important;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div id="maincontent">
+<div id="content">
+  <div id="mainheader"></div>
+  <header>
+    <div class="contentsection transparentcontent">
+      <h1 id="title">Frequently Asked Questions</h1>
+    </div>
+  </header>
+  <div class="line"></div>
+  <div class="contentsection transparentcontent">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- HorizontalBar -->
+    <ins class="adsbygoogle" style="display:block;height:90px;width:100%" data-ad-client="ca-pub-8686819159582535" data-ad-slot="5269181276"></ins>
+    <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+  </div>
+  <div id="faqParent" class="contentsection transparentcontent">
+    <div class="question" id="firsthg">
+      <h1 class="Q">How do I start my first Hunger Games?<a href="#firsthg" class="sectionLink">&#x1F517;</a></h1>
+      <div class="A">
+        The easiest way to start a game is by using the <a class="command" href="https://www.spikeybot.com/help/#autoplay">?hg autoplay</a> command.<br>
+        This will start a game with default settings and automatically continue until the game is over.
+      </div>
+    </div>
+    <div class="question" id="hgteams">
+      <h1 class="Q">How do I create teams in HG?<a href="#hgteams" class="sectionLink">&#x1F517;</a></h1>
+      <div class="A">
+        To enable teams, set the `teamSize` option to the size of teams you with to have.<br>
+        <a class="command" href="https://www.spikeybot.com/help/#hg_options">?hg opt teamSize 3</a> will automatically form teams with 3 players maximum.<br>
+        After changing the team size, you can reset the teams to automatically create the teams using <a class="command" href="https://www.spikeybot.com/help/#hg_reset">?hg reset teams</a>. If you have manually created teams previously, you may not want to do this.<br>
+        <br>
+        Once teams are created you can manage the players on the teams using the <a href="https://www.spikeybot.com/hg/">HG webview</a> or with the <a class="command" href="https://www.spikeybot.com/help/#hg_Team_Settings">?hg teams</a> commands.
+      </div>
+    </div>
+    <div class="question" id="disablehgteams">
+      <h1 class="Q">How do I turn off teams in HG?<a href="#disablehgteams" class="sectionLink">&#x1F517;</a></h1>
+      <div class="A">
+        To disable teams, set the `teamSize` option to 0.<br>
+        <a class="command" href="https://www.spikeybot.com/help/#hg_options">?hg opt teamSize 0</a><br>
+      </div>
+    </div>
+    <div class="question" id="disablecommand">
+      <h1 class="Q">What if I don't want someone to use a command?<a href="#disablecommand" class="sectionLink">&#x1F517;</a></h1>
+      <div class="A">
+        All permissions for commands are managed using the <a class="command" href="https://www.spikeybot.com/help/#enable">enable</a>, <a class="command" href="https://www.spikeybot.com/help/#disable">disable</a>, and <a class="command" href="https://www.spikeybot.com/help/#show">show</a> commands.<br>
+        To prevent someone from using a command, they cannot have any of the permissions in the "allowed with" section, or they can have any blocking permissions in the "blocked for" section.<br>
+        <br>
+        If any permission is matched in the "allowed with" section, they will have access to the command.<br>
+        If no permission is matched in the "allowed with" section, they will not have access to the command.<br>
+        If any permission is matched in the "blocked for" section, they will not have access to the command.<br>
+        If no permission is matched in the "blocked for" section, they will have access to the command.<br>
+        <br>
+        To change "allowed with" to "blocked for" or vice versa, use <a class="command" href="https://www.spikeybot.com/help/#disable">?disable {COMMAND} everyone</a> or <a class="command" href="https://www.spikeybot.com/help/#enable">?enable {COMMAND} everyone</a> respectively.<br>
+      </div>
+    </div>
+    <div class="question" id="hgperms">
+      <h1 class="Q">How do I allow other users to use Hunger Games commands?<a href="#hgperms" class="sectionLink">&#x1F517;</a></h1>
+      <div class="A">
+        All permissions for commands are managed using the <a class="command" href="https://www.spikeybot.com/help/#enable">enable</a>, <a class="command" href="https://www.spikeybot.com/help/#disable">disable</a>, and <a class="command" href="https://www.spikeybot.com/help/#show">show</a> commands.<br>
+        Most cases you can just type <a class="command">?enable hg * * @SpikeyRobot#0001</a>, where SpikeyRobot is the user to let manage the Games.<br>
+        <br>
+        These can be confusing to use. If you still need help after reading the examples, feel free to join the <a href="https://discord.gg/u6U2WRD">Discord server</a> to ask for help (or use the <a class="command" href="https://www.spikeybot.com/help/#pmspikey">pmspikey</a> command).
+      </div>
+    </div>
+    <div class="question" id="whichmath">
+      <h1 class="Q">Which command do I use to solve my math problem?<a href="#whichmath" class="sectionLink">&#x1F517;</a></h1>
+      <div class="A">
+        <a class="command" href="https://www.spikeybot.com/help/#evaluate">?eval</a> will probably be the most common one to use. It does math, and converts units, but does not work with variables/algebra.<br>
+        <a class="command" href="https://www.spikeybot.com/help/#solve">?solve</a> can solve for multiple variables in an equation and does algebra.
+      </div>
+    </div>
+    <div class="question" id="riggednumbers">
+      <h1 class="Q">Why does SpikeyBot reply with a random number after some messages?<a href="#riggednumbers" class="sectionLink">&#x1F517;</a></h1>
+      <div class="A">
+        SpikeyBot by default will count the number of times the word "rigged" has been said.<br>
+        This can be disabled using the <a class="command" href="https://www.spikeybot.com/help/#togglerigged">?togglerigged</a> command.<br>
+        <br>
+        This started as a joke due to people getting mad when they didn't win in HG.<br>
+      </div>
+    </div>
+    <div class="question" id="missingfeature">
+      <h1 class="Q">What do I do if something is broken or SpikeyBot doesn't do what I want?<a href="#missingfeature" class="sectionLink">&#x1F517;</a></h1>
+      <div class="A">
+        If anything is broken, or you want a new feature to be added, or you don't like the way something works, SpikeyRobot would love to hear your feedback.<br>
+        Let him know in the <a href="https://discord.gg/u6U2WRD">Discord server</a>, in a <a href="https://github.com/CampbellCrowley/SpikeyBot-Discord/issues/">GitHub issue</a>, in an <a href="mailto:features@spikeybot.com">email</a>, or using the <a href="https://www.spikeybot.com/help/#pmspikey" class="command">pmspikey</a> command.
+      </div>
+    </div>
+    <div class="question" id="all-data-private">
+      <h1 class="Q">Do you sell my data?<a href="#all-data-private" class="sectionLink">&#x1F517;</a></h1>
+      <div class="A">
+        No.<br>
+        <br>
+        All SpikeyBot data is kept private and is not shared with anyone.<br>
+        This website uses <a href="https://analytics.google.com/">Google Analytics</a>, <a href="http://google.com/adsense">Google Ads</a>, and <a href="https://www.cloudflare.com/">CloudFlare</a>.<br>
+        <a href="https://dialogflow.com/">Google Dialogflow</a> may be used for non-command DMs and non-command mentions on SpikeyBot.<br>
+        SpikeyBot is hosted on <a href="https://www.digitalocean.com/">DigitalOcean</a> as well as custom hardware.<br>
+        <br>
+        Your privacy and security is extremely important and will be respected.<br>
+        If you have any questions or concerns, please contact SpikeyRobot (Campbell Crowley) via the email at the bottom of this page, Discord, Github, or any other way you know how.
+      </div>
+    </div>
+  </div>
+  <div id="mainfooter"></div>
+</div>
+</div>
+</div>

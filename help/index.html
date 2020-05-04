@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<!-- Copyright 2019-2020 Campbell Crowley. All rights reserved. -->
+<!-- Author: Campbell Crowley (web@campbellcrowley.com) -->
+<html lang="en">
+<head>
+
+  <title>Help and Commands - SpikeyBot - Discord Bot</title>
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <meta name="description" content="SpikeyRobot's Discord Bot's Help and Commands"/>
+  <meta name="keywords" content="Campbell,Crowley,Spikey,SpikeyBot,Discord,SpikeyRobot,Hunger,Games,Bot,help,commands"/>
+  <meta name="author" content="Campbell Crowley"/>
+  <meta name="revised" content="Campbell Crowley, March 31, 2020"/>
+  <meta name="charset" content="utf-8"/>
+
+<style></style>
+<style>
+.line {
+  box-shadow: 2px 7px 20px rgba(0, 0, 0, 0.5), -2px 7px 20px rgba(0, 0, 0, 0.5);
+}
+.contentsection {
+  background: white;
+  text-align: center;
+}
+.transparentcontent2 {
+  background-color: transparent;
+  text-align: center;
+  box-shadow: none;
+  margin-top: 25px;
+}
+#helpTOC {
+  text-align: center;
+  background: #36393F;
+  margin: -14px;
+  color: #DDD;
+  text-align: center;
+}
+#helpTOC *:visited {
+  color: #DDD;
+}
+#helpTOC *:hover {
+  color: #FFF;
+}
+#sidebarTOC {
+  position: fixed;
+  left: 0;
+  top: 0;
+  color: #444;
+  opacity: 0;
+  transition: all 1.2s ease-in-out;
+  font-size: 0.85em;
+}
+#sidebarTOC * {
+  background: transparent;
+  color: #444;
+  display: block;
+  max-height: 1000px;
+  max-height: 100vh;
+  transition: all 0.5s ease-in-out, color;
+}
+#sidebarTOC *:visited {
+  color: #444;
+}
+#sidebarTOC *:hover {
+  color: #666;
+}
+#sidebarTOC .folded * {
+  max-height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+#sidebarTOC #helpTOC {
+  margin: 0;
+}
+#scrollToTop {
+  position: fixed;
+  bottom: 25px;
+  left: 1600px;
+  width: 50px;
+  height: 50px;
+  font-size: 4em;
+  color: #18191C;
+  background: #36393F;
+  cursor: pointer;
+  transition: all 0.5s ease-in-out, color;
+  border-radius: 50%;
+  text-align: center;
+}
+#scrollToTop:hover {
+  background: #444;
+}
+.toc1 {
+  color: #DDD;
+  text-align: left;
+  text-align-last: left;
+  vertical-align: top;
+  font-size: 1.25em;
+  margin: 4px;
+  width: 205px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+}
+.toc1 .title {
+  text-decoration: underline;
+}
+.toc2 {
+  color: #DDD;
+  font-size: 0.90em;
+  margin: 0;
+  padding-left: 1em;
+  text-decoration: none;
+  display: block;
+}
+.toc3 {
+  color: #DDD;
+  font-size: 0.75em;
+  margin: 0;
+  padding-left: 1em;
+  text-decoration: none;
+  display: block;
+}
+#helpList {
+  text-align: justify;
+  border-bottom: 1px solid #bbb;
+  margin-bottom: 0;
+}
+#helpList ul {
+  list-style: none;
+}
+.commandListRow {
+  margin: 0.4em;
+}
+.commandInfo {
+  display: block;
+  color: #888;
+  margin-left: 2em;
+}
+.commandAlias {
+  display: block;
+  color: #FF50FF;
+  margin-left: 1em;
+}
+.commandText, .moduleHeader, .sectionTitle {
+  text-decoration: none;
+  color: black;
+  outline: none;
+}
+.commandText {
+  margin-bottom: 0;
+  color: #AAA;
+}
+.sectionLink {
+  font-size: 0.75em;
+  margin-left: 0.25em;
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.1s ease-in-out;
+}
+.commandText:hover .sectionLink, .moduleHeader:hover .sectionLink, .sectionTitle:hover .sectionLink {
+  opacity: 1;
+}
+.moduleHeader {
+  display: block;
+  font-size: 1.5em;
+  font-weight: bold;
+  border-bottom: 1px solid #8f8;
+}
+.sectionTitle {
+  display: block;
+  font-size: 1.17em;
+  font-weight: bold;
+}
+.commandList {
+  text-align: left;
+  text-shadow: 0 0 0;
+  background: #36393F;
+  color: #AAA;
+  margin: 0 -18px;
+}
+.commandList a:-webkit-any-link {
+  /* color: #0096cf; */
+  color: #1ec1ff;
+  text-decoration: none;
+}
+.commandList a:-webkit-any-link:hover {
+  text-decoration: underline;
+}
+.exampleParent {
+  margin: 2em;
+  margin-top: 1em;
+  padding: 0.5em;
+  box-shadow: 0px 0px 5px rgba(255, 0, 255, 0.1), 0px 0px 5px rgba(255, 0, 255, 0.1);
+}
+.exampleParentTitle {
+  font-weight: bold;
+}
+.example {
+  margin-bottom: 0.75em;
+  box-shadow: 0px 0px 5px rgba(0, 255, 0, 0.1), 0px 0px 5px rgba(0, 255, 0, 0.1);
+}
+.exampleDescription {
+  margin-bottom: 0.5em;
+  font-style: italic;
+  color: #0F0;
+  background: #18191C;
+  padding: 4px;
+  border-radius: 4px;
+  border-left: 3px solid;
+}
+.exampleCommandParent, .exampleResultParent {
+  padding-left: 5px;
+  border-left: 3px solid #CCCCCC;
+}
+.exampleCommand {
+  background: #2f3136;
+  color: #839496;
+  border-radius: 4px;
+  border: 1px solid rgba(32,34,37,.3);
+  display: inline-block;
+  vertical-align: top;
+  padding: 4px;
+  font-family: 'Ubuntu Mono', monospace;
+}
+.exampleResult img {
+  max-width: 100%;
+}
+.exampleCodeBlock {
+  display: inline-block;
+  background: #2f3136;
+  color: #839496;
+  border-radius: 0.6em;
+  border: 1px solid rgba(32,34,37,.3);
+  font-family: 'Ubuntu Mono', monospace;
+  padding: 6px;
+}
+.exampleCodeLine {
+  display: inline-block;
+  background: #2f3136;
+  border-radius: 3px;
+  font-family: 'Ubuntu Mono', monospace;
+  padding: 0.2em;
+  margin: -0.2em 0;
+  font-size: 0.85em;
+}
+#copyright {
+  text-align: center;
+  font-size: 0.8em;
+}
+#patreonRow {
+  text-align: right;
+  position: relative;
+  display: block;
+  height: 35px;
+}
+#patreonButton {
+  position: relative;
+  display: block;
+  margin-left: auto;
+  width: 175px;
+  height: 100%;
+  bottom: 0;
+  overflow: hidden;
+}
+#patreonStatus {
+  position: absolute;
+  left: 0;
+  top: 0;
+  margin-left: 4px;
+  text-align: left;
+  width: 50%;
+  width: calc(100% - 175px - 8px);
+  height: 100%;
+  height: calc(100% - 3px);
+}
+#patreonProgress, #patreonProgressBack {
+  position: absolute;
+  height: 100%;
+  border-radius: 17px;
+  background: #E85B46;
+  border: 1px solid black;
+}
+#patreonProgress {
+  width: 0px;
+  max-width: 100%;
+  transition: width ease-in-out 5s;
+  transition: width cubic-bezier(0.25, 0, 0, 1) 5s;
+}
+#patreonProgressBack {
+  padding-top: 7px;
+  height: calc(100% - 7px);
+  background: transparent;
+  font-weight: bold;
+  text-align: center;
+  width: 100%;
+}
+#patreonThanks {
+  padding-right: 1em;
+  position: absolute;
+  right: 0;
+  max-width: 175px;
+  font-style: italic;
+}
+#patreonRow .hidden {
+  display: none;
+}
+.alert {
+  background: rgba(65, 40, 40, 1);
+}
+.alert a:link {
+  color: #00b0f4;
+}
+@media screen and (max-width: 550px) {
+  #helpTOC {
+    text-align: justify;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+<div id="maincontent">
+<div id="content">
+  <div id="mainheader"></div>
+  <div id="patreonRow">
+    <div id="patreonButton">
+      <a href="https://www.patreon.com/bePatron?u=12105522" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async defer src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
+    </div>
+    <div id="patreonStatus" class="">
+      <span id="patreonProgress"></span>
+      <span id="patreonProgressBack"></span>
+    </div>
+    <div id="patreonThanks" class="hidden">
+      <a>Thank you for supporting SpikeyBot!</a>
+    </div>
+  </div>
+  <div id="sidebarTOC"></div>
+  <div id="scrollToTop" title="Scroll to top of page">^</div>
+  <div class="contentsection transparentcontent">
+    <h1>SpikeyBot</h1>
+    <div class="line"></div>
+    <br>
+    <!-- <div class="contentsection greycontent alert">
+      <h1>Scheduled Downtime for Maintenance</h1>
+      <h2>Tuesday, November 5th</h2>
+      <h3>12pm to 1pm PST</h3>
+      <small id="localTime" style="display: none"></small>
+        <script>
+          const date = new Date('Tue Nov 05 2019 12:00:00 GMT-0800');
+          const end = new Date('Tue Nov 05 2019 13:00:00 GMT-0800');
+          if (date.getTimezoneOffset() != 480) {
+            const el = document.getElementById('localTime');
+            el.style.display = '';
+            el.appendChild(document.createTextNode(date.toDateString()));
+            el.appendChild(document.createElement('br'));
+            el.appendChild(document.createTextNode(date.toTimeString()));
+            el.appendChild(document.createTextNode(' to'));
+            el.appendChild(document.createElement('br'));
+            el.appendChild(document.createTextNode(end.toTimeString()));
+          }
+        </script>
+      <p>The bot may go offline during this period in order to perform necessary hardware upgrades. For more information, <a href="https://discord.gg/u6U2WRD">join our Discord server</a>.</p>
+    </div> -->
+    <br>
+    <div id="helpTOC" class="contentsection transparentcontent"></div>
+    <br>
+    <div class="contentsection transparentcontent">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+      <!-- HorizontalBar -->
+      <ins class="adsbygoogle" style="display:block;height:90px;width:100%" data-ad-client="ca-pub-8686819159582535" data-ad-slot="5269181276"></ins>
+      <script> (adsbygoogle = window.adsbygoogle || []).push({}); </script>
+    </div>
+    <div class="line"></div>
+    <div id="helpList" class="contentsection transparentcontent"></div>
+  </div>
+  <div id="mainfooter"></div>
+</div>
+</div>
+</div>
+<script async defer src="https://www.spikeybot.com/dev/patreonBar.js" type="text/javascript"></script>
+<script>
+(function() {
+const modules =
+    [ 'mainHelp.json', 'hgHelp.json', 'adminHelp.json', /*'musicHelp.json',*/
+      'searchHelp.json' ];
+var responses = 0;
+
+function fetchHelpObjects() {
+  for (var url of modules) {
+    requestFile(`https://www.spikeybot.com/dev/docs/${url}`);
+  }
+}
+fetchHelpObjects();
+
+var sidebar = document.getElementById('sidebarTOC');
+var scrollToTop = document.getElementById('scrollToTop');
+var sidebarAttached = document.getElementById('helpList');
+document.body.onscroll = onViewUpdate;
+document.body.onresize = onViewUpdate;
+onViewUpdate();
+
+scrollToTop.onclick = function() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+};
+
+function onViewUpdate() {
+  var wHeight = window.innerHeight || document.documentElement.clientHeight;
+  var wWidth = window.innerWidth || document.documentElement.clientWidth;
+
+  var bound = sidebarAttached.getBoundingClientRect();
+  var visible = wWidth > 1600 && bound.top <= 0;
+  sidebar.style.opacity = visible ? '1' : '0';
+  sidebar.style.pointerEvents = visible ? 'auto' : 'none';
+  scrollToTop.style.opacity = visible ? '1' : '0';
+  scrollToTop.style.pointerEvents = visible ? 'auto' : 'none';
+
+  scrollToTop.style.left = bound.width + bound.left + 50 + 'px';
+
+  (function checkVisible(children) {
+    if (!children) return;
+    for (var i in children) {
+      if (!children[i].classList) continue;
+      checkVisible(children[i].children);
+      var linkTo =
+          document.getElementById(children[i].href.replace(/^[^#]*#/, ''));
+      if (!linkTo) continue;
+      if (linkTo.classList.contains('sectionTitle')) {
+        linkTo = linkTo.nextSibling;
+      } else {
+        linkTo = linkTo.parentNode;
+      }
+      var bound = linkTo.getBoundingClientRect();
+      children[i].classList.toggle('folded',
+                                   bound.top > wHeight || bound.bottom < 0);
+    }
+  })(sidebar.children);
+}
+sidebar.innerHTML = '';
+
+function requestFile(url) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url);
+  xhr.setRequestHeader('Content-Type', 'text/json');
+  xhr.onload = function() {
+    responses++;
+    if (xhr.status != 200) {
+      console.log(xhr.status, xhr.response);
+    } else {
+      newHelpOpject(JSON.parse(xhr.responseText));
+    }
+    if (responses == modules.length) {
+      setTimeout(scrollToTag);
+    }
+  };
+  xhr.send();
+}
+
+var wrapper = document.getElementById('helpList');
+var toc = document.getElementById('helpTOC');
+toc.innerHTML = '';
+wrapper.innerHTML = '';
+function newHelpOpject(helpObj) {
+  console.log(helpObj);
+  var module = document.createElement('div');
+  var header = document.createElement('h1');
+  var postPrefix = (helpObj.prefix || '');
+  var prefix = '?' + postPrefix;
+
+  header.appendChild(document.createTextNode(helpObj.title));
+  header.id = makeId(helpObj.title);
+  header.classList.add('moduleHeader');
+  var headerLink = document.createElement('a');
+  headerLink.innerHTML = '&#x1F517;';
+  headerLink.href = '#' + header.id;
+  headerLink.classList.add('sectionLink');
+  header.appendChild(headerLink);
+  module.appendChild(header);
+
+  var tocUL = document.createElement('a');
+  tocUL.href = headerLink.href;
+  tocUL.classList.add('toc1');
+  var tocTitle = document.createElement('a');
+  tocTitle.textContent = helpObj.title;
+  tocTitle.classList.add('title');
+  tocUL.appendChild(tocTitle);
+
+  helpObj.sections.forEach(function(section) {
+    var title = document.createElement('h2');
+    title.innerHTML = section.title;
+    title.id = makeId(postPrefix + section.title);
+    title.classList.add('sectionTitle');
+    var titleLink = document.createElement('a');
+    titleLink.innerHTML = '&#x1F517;';
+    titleLink.href = '#' + title.id;
+    titleLink.classList.add('sectionLink');
+    title.appendChild(titleLink);
+    module.appendChild(title);
+
+    var tocUL2 = document.createElement('a');
+    tocUL2.href = titleLink.href;
+    tocUL2.classList.add('toc2');
+    tocUL2.appendChild(document.createTextNode(section.title));
+    tocUL.appendChild(tocUL2);
+
+    var list = document.createElement('ul');
+    list.classList.add('contentsection');
+    list.classList.add('commandList');
+    section.rows.forEach(function(row) {
+      var command = document.createElement('li');
+      command.classList.add('commandListRow');
+      var aliases = '';
+      var help = '';
+      var commandText = '';
+      var examples = [];
+
+      if (typeof row === 'string') {
+        var splitCmd = row.match(/(.*?) \/\/(.*?)$/)
+        var splitHelp = splitCmd[2].match(/([^\[]*?)\[([^\]]*?)\](.*?)/);
+        help = splitCmd[2];
+        if (splitHelp) {
+          aliases = splitHelp.splice(2, 1);
+          help = splitHelp.slice(1).join('');
+        }
+        commandText = splitCmd[1];
+      } else if (typeof row === 'object') {
+        commandText = row.command;
+        help = row.description;
+        aliases = row.aliases;
+        examples = row.examples;
+      }
+
+      var cmdText = document.createElement('h4');
+      cmdText.appendChild(document.createTextNode(
+          prefix + commandText.replace(/\{prefix\}/g, prefix)));
+      cmdText.id = makeId(postPrefix + commandText.match(/^\W*?[\w\s]*/));
+      cmdText.classList.add('commandText');
+      command.appendChild(cmdText);
+
+      var tocUL3 = document.createElement('a');
+      tocUL3.href = '#' + cmdText.id;
+      tocUL3.classList.add('toc3');
+      tocUL3.innerHTML = cmdText.innerHTML;
+      tocUL2.appendChild(tocUL3);
+
+      var cmdLink = document.createElement('a');
+      cmdLink.innerHTML = '&#x1F517;';
+      cmdLink.href = '#' + cmdText.id;
+      cmdLink.classList.add('sectionLink');
+      cmdText.appendChild(cmdLink);
+
+      if (aliases) {
+        var cmdAliases = document.createElement('a');
+        cmdAliases.classList.add('commandAlias');
+        cmdAliases.appendChild(document.createTextNode('Aliases: ' + aliases));
+        command.appendChild(cmdAliases);
+      }
+
+      var cmdHelp = document.createElement('a');
+      cmdHelp.classList.add('commandInfo');
+      cmdHelp.appendChild(document.createTextNode(help));
+      cmdHelp.innerHTML = formatURLs(cmdHelp.innerHTML);
+      command.appendChild(cmdHelp);
+
+      if (examples && examples.length > 0) {
+        command.appendChild(makeCommandExample(prefix, examples));
+      }
+
+      list.appendChild(command);
+    });
+    module.appendChild(list);
+  });
+
+  var before = wrapper.children.length;
+  for (var i = 0; i < wrapper.children.length; i++) {
+    console.log(i, module.innerHTML.substring(0, 20),
+                wrapper.children[i].innerHTML.substring(0, 20));
+    if (wrapper.children[i].innerHTML.localeCompare(module.innerHTML) > 0) {
+      before = i;
+      break;
+    }
+  }
+
+  wrapper.insertBefore(module, wrapper.children[before]);
+  toc.insertBefore(tocUL, toc.children[before]);
+  sidebar.insertBefore(tocUL.cloneNode(true), sidebar.children[before]);
+}
+
+function scrollToTag() {
+  var tag = document.URL.split('#')[1];
+  if (tag) {
+    var el = document.getElementById(tag);
+    if (el) {
+      el.scrollIntoView();
+
+      const color = '#fbff9e';
+      const initial = el.style.backgroundColor;
+      el.style.backgroundColor = color;
+      setTimeout(function() { el.style.backgroundColor = color; }, 100);
+      setTimeout(function() { el.style.backgroundColor = initial; }, 150);
+      setTimeout(function() { el.style.backgroundColor = color; }, 200);
+      setTimeout(function() { el.style.backgroundColor = initial; }, 250);
+      setTimeout(function() { el.style.backgroundColor = color; }, 300);
+      setTimeout(function() { el.style.backgroundColor = initial; }, 3000);
+      setTimeout(function() { el.style.backgroundColor = color; }, 3050);
+      setTimeout(function() { el.style.backgroundColor = initial; }, 3100);
+      setTimeout(function() { el.style.backgroundColor = color; }, 3150);
+      setTimeout(function() { el.style.backgroundColor = initial; }, 3250);
+    }
+  }
+};
+
+// Notice: Does not clean examples for HTML injection intentionally to allow for
+// more formatting freedom. Do not give unclean values to this function.
+function makeCommandExample(prefix, examples) {
+  var exampleParent = document.createElement('div');
+  exampleParent.classList.add('exampleParent');
+
+  var title  = document.createElement('div');
+  title.innerHTML = examples.length !== 1 ? 'Examples' : 'Example';
+  title.classList.add('exampleParentTitle');
+  exampleParent.appendChild(title);
+
+  for (var i = 0; i < examples.length; i++) {
+    var example = document.createElement('div');
+    example.classList.add('example');
+
+    var description = document.createElement('div');
+    description.classList.add('exampleDescription');
+    description.innerHTML = examples[i].description || '';
+    example.appendChild(description);
+
+    var commandParent = document.createElement('div');
+    commandParent.classList.add('exampleCommandParent');
+    var command = document.createElement('a');
+    command.classList.add('exampleCommand');
+    command.innerHTML = formatURLs(
+        prefix + examples[i].command.replace(/{prefix}/g, prefix) || '');
+
+    commandParent.appendChild(command);
+    example.appendChild(commandParent);
+
+    var resultParent = document.createElement('div');
+    resultParent.classList.add('exampleResultParent');
+    var result = document.createElement('a');
+    result.classList.add('exampleResult');
+    var formmattedResult = formatHTML(examples[i].result || '', prefix);
+    result.innerHTML = formmattedResult;
+
+    resultParent.appendChild(result);
+    example.appendChild(resultParent);
+
+    exampleParent.appendChild(example);
+  }
+
+  return exampleParent;
+}
+
+function formatHTML(txt, prefix) {
+  if (!prefix) prefix = '?';
+  return formatURLs(txt)
+      .replace(/\{prefix\}/g, prefix)
+      .replace(/```([^`]*)```/gm,
+               function(match, p1){
+                   return '<a class="exampleCodeBlock">' +
+                          document.createTextNode(p1).textContent + '</a>'})
+      .replace(/`([^`]*)`/gm,
+               function(match, p1){
+                   return '<a class="exampleCodeLine">' +
+                          document.createTextNode(p1).textContent + '</a>'});
+}
+
+function formatURLs(txt) {
+  const r = new RegExp(
+      '(http(s)?:\\/\\/.)?(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6' +
+          '}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)(?![^<]*>)',
+      'g');
+  return txt.replace(r, function(m, one, two, three) {
+    var suffix = '';
+    var hrefPre = '';
+    var hrefPost = '';
+    if (m.endsWith('.')) {
+      m = m.substring(0, m.length - 1);
+      suffix = '.';
+    }
+    if (!one) hrefPre = 'https://';
+    if (m.toLowerCase() == 'discord.js') hrefPost = '.org';
+    var out = `<a href="${hrefPre}${m}${hrefPost}">${m}</a>${suffix}`;
+    console.log(m, '-->', out);
+    return out;
+  });
+}
+
+function makeId(title) {
+  return encodeURIComponent(title.replace(/\s/g, '_'));
+}
+
+})();
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-89923351-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>
