@@ -1,0 +1,61 @@
+<ol class="pageList" vocab="http://schema.org/" typeof="BreadcrumbList">
+    <li property="itemListElement" typeof="ListItem">
+      <a id="homeTab" class="pageTab" href="https://www.spikeybot.com/index.html" property="item" typeof="WebPage"><img alt="SB Icon" src="https://www.spikeybot.com/SBIconCropped-128.png" style="height:1em;" /></a>
+      <meta property="name" content="Home Page">
+      <meta property="position" content="1">
+    </li>
+    <li property="itemListElement" typeof="ListItem">
+      <a id="helpTab" class="pageTab" href="https://www.spikeybot.com/help/" property="item" typeof="WebPage">Commands</a>
+      <meta property="name" content="Help for bot commands and how to use the bot.">
+      <meta property="position" content="2">
+    </li>
+    <li property="itemListElement" typeof="ListItem">
+      <a id="faqTab" class="pageTab" href="https://www.spikeybot.com/faq/" property="item" typeof="WebPage">FAQs</a>
+      <meta property="name" content="Frequently Asked Questions and other help">
+      <meta property="position" content="2">
+    </li>
+    <li property="itemListElement" typeof="ListItem" class="nounderline">
+      <a id="inviteTab" class="pageTab" href="https://www.spikeybot.com/invite/" property="item" typeof="WebPage">Invite SpikeyBot</a>
+      <meta property="name" content="Invite SpikeyBot to your Discord server">
+      <meta property="position" content="2">
+    </li>
+    <li property="itemListElement" typeof="ListItem" class="nounderline">
+      <a id="joinTab" class="pageTab" href="https://discord.gg/u6U2WRD" property="item" typeof="WebPage">Get Human Help</a>
+      <meta property="name" content="Join the SpikeyBot suport Discord server">
+      <meta property="position" content="2">
+    </li>
+    <li class="menuDropdownParent">
+      <ol class="menuDropdownContainer">
+        <li class="menuDropdownRow menuDropdownTitle">
+          <a class="pageTab" href="#">Bot Web Interface ▼</a>
+        </li>
+        <li class="menuDropdownRow" property="itemListElement" typeof="ListItem">
+          <a id="hgTab" class="pageTab" href="https://www.spikeybot.com/hg/" property="item" typeof="WebPage">Hungry Games</a>
+          <meta property="name" content="Hungry Games Webview and Control">
+          <meta property="position" content="3">
+        </li>
+        <li class="menuDropdownRow" property="itemListElement" typeof="ListItem">
+          <a id="controlTab" class="pageTab" href="https://www.spikeybot.com/control/" property="item" typeof="WebPage">Admin Settings</a>
+          <meta property="name" content="SpikeyBot Settings and Bot Control">
+          <meta property="position" content="3">
+        </li>
+        <li class="menuDropdownRow" property="itemListElement" typeof="ListItem">
+          <a id="accountTab" class="pageTab" href="https://www.spikeybot.com/account/" property="item" typeof="WebPage">Account Settings</a>
+          <meta property="name" content="Account Management and Settings">
+          <meta property="position" content="3">
+        </li>
+      </ol>
+    </li>
+  </ol>
+  <script>
+    if (!location.pathname.match(/\/[^.]*\.\w*$|\/$/)) {
+      history.replaceState(null, null, location.origin + location.pathname +
+                             '/' + location.search + location.hash);
+    }
+    var links = document.getElementsByClassName('pageTab');
+    for (var i in links) {
+      if (links[i] && links[i].href == location.origin + location.pathname) {
+        links[i].parentNode.classList.add('currentPageTab');
+      }
+    }
+  </script>

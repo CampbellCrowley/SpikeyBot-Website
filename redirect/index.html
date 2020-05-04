@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- Copyright 2019 Campbell Crowley. All rights reserved. -->
+<!-- Author: Campbell Crowley (web@campbellcrowley.com) -->
+<html lang="en">
+<head>
+  <title>Login Redirect - SpikeyBot</title>
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <meta name="description" content="Login landing page after granting permission"/>
+  <meta name="author" content="Campbell Crowley"/>
+  <meta name="revised" content="Campbell Crowley, 12/31/18"/>
+</head>
+<body style="background-color: #18191C; color: white;">
+<div class="container">
+<div id="maincontent">
+<div id="content">
+  <a id="text">Redirected</a>
+</div>
+</div>
+</div>
+<script>
+(function() {
+var content = document.getElementById('content');
+var queryString = document.URL.split('?')[1].split('#')[0].split('&');
+var queries = {};
+for (var i in queryString) {
+  var split = queryString[i].split('=');
+  queries[split[0]] = split[1];
+}
+var newText = document.createElement('p');
+newText.appendChild(document.createTextNode(queries.code));
+content.appendChild(newText);
+queries.state = decodeURIComponent(queries.state || '');
+
+const stateExempt = [ 'dev/welcome1', 'welcome1' ];
+const exempt = stateExempt.includes(queries.state);
+
+var successText = document.createElement('h1');
+const state = exempt ? queries.state : getCookie('state');
+setCookie('state', '', 0);
+newText.innerHTML =
+    queries.state == state
+        ? 'Success! Returning to your page in just a moment...'
+        : 'FAILED! Something went wrong, and I don\'t know what to do...';
+
+if (state === queries.state) {
+  const redirect = `${state.match(/^[^0-9]*/)[0]}/`;
+
+  setCookie('code', queries.code, undefined,
+            redirect.startsWith('dev/') ? '/dev/' : '/');
+
+  const href = `https://www.spikeybot.com/${redirect}`;
+
+  window.location.href = href;
+  setTimeout(() => {
+    window.location.href = href;
+    newText.innerHTML =
+        'Click here if you do not get redirected automatically.';
+    newText.href = href;
+  }, 3000);
+} else {
+  console.error(state, 'does not match', queries.state);
+}
+
+function setCookie(name, value, expiresAt, path = '/') {
+  var d = new Date(expiresAt);
+  var expires = `expires=${d.toUTCString()}`;
+  document.cookie = `${name}=${value};${expires};path=${path};secure`;
+}
+function getCookie(name) {
+  name += '=';
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return '';
+}
+})();
+</script>
+<script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+ga('create', 'UA-89923351-1', 'auto');
+ga('send', 'pageview');
+</script>
+</body>
+</html>

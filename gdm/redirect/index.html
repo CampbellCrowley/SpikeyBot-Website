@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<!-- Copyright 2018 Campbell Crowley. All rights reserved. -->
+<!-- Author: Campbell Crowley (web@campbellcrowley.com) -->
+<html lang="en">
+<head>
+  <title>GDM Redirect - SpikeyBot</title>
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <meta name="description" content="Login landing page after granting permission for GDMs"/>
+  <meta name="author" content="Campbell Crowley"/>
+  <meta name="revised" content="Campbell Crowley, 06/13/18"/>
+</style>
+</head>
+<body>
+<div class="container">
+<div id="maincontent">
+<div id="content">
+  <a id="text">Authenticating...</a>
+</div>
+</div>
+</div>
+<script>
+(function() {
+var content = document.getElementById('content');
+var code = getCookie('code');
+setCookie('code', '', 0);
+if (!code) {
+  content.innerHTML = 'No code.';
+  return;
+}
+function sendRequest() {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://www.spikeybot.com/gdm/code/');
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+  xhr.onload = function() { onResponse(xhr); };
+  xhr.send(JSON.stringify({code: code}));
+}
+sendRequest();
+
+function onResponse(xhr) {
+  console.log(xhr.response);
+  var successText = document.createElement('h1');
+  if (xhr.status == 200) {
+    successText.innerHTML =
+        'Success! You may close this page now, and use SpikeyBot to ' +
+        'create Group DMs!';
+  } else {
+    successText.appendChild(
+        document.createTextNode('FAILED to authenticate: ' + xhr.responseText));
+  }
+  content.innerHTML = '';
+  content.appendChild(successText);
+}
+
+function setCookie(name, value, expiresAt) {
+  var d = new Date(expiresAt);
+  var expires = "expires=" + d.toUTCString();
+  document.cookie = name + "=" + value + ";" + expires + ";path=/;secure";
+}
+function getCookie(name) {
+  name += "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+})();
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-89923351-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>

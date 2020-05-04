@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!-- Copyright 2018 Campbell Crowley. All rights reserved. -->
+<!-- Author: Campbell Crowley (web@campbellcrowley.com) -->
+<html lang="en">
+<head>
+  <title>GDM Auth Entry - SpikeyBot</title>
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <meta name="description" content="Login landing page before granting permission for GDMs"/>
+  <meta name="author" content="Campbell Crowley"/>
+  <meta name="revised" content="Campbell Crowley, 06/13/18"/>
+</style>
+</head>
+<body>
+<div class="container">
+<div id="maincontent">
+<div id="content">
+  <a id="text">Redirecting...</a>
+</div>
+</div>
+</div>
+<script>
+(function() {
+const state = 'gdm/redirect' + Math.random() * 10000000000000000;
+setCookie('state', state, Date.now() + 5 * 1000 * 60);
+window.location.href =
+    'https://discordapp.com/oauth2/authorize?client_id=318552464356016131&' +
+    'redirect_uri=https%3A%2F%2Fwww.spikeybot.com%2Fredirect&response_type=' +
+    'code&scope=gdm.join%20identify&state=' + state;
+
+function setCookie(name, value, expiresAt) {
+  var d = new Date(expiresAt);
+  var expires = "expires=" + d.toUTCString();
+  document.cookie = name + "=" + value + ";" + expires + ";path=/;secure";
+}
+})();
+</script>
