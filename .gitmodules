@@ -1,0 +1,4 @@
+[submodule "dev"]
+	path = dev
+	url = git@github.com:CampbellCrowley/SpikeyBot-Website.git
+	branch = dev
