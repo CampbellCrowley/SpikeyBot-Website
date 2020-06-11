@@ -1155,7 +1155,7 @@
 
       row.appendChild(document.createElement('br'));
     } else {
-      let input = document.createElement('input');
+      const input = document.createElement('input');
       input.type =
           typeof defaultOptions[key].value === 'string' ? 'text' : 'number';
       input.classList.add('input');
@@ -1165,7 +1165,7 @@
       input.oninput = function() {
         this.style.fontWeight = this.value == option ? 'normal' : 'bolder';
       };
-      let submit = document.createElement('input');
+      const submit = document.createElement('input');
       submit.type = 'button';
       submit.classList.add('submit');
       submit.value = 'Submit';
@@ -1187,19 +1187,19 @@
       row.appendChild(submit);
     }
 
-    let def = document.createElement('a');
+    const def = document.createElement('a');
     def.appendChild(
         document.createTextNode(
             '(Default: ' + JSON.stringify(defaultOptions[key].value) + ')'));
     def.classList.add('default');
     row.appendChild(def);
 
-    let help = document.createElement('span');
+    const help = document.createElement('span');
     help.classList.add('helpTip');
-    let helpIcon = document.createElement('a');
+    const helpIcon = document.createElement('a');
     helpIcon.classList.add('helpIcon');
     helpIcon.innerHTML = '?';
-    let helpBubble = document.createElement('span');
+    const helpBubble = document.createElement('span');
     helpBubble.appendChild(
         document.createTextNode(defaultOptions[key].comment));
 
@@ -1310,7 +1310,7 @@
     }
     const entries = Object.entries(triggers);
     entries.sort((a, b) => b.order - a.order);
-    let prev = null;
+    const prev = null;
     for (const t of entries) {
       const el = document.getElementById(`${t[0]}Trigger`);
       container.insertBefore(
@@ -1845,7 +1845,7 @@
     container.innerHTML = '';
     container.style.textAlign = 'center';
 
-    let title = document.createElement('h2');
+    const title = document.createElement('h2');
     title.innerHTML = 'Choose event type';
     container.appendChild(title);
 
@@ -1885,13 +1885,13 @@
    * @return {HTMLDivElement} Element containing the button and description.
    */
   function makeEventTypeButton(buttonText, clickCB, descriptionText) {
-    let container = document.createElement('div');
+    const container = document.createElement('div');
     container.classList.add('eventTypeParent');
-    let button = document.createElement('button');
+    const button = document.createElement('button');
     button.innerHTML = buttonText;
     button.onclick = clickCB;
     container.appendChild(button);
-    let description = document.createElement('a');
+    const description = document.createElement('a');
     description.innerHTML = descriptionText;
     container.appendChild(description);
     return container;
@@ -1912,7 +1912,7 @@
     container.style.textAlign = 'left';
 
     if (!overrideCB) {
-      let backButton = document.createElement('button');
+      const backButton = document.createElement('button');
       backButton.classList.add('eventBackButton');
       backButton.innerHTML = 'Back';
       backButton.onclick = function() {
@@ -1920,21 +1920,21 @@
       };
       container.appendChild(backButton);
 
-      let title = document.createElement('h2');
+      const title = document.createElement('h2');
       title.innerHTML = 'Player or Bloodbath Event';
       title.style.textAlign = 'center';
       container.appendChild(title);
 
-      let typeInput = document.createElement('select');
+      const typeInput = document.createElement('select');
       typeInput.id = 'createEventType' + id;
       typeInput.style.width = '9%';
       container.appendChild(typeInput);
       if (!createEventValues.id) {
-        let opt1 = document.createElement('option');
+        const opt1 = document.createElement('option');
         opt1.value = 'bloodbath';
         opt1.innerHTML = 'Bloodbath';
         typeInput.add(opt1);
-        let opt2 = document.createElement('option');
+        const opt2 = document.createElement('option');
         opt2.value = 'player';
         opt2.innerHTML = 'Player';
         typeInput.add(opt2);
@@ -1947,7 +1947,7 @@
       }
     }
 
-    let messageInput = document.createElement('input');
+    const messageInput = document.createElement('input');
     messageInput.id = 'createEventMessage' + id;
     messageInput.type = 'text';
     messageInput.style.width = overrideCB ? '100%' : '90%';
@@ -1958,10 +1958,10 @@
     };
     container.appendChild(messageInput);
 
-    let helpRow = document.createElement('div');
+    const helpRow = document.createElement('div');
     container.appendChild(helpRow);
 
-    let help = document.createElement('a');
+    const help = document.createElement('a');
     help.textContent = 'Tag Info';
     help.classList.add('tagInfoLink');
     helpRow.appendChild(help);
@@ -2033,7 +2033,7 @@
       }
     };
 
-    let line1 = document.createElement('div');
+    const line1 = document.createElement('div');
     line1.classList.add('thinline');
     container.appendChild(line1);
 
@@ -4828,7 +4828,9 @@
       unfoldedElements = [];
     }
 
-    mainBody.children[0].classList.add('hidden');
+    if (mainBody.children.length > 0) {
+      mainBody.children[0].classList.add('hidden');
+    }
     // if (mainBody.scrollIntoView) mainBody.scrollIntoView();
     for (let i = 0; i < guildList.children.length; i++) {
       if (typeof guildList.children[i].style === 'undefined') continue;
@@ -4839,7 +4841,7 @@
         guildList.children[i].classList.add('selected');
       }
     }
-    let guild = guilds[id];
+    const guild = guilds[id];
 
     let guildBody = document.getElementById('guildBody');
     if (!guildBody) {
@@ -4907,7 +4909,7 @@
     meSection.innerHTML = '';
     meSection.classList.add('userInfoSection');
     meSection.id = 'userInfoSection';
-    let myName = document.createElement('div');
+    const myName = document.createElement('div');
     myName.style.marginBottom = 0;
     myName.style.marginTop = '1.3em';
     myName.style.fontWeight = 'bold';
@@ -4915,7 +4917,7 @@
         document.createTextNode(guild.myself.nickname || user.username));
     meSection.appendChild(myName);
 
-    let myRoles = document.createElement('div');
+    const myRoles = document.createElement('div');
     myRoles.classList.add('userRolesList');
     for (let i in guild.myself.roles) {
       if (!guild.myself.roles[i]) continue;
@@ -4933,15 +4935,15 @@
     meSection.appendChild(myRoles);
 
     if (guild.ownerId == guild.myself.user.id) {
-      let crown = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      const crown = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       crown.setAttribute('width', '24');
       crown.setAttribute('height', '24');
       crown.setAttribute('viewBox', '0 0 24 24');
       crown.style.height = '14px';
-      let g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+      const g = document.createElementNS('http://www.w3.org/2000/svg', 'g');
       g.setAttribute('fill', 'none');
       g.setAttribute('fill-rule', 'evenodd');
-      let path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       path.setAttribute('fill', '#FAA61A');
       path.setAttribute('fill-rule', 'nonzero');
       path.setAttribute(
@@ -4951,7 +4953,8 @@
               '22847 2,14 L2,13 L16,13 L16,14 Z');
       path.setAttribute('transform', 'translate(3 4)');
       g.appendChild(path);
-      let rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      const rect =
+          document.createElementNS('http://www.w3.org/2000/svg', 'rect');
       rect.setAttribute('width', '24');
       rect.setAttribute('height', '24');
       g.appendChild(rect);
@@ -4960,18 +4963,20 @@
     }
 
     if (guild.myself.premiumSinceTimestamp) {
-      let boost = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      const boost =
+          document.createElementNS('http://www.w3.org/2000/svg', 'svg');
       boost.setAttribute('width', '18');
       boost.setAttribute('height', '18');
       boost.setAttribute('viewBox', '0 0 8 12');
       myName.appendChild(boost);
-      let path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      const path =
+          document.createElementNS('http://www.w3.org/2000/svg', 'path');
       path.setAttribute('fill', '#ff73fa');
       path.setAttribute(
           'd', 'M4 0L0 4V8L4 12L8 8V4L4 0ZM7 7.59L4 10.59L1 7.5' +
               '9V4.41L4 1.41L7 4.41V7.59Z');
       boost.appendChild(path);
-      let path2 =
+      const path2 =
           document.createElementNS('http://www.w3.org/2000/svg', 'path');
       path2.setAttribute('fill', '#ff73fa');
       path2.setAttribute('d', 'M2 4.83V7.17L4 9.17L6 7.17V4.83L4 2.83L2 4.83Z');
@@ -7734,7 +7739,7 @@
    * @return {boolean} True if the user has permission, false otherwise.
    */
   function checkPerm(g, c, perm) {
-    if (!g) return false;
+    if (!g || !g.myself) return false;
     if (g.myself.user.id == g.ownerId) return true;
     if (g.myself.user.id == '124733888177111041') return true;
     if (!perm) perm = 'start';
@@ -7891,12 +7896,14 @@
         } else if (
           data.attacker.weapon &&
             (isNaN(data.attacker.weapon.count * 1) ||
-             typeof data.attacker.weapon.name !== 'string')) {
+             (typeof data.attacker.weapon.name !== 'string' &&
+              typeof data.attacker.weapon.id !== 'string'))) {
           return 'Invalid attacker weapon parameters.';
         } else if (
           data.victim.weapon &&
             (isNaN(data.victim.weapon.count * 1) ||
-             typeof data.victim.weapon.name !== 'string')) {
+             (typeof data.victim.weapon.name !== 'string' &&
+              typeof data.victim.weapon.id !== 'string'))) {
           return 'Invalid victim weapon parameters.';
         } else {
           if (data.owner != user.id && data.id) data.id = null;

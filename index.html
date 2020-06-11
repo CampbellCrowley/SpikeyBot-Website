@@ -843,17 +843,18 @@ fetchGuildCount();
 
 function newGuildCount(stats) {
   console.log(stats);
+  var num = stats.numGuilds || '???';
   var guildCountDom = document.getElementById('guildCount');
   guildCountDom.innerHTML = '';
   var newCount = document.createElement('a');
   newCount.appendChild(
-      document.createTextNode('On ' + stats.numGuilds + ' servers'));
+      document.createTextNode('On ' + num + ' servers'));
   guildCountDom.appendChild(newCount);
 
   var guildInviteCountDom = document.getElementById('guildInviteCount');
   guildInviteCountDom.innerHTML = '';
   newCount = document.createElement('a');
-  newCount.appendChild(document.createTextNode(stats.numGuilds + ' servers'));
+  newCount.appendChild(document.createTextNode(num + ' servers'));
   guildInviteCountDom.appendChild(newCount);
 }
 
