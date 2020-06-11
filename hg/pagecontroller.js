@@ -4856,7 +4856,9 @@
       unfoldedElements = [];
     }
 
-    mainBody.children[0].classList.add('hidden');
+    if (mainBody.children.length > 0) {
+      mainBody.children[0].classList.add('hidden');
+    }
     // if (mainBody.scrollIntoView) mainBody.scrollIntoView();
     for (let i = 0; i < guildList.children.length; i++) {
       if (typeof guildList.children[i].style === 'undefined') continue;
@@ -8052,7 +8054,7 @@
    * @return {boolean} True if the user has permission, false otherwise.
    */
   function checkPerm(g, c, perm) {
-    if (!g) return false;
+    if (!g || !g.myself) return false;
     if (g.myself.user.id == g.ownerId) return true;
     if (g.myself.user.id == '124733888177111041') return true;
     if (!perm) perm = 'start';
@@ -8209,12 +8211,14 @@
         } else if (
           data.attacker.weapon &&
             (isNaN(data.attacker.weapon.count * 1) ||
-             typeof data.attacker.weapon.name !== 'string')) {
+             (typeof data.attacker.weapon.name !== 'string' &&
+              typeof data.attacker.weapon.id !== 'string'))) {
           return 'Invalid attacker weapon parameters.';
         } else if (
           data.victim.weapon &&
             (isNaN(data.victim.weapon.count * 1) ||
-             typeof data.victim.weapon.name !== 'string')) {
+             (typeof data.victim.weapon.name !== 'string' &&
+              typeof data.victim.weapon.id !== 'string'))) {
           return 'Invalid victim weapon parameters.';
         } else {
           if (data.owner != user.id && data.id) data.id = null;

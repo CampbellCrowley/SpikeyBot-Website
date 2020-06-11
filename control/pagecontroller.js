@@ -1146,7 +1146,7 @@
     };
 
     for (let i in s) {
-      if (i == 'channel') continue;
+      if (['channel', '_updated'].includes(i)) continue;
       const toggleRow = document.createElement('div');
       container.appendChild(toggleRow);
       toggleRow.classList.add('toggleParent');
