@@ -3,6 +3,9 @@
 
 (function() {
   console.warn('Page Version: %FILE_MODIFIED_TIMESTAMP%');
+  document.getElementById('copyright').innerHTML +=
+      '<br><small>Last Modified: %FILE_MODIFIED_TIMESTAMP%</small>';
+
   const authorizeUrl =
       'https://discordapp.com/api/oauth2/authorize?client_id=4442935347204587' +
       '53&redirect_uri=https%3A%2F%2Fwww.spikeybot.com%2Fredirect&response_ty' +
@@ -196,7 +199,11 @@
         logout();
       } else {
         // console.log('Authorized:', data);
-        console.log('Authorized:', data.username, data);
+        console.log(
+            'Authorized:', data.username,
+            Object.assign(
+                Object.assign({}, data),
+                {session: 'REDACTED', sessionId: 'REDACTED'}));
         setCookie('code', '', 0);
         setCookie(
             'session', data.sessionId, data.sessionExpirationDate,
@@ -547,32 +554,25 @@
   function handleChannel(guildId, channelId, channel) {
     channels[channelId] = channel;
     const doms = document.getElementsByClassName(channelId);
-    for (let i in doms) {
-      if (!doms[i]) continue;
-      doms[i].innerHTML = '';
-      if (doms[i].appendChild) {
-        if (channel.type === 'text') {
-          doms[i].appendChild(document.createTextNode(channel.name));
-          doms[i].innerHTML = '&#65283;' + doms[i].innerHTML;
-          const sI = doms[i].parentNode.selectedIndex;
-          if (sI >= 0 && doms[i].parentNode.children[sI].disabled) {
-            doms[i].parentNode.value = channelId;
-          }
-        } else if (channel.type === 'category') {
-          doms[i].appendChild(document.createTextNode(channel.name));
-          doms[i].disabled = true;
-          doms[i].style.background = 'darkgrey';
-          doms[i].style.fontWeight = 'bolder';
-        } else {
-          const name = document.createTextNode(channel.name);
-          doms[i].appendChild(name);
-          doms[i].innerHTML = '&#128266; ' + doms[i].innerHTML;
-          doms[i].disabled = true;
-          doms[i].style.background = 'grey';
-          doms[i].style.color = '#DDD';
+    for (let i = 0; i < doms.length; ++i) {
+      if (channel.type === 'text') {
+        doms[i].textContent = `＃${channel.name}`;
+        const sI = doms[i].parentNode.selectedIndex;
+        if (sI >= 0 && doms[i].parentNode.children[sI].disabled) {
+          doms[i].parentNode.value = channelId;
         }
-        sortChannelOptions(doms[i].parentNode);
+      } else if (channel.type === 'category') {
+        doms[i].textContent = channel.name;
+        doms[i].disabled = true;
+        doms[i].style.background = 'darkgrey';
+        doms[i].style.fontWeight = 'bolder';
+      } else {
+        doms[i].textContent = `�${channel.name}`;
+        doms[i].disabled = true;
+        doms[i].style.background = 'grey';
+        doms[i].style.color = '#DDD';
       }
+      sortChannelOptions(doms[i].parentNode);
     }
   }
   /**
@@ -2220,26 +2220,26 @@
     weaponSelectContainer.appendChild(
         document.createTextNode('Attackers gain weapon: '));
 
-    let aWeaponSelect = document.createElement('select');
+    const aWeaponSelect = document.createElement('select');
     aWeaponSelect.id = 'createEventAttackerWeaponSelect' + id;
     aWeaponSelect.onchange = function() {
       updateEventPreview(id);
     };
-    let aWeaponDefaultOption = document.createElement('option');
+    const aWeaponDefaultOption = document.createElement('option');
     aWeaponDefaultOption.value = '';
     aWeaponDefaultOption.innerHTML = 'None';
     aWeaponDefaultOption.style.color = 'gray';
     aWeaponDefaultOption.style.fontStyle = 'italic';
     aWeaponSelect.appendChild(aWeaponDefaultOption);
     for (const w of weaponList) {
-      let newOpt = document.createElement('option');
+      const newOpt = document.createElement('option');
       newOpt.value = w;
       const evt = getEvent(w);
       newOpt.textContent = evt && evt.name || w;
       aWeaponSelect.appendChild(newOpt);
     }
     weaponSelectContainer.appendChild(aWeaponSelect);
-    let aWeaponQuantity = document.createElement('input');
+    const aWeaponQuantity = document.createElement('input');
     aWeaponQuantity.id = 'createEventAttackerWeaponQuantity' + id;
     aWeaponQuantity.type = 'number';
     aWeaponQuantity.value = 0;
@@ -2262,16 +2262,16 @@
     }
 
     if (isWeapon) {
-      let line4 = document.createElement('div');
+      const line4 = document.createElement('div');
       line4.classList.add('thinline');
       container.appendChild(line4);
 
-      let weaponConsumeParent = document.createElement('div');
-      let weaponConsumeText = document.createElement('a');
+      const weaponConsumeParent = document.createElement('div');
+      const weaponConsumeText = document.createElement('a');
       weaponConsumeText.innerHTML =
           'The number of weapon consumables this event uses: ';
       weaponConsumeParent.appendChild(weaponConsumeText);
-      let weaponConsumeInput = document.createElement('input');
+      const weaponConsumeInput = document.createElement('input');
       weaponConsumeInput.id = 'createEventWeaponConsumed' + id;
       weaponConsumeInput.type = 'text';
       weaponConsumeInput.value = 0;
@@ -2283,7 +2283,7 @@
         weaponConsumeInput.value = createEventValues.consumes;
       }
       weaponConsumeParent.appendChild(weaponConsumeInput);
-      let weaponConsumeHelp = document.createElement('small');
+      const weaponConsumeHelp = document.createElement('small');
       weaponConsumeHelp.innerHTML =
           '<br>(Use "V" or "A" to consume one item for each victim or ' +
           'attacker)';
@@ -2291,15 +2291,15 @@
       container.appendChild(weaponConsumeParent);
     }
 
-    let line5 = document.createElement('div');
+    const line5 = document.createElement('div');
     line5.classList.add('thinline');
     container.appendChild(line5);
 
-    let preview = document.createElement('div');
+    const preview = document.createElement('div');
     preview.id = 'createEventPreview' + id;
     container.appendChild(preview);
 
-    let submit = document.createElement('button');
+    const submit = document.createElement('button');
     submit.innerHTML = 'Submit';
     submit.onclick = function() {
       checksPassed = 0;
@@ -2312,12 +2312,12 @@
      * submit.
      */
     function confirmSingleEvent() {
-      let type = (document.getElementById('createEventType' + id) || {
-                   value: 'unknown',
-                 }).value;
-      let message = document.getElementById('createEventMessage' + id).value;
-      let nV = document.getElementById('createEventNumVictim' + id).value;
-      let nA = document.getElementById('createEventNumAttacker' + id).value;
+      const type = (document.getElementById('createEventType' + id) || {
+        value: 'unknown',
+      }).value;
+      const message = document.getElementById('createEventMessage' + id).value;
+      const nV = document.getElementById('createEventNumVictim' + id).value;
+      const nA = document.getElementById('createEventNumAttacker' + id).value;
 
       /**
        * Create handler for when user confirms the event creation.
@@ -2326,26 +2326,27 @@
        * server.
        */
       function confirmEventCreation() {
-        let type_ = type;
-        let message_ = message;
-        let nV_ = nV;
-        let nA_ = nA;
-        let oV = document.getElementById('createEventVictimOutcome' + id).value;
-        let oA =
+        const type_ = type;
+        const message_ = message;
+        const nV_ = nV;
+        const nA_ = nA;
+        const oV =
+            document.getElementById('createEventVictimOutcome' + id).value;
+        const oA =
             document.getElementById('createEventAttackerOutcome' + id).value;
-        let kV =
+        const kV =
             document.getElementById('createEventVictimKiller' + id).checked;
-        let kA =
+        const kA =
             document.getElementById('createEventAttackerKiller' + id).checked;
-        let vWCount =
+        const vWCount =
             document.getElementById('createEventVictimWeaponQuantity' + id)
                 .value;
-        let aWCount =
+        const aWCount =
             document.getElementById('createEventAttackerWeaponQuantity' + id)
                 .value;
-        let vWName =
+        const vWName =
             document.getElementById('createEventVictimWeaponSelect' + id).value;
-        let aWName =
+        const aWName =
             document.getElementById('createEventAttackerWeaponSelect' + id)
                 .value;
         let wV;
@@ -2362,7 +2363,7 @@
           wA = {id: aWName, count: aWCount};
         }
         let consumes = null;
-        let consumeInput =
+        const consumeInput =
             document.getElementById('createEventWeaponConsumed' + id);
         if (consumeInput) {
           consumes = consumeInput.value;
@@ -2434,8 +2435,8 @@
         }
       }
 
-      let hasVictim = message.indexOf('{victim}') >= 0;
-      let hasAttacker = message.indexOf('{attacker}') >= 0;
+      const hasVictim = message.indexOf('{victim}') >= 0;
+      const hasAttacker = message.indexOf('{attacker}') >= 0;
       if (!message || message.length <= 0) {
         showMessageBox('Failed to create event. Event must have a message.');
       } else if (
@@ -2518,7 +2519,7 @@
     container.innerHTML = '';
     container.style.textAlign = 'left';
 
-    let backButton = document.createElement('button');
+    const backButton = document.createElement('button');
     backButton.classList.add('eventBackButton');
     backButton.innerHTML = 'Back';
     backButton.onclick = function() {
@@ -2526,18 +2527,18 @@
     };
     container.appendChild(backButton);
 
-    let title = document.createElement('h2');
+    const title = document.createElement('h2');
     title.innerHTML = 'Weapon';
     title.style.textAlign = 'center';
     title.style.background = 'transparent';
     container.appendChild(title);
 
-    let guild = guilds[selectedGuild];
+    const guild = guilds[selectedGuild];
 
     if (!cachedArenaEvent) {
       cachedArenaEvent = {};
     }
-    let eventWeaponName = document.createElement('input');
+    const eventWeaponName = document.createElement('input');
     eventWeaponName.id = 'eventStartMessageInput';
     eventWeaponName.type = 'text';
     eventWeaponName.placeholder = 'Weapon name';
@@ -2549,7 +2550,7 @@
     }
     container.appendChild(eventWeaponName);
 
-    let eventConsumableName = document.createElement('input');
+    const eventConsumableName = document.createElement('input');
     eventConsumableName.id = 'eventConsumableNameInput';
     eventConsumableName.type = 'text';
     eventConsumableName.placeholder = 'Consumable name (or blank for none)';
@@ -2561,7 +2562,7 @@
     }
     container.appendChild(eventConsumableName);
 
-    let consumableNameInfo = document.createElement('small');
+    const consumableNameInfo = document.createElement('small');
     consumableNameInfo.style.width = '90%';
     consumableNameInfo.style.marginLeft = '5%';
     consumableNameInfo.innerHTML =
@@ -2642,10 +2643,10 @@
       cachedArenaEvent.outcomes = [];
     }
 
-    let createEvent = makeSingleEventContainer(true);
+    const createEvent = makeSingleEventContainer(true);
     container.appendChild(createEvent);
 
-    let submitButton = document.createElement('button');
+    const submitButton = document.createElement('button');
     submitButton.id = 'submitArenaEventButton';
     submitButton.innerHTML = 'Submit';
     submitButton.onclick = function() {
@@ -2702,7 +2703,7 @@
         }
       };
 
-      let eventWeaponName = document.getElementById('eventStartMessageInput');
+      const eventWeaponName = document.getElementById('eventStartMessageInput');
       if (eventWeaponName.value.length == 0) {
         showMessageBox('You have not entered a name for this weapon.');
       } else if (
@@ -2749,7 +2750,7 @@
     container.innerHTML = '';
     container.style.textAlign = 'left';
 
-    let backButton = document.createElement('button');
+    const backButton = document.createElement('button');
     backButton.classList.add('eventBackButton');
     backButton.innerHTML = 'Back';
     backButton.onclick = function() {
@@ -2757,7 +2758,7 @@
     };
     container.appendChild(backButton);
 
-    let title = document.createElement('h2');
+    const title = document.createElement('h2');
     title.innerHTML = 'Arena Event';
     title.style.textAlign = 'center';
     container.appendChild(title);
@@ -2765,7 +2766,7 @@
     if (!cachedArenaEvent) {
       cachedArenaEvent = {};
     }
-    let eventStartMessageInput = document.createElement('input');
+    const eventStartMessageInput = document.createElement('input');
     eventStartMessageInput.id = 'eventStartMessageInput';
     eventStartMessageInput.type = 'text';
     eventStartMessageInput.placeholder = 'Arena Event Start Message';
@@ -2845,10 +2846,10 @@
       container.appendChild(preview);
     }
 
-    let createEvent = makeSingleEventContainer();
+    const createEvent = makeSingleEventContainer();
     container.appendChild(createEvent);
 
-    let submitButton = document.createElement('button');
+    const submitButton = document.createElement('button');
     submitButton.id = 'submitArenaEventButton';
     submitButton.innerHTML = 'Submit';
     submitButton.onclick = function() {
@@ -2916,7 +2917,7 @@
     container.innerHTML = '';
     container.style.textAlign = 'left';
 
-    let backButton = document.createElement('button');
+    const backButton = document.createElement('button');
     backButton.classList.add('eventBackButton');
     backButton.innerHTML = 'Back';
     backButton.onclick = function() {
@@ -2924,18 +2925,18 @@
     };
     container.appendChild(backButton);
 
-    let title = document.createElement('h2');
+    const title = document.createElement('h2');
     title.innerHTML = 'Upload Event';
     title.style.textAlign = 'center';
     container.appendChild(title);
 
     /* eslint-disable-next-line no-unused-vars */
-    let guild = guilds[selectedGuild];
+    const guild = guilds[selectedGuild];
 
-    let inputForm = document.createElement('form');
+    const inputForm = document.createElement('form');
     inputForm.classList.add('uploadForm');
 
-    let inputArea = document.createElement('div');
+    const inputArea = document.createElement('div');
     inputArea.classList.add('uploadDropZone');
     inputForm.appendChild(inputArea);
 
@@ -2946,7 +2947,7 @@
         typeof window.FileReader !== 'undefined') {
       inputArea.classList.add('enabled');
       inputForm.classList.add('enabled');
-      let dropHereText = document.createElement('a');
+      const dropHereText = document.createElement('a');
       dropHereText.innerHTML = 'Drop File Here';
       inputArea.appendChild(dropHereText);
       inputArea.appendChild(document.createElement('br'));
@@ -3019,7 +3020,7 @@
       }
     }
 
-    let input = document.createElement('input');
+    const input = document.createElement('input');
     input.type = 'file';
     // input.multiple = true;
     input.accept = 'application/json';
@@ -3123,14 +3124,14 @@
    * } gameEvent The event to create a preview of.
    */
   function importUploadedEvent(container, gameEvent) {
-    let type = inferEventUploadType(gameEvent);
+    const type = inferEventUploadType(gameEvent);
     if (!type) {
       console.warn('Unable to infer type for event', gameEvent);
       showMessageBox('Invalid event file: Unable to infer event category.');
       makeUploadEventContainer(container);
       return;
     }
-    let output = validateEventUploadData(gameEvent, type);
+    const output = validateEventUploadData(gameEvent, type);
     if (output) {
       console.warn(output, gameEvent);
       showMessageBox('Invalid event file: ' + output, 20000, true);
@@ -3244,7 +3245,7 @@
     function submitCB(type, evt) {
       if (cachedArenaEvent.outcomes) {
         for (let i = 0; i < cachedArenaEvent.outcomes.length; i++) {
-          let el = cachedArenaEvent.outcomes[i];
+          const el = cachedArenaEvent.outcomes[i];
           if (el.message == evt.message &&
               el.victim.count == evt.victim.count &&
               el.attacker.count == evt.attacker.count &&
@@ -3261,7 +3262,7 @@
       container.appendChild(
           makeEventRow('preview' + cachedArenaEvent.outcomes.length, evt));
       cachedArenaEvent.outcomes.push(evt);
-      let removeButton = document.createElement('img');
+      const removeButton = document.createElement('img');
       removeButton.src = 'https://www.spikeybot.com/hg/trashCan.png';
       removeButton.classList.add('removeButton');
       removeButton.title = 'Delete Event';
@@ -3285,7 +3286,7 @@
       container.parentNode.appendChild(makeSingleEventContainer(isWeapon));
     }
 
-    let container = document.createElement('div');
+    const container = document.createElement('div');
     container.classList.add('singleEventContainer');
     makeCreateEventContainer(container, 'normalSingle', submitCB, isWeapon);
     return container;
@@ -3298,7 +3299,7 @@
    */
   function updateEventPreview(id) {
     try {
-      let gameEvent = {id: createEventValues.id, victim: {}, attacker: {}};
+      const gameEvent = {id: createEventValues.id, victim: {}, attacker: {}};
 
       gameEvent.message =
           document.getElementById('createEventMessage' + id).value;
@@ -3326,13 +3327,13 @@
           document.getElementById('createEventAttackerWeaponQuantity' + id)
               .value;
 
-      let consumedCountElement =
+      const consumedCountElement =
           document.getElementById('createEventWeaponConsumed' + id);
       if (consumedCountElement) gameEvent.consumes = consumedCountElement.value;
 
       createEventValues = gameEvent;
 
-      let preview = document.getElementById('createEventPreview' + id);
+      const preview = document.getElementById('createEventPreview' + id);
       preview.innerHTML = '';
       preview.appendChild(makeEventRow('preview', gameEvent));
       createEventEditing = true;
@@ -3386,7 +3387,7 @@
     let title = container.getElementsByClassName(`${type}Title`)[0];
     if (type === 'weapon') {
       container.setAttribute('eventId', eventList[page].id);
-      let message = weaponMessage;
+      const message = weaponMessage;
       if (!title) {
         title = document.createElement('a');
         title.classList.add('eventPageTitle');
@@ -3863,7 +3864,7 @@
       submit.onclick = function(event) {
         const parent = this.parentNode;
         const sliders = parent.getElementsByTagName('input');
-        let probs =
+        const probs =
             (guild && guild.hg && guild.hg.options.arenaOutcomeProbs) || {};
         let anyDifferent = false;
         for (let i = 0; i < sliders.length; i++) {
@@ -3882,15 +3883,20 @@
           probs[sliders[i].name] = val;
         }
         if (!anyDifferent) {
-          probs = null;
+          return;
+        } else {
+          eventList[page].outcomeProbs = probs;
         }
-        socket.emit('replaceEvent', eventList[page], (err) => {
+        const evt = eventList[page];
+        console.log('Replacing event', page, evt);
+        socket.emit('replaceEvent', evt, (err) => {
           if (err) {
             console.error('Failed to replace event', evt.id, err);
             showMessageBox('Failed to edit event.');
             return;
           }
-          getEvent(eventList[page].id, true);
+          console.log('Event replaced', page, evt);
+          getEvent(evt.id, true);
         });
       };
 
@@ -3906,13 +3912,17 @@
       }
       reset.style.display = deletable ? '' : 'none';
       reset.onclick = function(event) {
-        socket.emit('replaceEvent', eventList[page], (err) => {
+        const evt = eventList[page];
+        evt.outcomeProbs = null;
+        console.log('Replacing event', page, evt);
+        socket.emit('replaceEvent', evt, (err) => {
           if (err) {
             console.error('Failed to replace event', evt.id, err);
             showMessageBox('Failed to edit event.');
             return;
           }
-          getEvent(eventList[page].id, true);
+          console.log('Event replaced', page, evt);
+          getEvent(evt.id, true);
         });
       };
 
@@ -4087,7 +4097,7 @@
           if (p1 === 'V') {
             color += 'blue';
             if (gameEvent.victim.count > 0) {
-              let split = p2.split('|');
+              const split = p2.split('|');
               if (gameEvent.victim.count == 1) {
                 p2 = split[0];
               } else {
@@ -4097,7 +4107,7 @@
           } else if (p1 === 'A') {
             color += 'red';
             if (gameEvent.attacker.count > 0) {
-              let split = p2.split('|');
+              const split = p2.split('|');
               if (gameEvent.attacker.count == 1) {
                 p2 = split[0];
               } else {
@@ -4109,7 +4119,7 @@
           } else if (p1 === 'C') {
             color += 'orange';
           }
-          let tag = makeTag(p2, color, '[', ']');
+          const tag = makeTag(p2, color, '[', ']');
           return tag.outerHTML;
         });
 
@@ -4418,9 +4428,9 @@
     let disableButton = row.getElementsByClassName('disableEventButton')[0];
     if (type && type !== 'personal') {
       if (guild && guild.hg) {
-        let disabledEvents =
+        const disabledEvents =
             guild.hg.disabledEventIds && guild.hg.disabledEventIds[type] || [];
-        let isEnabled = !disabledEvents.includes(fullId);
+        const isEnabled = !disabledEvents.includes(fullId);
         if (!disableButton) {
           disableButton = document.createElement('button');
           disableButton.classList.add('disableEventButton');
@@ -4555,13 +4565,13 @@
    * @return {HTMLSpanElement} The formatted tag.
    */
   function makeTag(message, color, openBracket = '{', closeBracket = '}') {
-    let bracketOpen = document.createElement('span');
-    bracketOpen.innerHTML = openBracket;
+    const bracketOpen = document.createElement('span');
+    bracketOpen.textContent = openBracket;
     bracketOpen.style.fontSize = '0';
-    let bracketClose = document.createElement('span');
-    bracketClose.innerHTML = closeBracket;
+    const bracketClose = document.createElement('span');
+    bracketClose.textContent = closeBracket;
     bracketClose.style.fontSize = '0';
-    let tag = document.createElement('a');
+    const tag = document.createElement('a');
     tag.appendChild(bracketOpen);
     tag.appendChild(document.createTextNode(message));
     tag.appendChild(bracketClose);
@@ -4583,15 +4593,19 @@
       el.style.borderRadius = '10px';
       el.style.padding = '2px';
       el.style.border = '1px solid black';
-      el.classList.add(role.id);
+      try {
+        el.classList.add(role.id);
+      } catch (err) {
+        console.error('Invalid Role ID!', err, role);
+      }
     }
     el.textContent = role.name;
     if (role.color) {
       el.style.background =
           '#' + ('000000' + role.color.toString(16)).slice(-6);
-      let color = role.color.toString(16);
-      let r = color.substr(0, 2);
-      let g = color.substr(2, 2);
+      const color = role.color.toString(16);
+      const r = color.substr(0, 2);
+      const g = color.substr(2, 2);
       /* let b = color.substr(4, 2); */
       if (r > 'c8' && g > 'c8' /* && b > 'ee' */) {
         el.style.color = 'black';
@@ -4703,7 +4717,7 @@
         fetchMemberCount = 0;
         fetchMemberTimeout = null;
         for (let i = 0; i < fetchMemberMax && fetchMemberRequests.length > 0;
-             i++) {
+          i++) {
           fetchMember(...fetchMemberRequests.splice(0, 1)[0]);
         }
       }, fetchMemberDelay);
@@ -4722,10 +4736,18 @@
     members[guildId][memberId] = member;
     if (memberId == '124733888177111041') console.log(member);
 
-    const creatorInfos = document.getElementsByClassName('creatorInfo');
-    for (let i = 0; i < creatorInfos.length; i++) {
-      if (creatorInfos[i].getAttribute('userId') !== memberId) continue;
-      creatorInfos[i].textContent = `Creator: ${findMember(memberId).name}`;
+    if ('querySelectorAll' in document) {
+      const creatorInfos =
+          document.querySelectorAll(`.creatorInfo[userId="${memberId}"]`);
+      creatorInfos.forEach((el) => {
+        el.textContent = `Creator: ${findMember(memberId).name}`;
+      });
+    } else {
+      const creatorInfos = document.getElementsByClassName('creatorInfo');
+      for (let i = 0; i < creatorInfos.length; i++) {
+        if (creatorInfos[i].getAttribute('userId') !== memberId) continue;
+        creatorInfos[i].textContent = `Creator: ${findMember(memberId).name}`;
+      }
     }
 
     if (selectedGuild !== guildId) return;
@@ -4953,8 +4975,7 @@
               '22847 2,14 L2,13 L16,13 L16,14 Z');
       path.setAttribute('transform', 'translate(3 4)');
       g.appendChild(path);
-      const rect =
-          document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
       rect.setAttribute('width', '24');
       rect.setAttribute('height', '24');
       g.appendChild(rect);
@@ -4991,7 +5012,7 @@
       if (!create) {
         create = document.createElement('div');
         create.id = 'createGameButton';
-        let text = document.createElement('a');
+        const text = document.createElement('a');
         text.innerHTML = 'A game has not been created for this server, ' +
             'click here to create one.';
         text.style.cursor = 'pointer';
@@ -5006,7 +5027,7 @@
       guildBody.insertBefore(create, meSection.nextSibling);
       prev = create;
     } else {
-      let day = document.createElement('div');
+      const day = document.createElement('div');
       day.id = 'dayDisplay';
       guildBody.appendChild(day);
       updateDayNum(guild);
@@ -5098,7 +5119,7 @@
     }
 
     if (!checkPerm(guild, null, null)) {
-      let title = document.createElement('h4');
+      const title = document.createElement('h4');
       title.innerHTML =
           'You do not have permission for the Hungry Games in this server. ' +
           '(You need permission for "?hg start")';
@@ -5340,7 +5361,7 @@
         playerRight.insertBefore(
             playerRightSearchParent, playerRightButtonParent.nextSibling);
 
-        let searchBar = document.createElement('input');
+        const searchBar = document.createElement('input');
         searchBar.id = 'memberSearchBar';
         searchBar.type = 'text';
         searchBar.oninput = onMemberSearchChange;
@@ -5490,7 +5511,7 @@
           resetDiv = document.createElement('div');
           resetDiv.id = 'optionReset';
           resetDiv.style.textAlign = 'right';
-          let optionResetButton = document.createElement('button');
+          const optionResetButton = document.createElement('button');
           optionResetButton.innerHTML = 'Reset all to default';
           optionResetButton.classList.add('button');
           optionResetButton.onclick = function() {
@@ -5737,7 +5758,7 @@
       dayTitle.classList.add('title');
       dayTitle.onclick = foldHandler;
       dayList.insertBefore(dayTitle, dayList.children[0]);
-      let dayContainer = document.createElement('div');
+      const dayContainer = document.createElement('div');
       dayContainer.classList.add('section');
       dayContainer.id = 'dayContainer';
       dayList.insertBefore(dayContainer, dayTitle.nextSibling);
@@ -5775,7 +5796,7 @@
    * @private
    */
   function onMemberSearchChange() {
-    let container = document.getElementById('rightPlayerColumn');
+    const container = document.getElementById('rightPlayerColumn');
     const guild = guilds[selectedGuild];
     let result = memberFuse.search(this.value);
     if (result.length > 0) {
@@ -5811,16 +5832,16 @@
    */
   function makeOptionContainer(container, options) {
     if (!container) return;
-    let keys = Object.keys(options);
+    const keys = Object.keys(options);
     /* while (container.children.length > 2) {
       container.lastChild.remove();
     } */
-    let catList = [];
+    const catList = [];
     keys.sort((a, b) => {
       if (!defaultOptions[a]) return 1;
       if (!defaultOptions[b]) return -1;
-      let ac = defaultOptions[a].category;
-      let bc = defaultOptions[b].category;
+      const ac = defaultOptions[a].category;
+      const bc = defaultOptions[b].category;
       if (!catList.includes(ac)) catList.push(ac);
       if (ac === 'other') return 1;
       if (bc === 'other') return -1;
@@ -6240,7 +6261,7 @@
    * @private
    */
   function foldHandler() {
-    let set = this.parentNode.classList.contains('folded');
+    const set = this.parentNode.classList.contains('folded');
     for (let i in this.parentNode.parentNode.children) {
       if (this.parentNode.parentNode.children[i].classList) {
         this.parentNode.parentNode.children[i].classList.add('folded');
@@ -6352,9 +6373,9 @@
    * @param {Event} event Click event.
    */
   function optionObjectSubmitHandler(event) {
-    let parent = document.getElementById(event.target.name);
-    let sliders = parent.getElementsByTagName('input');
-    let guild = guilds[selectedGuild];
+    const parent = document.getElementById(event.target.name);
+    const sliders = parent.getElementsByTagName('input');
+    const guild = guilds[selectedGuild];
     for (let i = 0; i < sliders.length; i++) {
       let val = sliders[i].value * 1;
       if (i > 0 && sliders[i].type == 'range') {
@@ -6408,8 +6429,8 @@
    * @param {Event} event Click event.
    */
   function commandSubmitHandler(event) {
-    let children = event.target.parentNode.children;
-    let args = [event.target.name.replace('command', '')];
+    const children = event.target.parentNode.children;
+    const args = [event.target.name.replace('command', '')];
     for (let i in children) {
       if (children[i].id && children[i].id.match(/^command.*#[0-9]+$/)) {
         args.push(children[i].value);
@@ -6540,7 +6561,7 @@
     if (selectedGuild != gId) return;
     if (!day || day.num < 0) return;
     // console.log('New Day!', gId, day);
-    let guild = guilds[gId];
+    const guild = guilds[gId];
     if (!guild.hg) {
       guild.hg = {
         currentGame: {day: day, includedUsers: incUsers, inProgress: true},
@@ -6564,12 +6585,12 @@
    */
   function handleDayState(gId, num, state, eventState) {
     if (selectedGuild != gId) return;
-    let guild = guilds[gId];
+    const guild = guilds[gId];
     if (!guild.hg || guild.hg.currentGame.day.num != num) {
       socket.emit('fetchDay', selectedGuild);
     }
     if (guild.hg) {
-      let updateSection = num == guild.hg.currentGame.day.num;
+      const updateSection = num == guild.hg.currentGame.day.num;
       guild.hg.currentGame.day.num = num;
       guild.hg.currentGame.day.state = state;
       if (state > 1 && guild.hg.currentGame.day.events &&
@@ -6586,19 +6607,19 @@
    * @param {Object} guild The guild object of the guild to update.
    */
   function updateDayNum(guild) {
-    let day = document.getElementById('dayDisplay');
+    const day = document.getElementById('dayDisplay');
     if (!day) return;
     day.innerHTML = '';
 
-    let text = document.createElement('a');
+    const text = document.createElement('a');
     if (!guild.hg || !guild.hg.currentGame.inProgress) {
       text.innerHTML = 'No game in progress';
     } else if (guild.hg.currentGame.day.state == 0) {
       text.innerHTML = '';
     } else {
-      let dayPart = (guild.hg.currentGame.day.state - 1) + '/' +
+      const dayPart = (guild.hg.currentGame.day.state - 1) + '/' +
           (guild.hg.currentGame.day.events.length + 1);
-      let dayText = guild.hg.currentGame.day.num == 0 ?
+      const dayText = guild.hg.currentGame.day.num == 0 ?
           'in bloodbath' :
           ('Day #' + guild.hg.currentGame.day.num);
       text.appendChild(
@@ -6615,7 +6636,7 @@
    * just to update what's there already.
    */
   function updateDaySection(guild, reset) {
-    let container = document.getElementById('dayContainer');
+    const container = document.getElementById('dayContainer');
     if (!container) return;
 
     let leftSide = document.getElementById('currentDayLeftControls');
@@ -7051,15 +7072,15 @@
       icons.classList.add('dayEventRowIcons');
 
       let numNonUser = 0;
-      let guild = guilds[selectedGuild];
+      const guild = guilds[selectedGuild];
       for (let i = gameEvent.icons.length - 1; i >= 0; i--) {
-        let userName = guild.hg.currentGame.includedUsers
-                           .find((el) => el.id == gameEvent.icons[i].id)
-                           .name;
-        let container = makeAvatarIcon(
+        const userName = guild.hg.currentGame.includedUsers
+            .find((el) => el.id == gameEvent.icons[i].id)
+            .name;
+        const container = makeAvatarIcon(
             gameEvent.icons[i].id, gameEvent.icons[i].url, 32, [userName],
             false, gameEvent.icons[i].settings['hg:bar_color']);
-        let icon = container.children[0];
+        const icon = container.children[0];
         if (!gameEvent.icons[i]) {
           numNonUser++;
         } else if (i >= gameEvent.victim.count + numNonUser) {
@@ -7173,6 +7194,26 @@
 
     return getScrollParent(node.parentNode) || document.body;
   }
+
+  /**
+   * Find the first parent that is flagged as folded.
+   * @private
+   * @param {HTMLElement} node Node to start search.
+   * @return {?HTMLElement} The element or null if none.
+   */
+  function getFoldedParent(node) {
+    const isElement = node instanceof HTMLElement;
+    const isFolded = isElement && node.classList.contains('folded');
+
+    if (!node) {
+      return null;
+    } else if (isFolded) {
+      return node;
+    }
+
+    return getFoldedParent(node.parentNode);
+  }
+
   /**
    * Creates the icon and the hover elements for the current day control.
    * @private
@@ -7193,9 +7234,9 @@
     } else {
       console.warn(user, 'doesn\'t have an icon?');
     }
-    let container = document.createElement('span');
+    const container = document.createElement('span');
     container.classList.add('iconContainer');
-    let icon = document.createElement('img');
+    const icon = document.createElement('img');
     icon.setAttribute('decoding', 'async');
     icon.style.width = `${size}px`;
     icon.style.height = `${size}px`;
@@ -7203,7 +7244,7 @@
       const padded = ('00000000' + topColor.toString(16)).slice(-8);
       icon.style.borderTopColor = `#${padded}`;
     }
-    const interval = setInterval(function() {
+    const interval = setInterval(() => {
       if (!container.parentNode || !container.parentNode.parentNode) return;
       clearInterval(interval);
       const parent = getScrollParent(container);
@@ -7216,7 +7257,7 @@
         const par = parent.getBoundingClientRect();
         const visible = me.height > 0 && par.height >= me.height &&
             par.width >= me.width && me.top <= par.bottom &&
-            me.bottom >= par.top;
+            me.bottom >= par.top && !getFoldedParent(parent);
         if (visible || parent == document.body) {
           if (url) {
             icon.src = url;
@@ -7231,7 +7272,7 @@
       parent.addEventListener('scroll', update);
       parent.addEventListener('resize', update);
       update();
-    });
+    }, Math.random() * 100);
     icon.onerror = iconError;
     container.appendChild(icon);
 
@@ -7250,7 +7291,7 @@
         let buttonParent = document.createElement('div');
 
         let killButton = document.createElement('button');
-        killButton.innerHTML = 'Kill';
+        killButton.textContent = 'Kill';
         killButton.onclick = function() {
           console.log('Killing', user);
           socket.emit(
@@ -7265,7 +7306,7 @@
         };
         buttonParent.appendChild(killButton);
         let woundButton = document.createElement('button');
-        woundButton.innerHTML = 'Wound';
+        woundButton.textContent = 'Wound';
         woundButton.onclick = function() {
           console.log('Wounding', user);
           socket.emit(
@@ -7280,7 +7321,7 @@
         };
         buttonParent.appendChild(woundButton);
         let healButton = document.createElement('button');
-        healButton.innerHTML = 'Heal';
+        healButton.textContent = 'Heal';
         healButton.onclick = function() {
           console.log('Healing', user);
           socket.emit(
@@ -7329,7 +7370,7 @@
         weaponParent.appendChild(numInput);
 
         const giveButton = document.createElement('button');
-        giveButton.innerHTML = '+';
+        giveButton.textContent = '+';
         giveButton.onclick = function() {
           console.log('Giving', user, select.value, numInput.value);
           socket.emit(
@@ -7346,7 +7387,7 @@
         weaponParent.appendChild(giveButton);
 
         const takeButton = document.createElement('button');
-        takeButton.innerHTML = '-';
+        takeButton.textContent = '-';
         takeButton.onclick = function() {
           console.log('Take', user, select.value, numInput.value * -1);
           socket.emit(
@@ -7475,19 +7516,19 @@
    * @return {HTMLSectionElement} The slider parent.
    */
   function makeDeathRateSlider(option, disable = false) {
-    let section = document.createElement('section');
+    const section = document.createElement('section');
     section.classList.add('multiValueSliderParent');
 
-    let entries = Object.entries(option);
+    const entries = Object.entries(option);
 
     let sum = 0;
     entries.forEach((el) => sum += el[1]);
     sum = sum || 100;
-    let multiplier = 100 / sum;
+    const multiplier = 100 / sum;
 
-    let sliderUpdate = function(self, index) {
-      let parent = self.parentNode;
-      let sliders = parent.getElementsByTagName('input');
+    const sliderUpdate = function(self, index) {
+      const parent = self.parentNode;
+      const sliders = parent.getElementsByTagName('input');
 
       if (index == sliders.length - 1) {
         self.value = 100 + index + 1;
@@ -7518,7 +7559,7 @@
         }
       }
 
-      let backgrounds =
+      const backgrounds =
           parent.getElementsByClassName('multiValueSliderBackground');
 
       const width = parent.offsetWidth;
@@ -7533,14 +7574,14 @@
         }
         backgrounds[i].style.left = left + 'px';
 
-        let right = (1 * sliders[i].value / sliders[i].max) * width;
+        const right = (1 * sliders[i].value / sliders[i].max) * width;
         backgrounds[i].style.width = right - left + 'px';
       }
     };
 
     let runningSum = 0;
     for (let i = 0; i < entries.length; i++) {
-      let back = document.createElement('span');
+      const back = document.createElement('span');
       back.classList.add('multiValueSliderBackground');
       switch (entries[i][0]) {
         case 'kill':
@@ -7560,7 +7601,7 @@
           break;
       }
 
-      let slider = document.createElement('input');
+      const slider = document.createElement('input');
       slider.type = 'range';
       slider.min = 0;
       slider.max = 100 + entries.length - 1;
@@ -7582,7 +7623,7 @@
     }
 
     setTimeout(function() {
-      let parents = document.getElementsByClassName('multiValueSliderParent');
+      const parents = document.getElementsByClassName('multiValueSliderParent');
       for (let i = 0; i < parents.length; i++) {
         parents[i].getElementsByTagName('input')[0].oninput();
       }
@@ -8303,7 +8344,7 @@
     }
     const out = eventStore[id] || null;
     if (!out || force) {
-      const fetching = Date.now() - eventFetching[id] < 30000;
+      const fetching = force || Date.now() - eventFetching[id] < 30000;
       if (!fetching) {
         eventFetching[id] = Date.now();
         socket.emit('fetchEvent', id, (err, evt) => {
@@ -8313,50 +8354,77 @@
           }
           eventStore[evt.id] = evt;
 
-          if (['arena', 'weapon'].includes(evt.type)) {
-            const guild = guilds[selectedGuild];
-            const list = document.getElementsByClassName('eventPage');
-            for (let i = 0; i < list.length; i++) {
-              if (list[i].getAttribute('eventId') !== evt.id) continue;
-              const cat = list[i].getAttribute('eventCategory');
-              const type = list[i].getAttribute('eventType');
-              const events =
-                  ((cat === 'custom' ? guild.hg.customEventStore[type] :
-                                       defaultEvents[type]) ||
-                   []).map((el) => {
-                    return {id: el};
-                  });
-              const page = events.findIndex((el) => el.id === evt.id);
-
-              selectEventPage(page, list[i], events, cat, type);
-            }
-
-            if (evt.type === 'weapon') {
-              const avCells =
-                  document.getElementsByClassName('avWeaponNameCell');
-              for (let i = 0; i < avCells.length; i++) {
-                if (avCells[i].getAttribute('eventId') !== evt.id) continue;
-                avCells[i].textContent = evt.name;
-              }
-            }
-          }
-          const list = document.getElementsByClassName('eventRow');
-          for (let i = list.length - 1; i >= 0; i--) {
-            if (list[i].getAttribute('eventId') !== evt.id) continue;
-            makeEventRow(
-                list[i].id, evt, list[i].classList.contains('deletable'),
-                list[i].getAttribute('eventType'), list[i]);
-          }
-
-          const options = document.getElementsByTagName('option');
-          for (let i = 0; i < options.length; i++) {
-            if (options[i].value != evt.id) continue;
-            options[i].textContent = evt.name || evt.message;
-          }
+          updateEventData(evt);
         });
       }
     }
     return out;
+  }
+
+  /**
+   * @description Update UIs for the given event.
+   * @private
+   * @param {object} evt The event object to show.
+   */
+  function updateEventData(evt) {
+    if (['arena', 'weapon'].includes(evt.type)) {
+      const guild = guilds[selectedGuild];
+      const list = document.getElementsByClassName('eventPage');
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].getAttribute('eventId') !== evt.id) continue;
+        const cat = list[i].getAttribute('eventCategory');
+        const type = list[i].getAttribute('eventType');
+        const events = ((cat === 'custom' ? guild.hg.customEventStore[type] :
+                                            defaultEvents[type]) ||
+                        []).map((el) => {
+          return {id: el};
+        });
+        const page = events.findIndex((el) => el.id === evt.id);
+
+        selectEventPage(page, list[i], events, cat, type);
+      }
+
+      if (evt.type === 'weapon') {
+        if ('querySelectorAll' in document) {
+          const avCells = document.querySelectorAll(
+              `.avWeaponNameCell[eventId="${evt.id}"]`);
+          avCells.forEach((el) => el.textContent = evt.name);
+        } else {
+          const avCells = document.getElementsByClassName('avWeaponNameCell');
+          for (let i = 0; i < avCells.length; i++) {
+            if (avCells[i].getAttribute('eventId') !== evt.id) continue;
+            avCells[i].textContent = evt.name;
+          }
+        }
+      }
+    }
+    if ('querySelectorAll' in document) {
+      const list = document.querySelectorAll(`.eventRow[eventId="${evt.id}"]`);
+      list.forEach((el) => {
+        makeEventRow(
+            el.id, evt, el.classList.contains('deletable'),
+            el.getAttribute('eventType'), el);
+      });
+    } else {
+      const list = document.getElementsByClassName('eventRow');
+      for (let i = list.length - 1; i >= 0; i--) {
+        if (list[i].getAttribute('eventId') !== evt.id) continue;
+        makeEventRow(
+            list[i].id, evt, list[i].classList.contains('deletable'),
+            list[i].getAttribute('eventType'), list[i]);
+      }
+    }
+
+    if ('querySelectorAll' in document) {
+      const options = document.querySelectorAll(`option[value="${evt.id}"]`);
+      options.forEach((el) => el.textContent = evt.name || evt.message);
+    } else {
+      const options = document.getElementsByTagName('option');
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].value != evt.id) continue;
+        options[i].textContent = evt.name || evt.message;
+      }
+    }
   }
 
   /**
@@ -8539,7 +8607,7 @@
     console.error(...err);
     const stC = document.getElementById('stackTraceContainer');
     if (stC) {
-      const s = err[0].stack;
+      const s = err[2].stack;
       if (s) {
         stC.textContent = JSON.stringify(s, Object.getOwnPropertyNames(s), 2);
       }

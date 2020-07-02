@@ -41,8 +41,8 @@ function HGDragging(socket) {/* eslint-disable-line no-unused-vars */
    * @param {Event} event DOM event.
    */
   function handleTouchMove(event) {
-    let x = event.touches[0].clientX;
-    let y = event.touches[0].clientY;
+    const x = event.touches[0].clientX;
+    const y = event.touches[0].clientY;
     if (Math.abs(x - touch.x) > 2 || Math.abs(y - touch.y) > 2) {
       clearTimeout(touchTimeout);
     }
@@ -84,7 +84,7 @@ function HGDragging(socket) {/* eslint-disable-line no-unused-vars */
    */
   function handleDragStart(event) {
     event.dataTransfer.setData('Text', this.id);
-    for (let i in droppable) {
+    for (let i = 0; i < droppable.length; ++i) {
       if (!droppable[i].classList) continue;
       droppable[i].draggable = true;
       droppable[i].ondragenter = handleDragEnter;
@@ -143,7 +143,7 @@ function HGDragging(socket) {/* eslint-disable-line no-unused-vars */
            dragObj.parentNode.parentNode.parentNode.id == 'playerRight')) {
         dragDir = 'left';
       } else if (
-          (this.parentNode.id == 'playerRight' ||
+        (this.parentNode.id == 'playerRight' ||
            this.parentNode.parentNode.id == 'playerRight' ||
            this.parentNode.parentNode.parentNode.id == 'playerRight') &&
           (dragObj.parentNode.parentNode.id == 'playerLeft' ||
@@ -242,12 +242,10 @@ function HGDragging(socket) {/* eslint-disable-line no-unused-vars */
    */
   function handleDragEnd() {
     this.style.opacity = 1.0;
-    for (let i in draggable) {
-      if (!draggable[i].classList) continue;
+    for (let i = 0; draggable.length; ++i) {
       draggable[i].classList.remove('over');
     }
-    for (let i in droppable) {
-      if (!droppable[i].classList) continue;
+    for (let i = 0; i < droppable.length; ++i) {
       droppable[i].classList.remove('over');
       droppable[i].draggable = false;
       droppable[i].classList.remove('dragging');
@@ -263,8 +261,7 @@ function HGDragging(socket) {/* eslint-disable-line no-unused-vars */
     guildId = gId;
     draggable = document.getElementsByClassName('draggable');
     droppable = document.getElementsByClassName('droppable');
-    for (let i in draggable) {
-      if (!draggable[i] || !draggable[i].classList) continue;
+    for (let i = 0; i < draggable.length; ++i) {
       draggable[i].ondragstart = handleDragStart;
       draggable[i].ondragenter = handleDragEnter;
       draggable[i].ondragover = handleDragOver;
