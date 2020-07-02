@@ -3,6 +3,9 @@
 
 (function() {
   console.warn('Page Version: %FILE_MODIFIED_TIMESTAMP%');
+  document.getElementById('copyright').innerHTML +=
+      '<br><small>Last Modified: %FILE_MODIFIED_TIMESTAMP%</small>';
+
   const authorizeUrl =
       'https://discordapp.com/api/oauth2/authorize?client_id=4442935347204587' +
       '53&redirect_uri=https%3A%2F%2Fwww.spikeybot.com%2Fredirect&response_ty' +
@@ -574,32 +577,33 @@
   function handleChannel(guildId, channelId, channel) {
     channels[channelId] = channel;
     const doms = document.getElementsByClassName(channelId);
-    for (let i in doms) {
-      if (!doms[i]) continue;
-      doms[i].innerHTML = '';
-      if (doms[i].appendChild) {
-        if (channel.type === 'text') {
-          doms[i].appendChild(document.createTextNode(channel.name));
-          doms[i].innerHTML = '&#65283;' + doms[i].innerHTML;
-          const sI = doms[i].parentNode.selectedIndex;
-          if (sI >= 0 && doms[i].parentNode.children[sI].disabled) {
-            doms[i].parentNode.value = channelId;
-          }
-        } else if (channel.type === 'category') {
-          doms[i].appendChild(document.createTextNode(channel.name));
-          doms[i].disabled = true;
-          doms[i].style.background = 'darkgrey';
-          doms[i].style.fontWeight = 'bolder';
-        } else {
-          const name = document.createTextNode(channel.name);
-          doms[i].appendChild(name);
-          doms[i].innerHTML = '&#128266; ' + doms[i].innerHTML;
-          doms[i].disabled = true;
-          doms[i].style.background = 'grey';
-          doms[i].style.color = '#DDD';
+    for (let i = 0; i < doms.length; ++i) {
+      // doms[i].innerHTML = '';
+      // if (doms[i] instanceof HTMLElement) {
+      if (channel.type === 'text') {
+        doms[i].textContent = `＃${channel.name}`;
+        // doms[i].innerHTML = `&#65283;${doms[i].innerHTML}`;
+        const sI = doms[i].parentNode.selectedIndex;
+        if (sI >= 0 && doms[i].parentNode.children[sI].disabled) {
+          doms[i].parentNode.value = channelId;
         }
-        sortChannelOptions(doms[i].parentNode);
+      } else if (channel.type === 'category') {
+        doms[i].textContent = channel.name;
+        // doms[i].appendChild(document.createTextNode(channel.name));
+        doms[i].disabled = true;
+        doms[i].style.background = 'darkgrey';
+        doms[i].style.fontWeight = 'bolder';
+      } else {
+        doms[i].textContent = `�${channel.name}`;
+        // const name = document.createTextNode(channel.name);
+        // doms[i].appendChild(name);
+        // doms[i].innerHTML = '&#128266; ' + doms[i].innerHTML;
+        doms[i].disabled = true;
+        doms[i].style.background = 'grey';
+        doms[i].style.color = '#DDD';
       }
+      sortChannelOptions(doms[i].parentNode);
+      // }
     }
   }
   /**
@@ -3891,7 +3895,7 @@
       submit.onclick = function(event) {
         const parent = this.parentNode;
         const sliders = parent.getElementsByTagName('input');
-        let probs =
+        const probs =
             (guild && guild.hg && guild.hg.options.arenaOutcomeProbs) || {};
         let anyDifferent = false;
         for (let i = 0; i < sliders.length; i++) {
@@ -3910,15 +3914,20 @@
           probs[sliders[i].name] = val;
         }
         if (!anyDifferent) {
-          probs = null;
+          return;
+        } else {
+          eventList[page].outcomeProbs = probs;
         }
-        socket.emit('replaceEvent', eventList[page], (err) => {
+        const evt = eventList[page];
+        console.log('Replacing event', page, evt);
+        socket.emit('replaceEvent', evt, (err) => {
           if (err) {
             console.error('Failed to replace event', evt.id, err);
             showMessageBox('Failed to edit event.');
             return;
           }
-          getEvent(eventList[page].id, true);
+          console.log('Event replaced', page, evt);
+          getEvent(evt.id, true);
         });
       };
 
@@ -3934,13 +3943,17 @@
       }
       reset.style.display = deletable ? '' : 'none';
       reset.onclick = function(event) {
-        socket.emit('replaceEvent', eventList[page], (err) => {
+        const evt = eventList[page];
+        evt.outcomeProbs = null;
+        console.log('Replacing event', page, evt);
+        socket.emit('replaceEvent', evt, (err) => {
           if (err) {
             console.error('Failed to replace event', evt.id, err);
             showMessageBox('Failed to edit event.');
             return;
           }
-          getEvent(eventList[page].id, true);
+          console.log('Event replaced', page, evt);
+          getEvent(evt.id, true);
         });
       };
 
@@ -4584,10 +4597,10 @@
    */
   function makeTag(message, color, openBracket = '{', closeBracket = '}') {
     const bracketOpen = document.createElement('span');
-    bracketOpen.innerHTML = openBracket;
+    bracketOpen.textContent = openBracket;
     bracketOpen.style.fontSize = '0';
     const bracketClose = document.createElement('span');
-    bracketClose.innerHTML = closeBracket;
+    bracketClose.textContent = closeBracket;
     bracketClose.style.fontSize = '0';
     const tag = document.createElement('a');
     tag.appendChild(bracketOpen);
@@ -4611,7 +4624,11 @@
       el.style.borderRadius = '10px';
       el.style.padding = '2px';
       el.style.border = '1px solid black';
-      el.classList.add(role.id);
+      try {
+        el.classList.add(role.id);
+      } catch (err) {
+        console.error('Invalid Role ID!', err, role);
+      }
     }
     el.textContent = role.name;
     if (role.color) {
@@ -4750,10 +4767,18 @@
     members[guildId][memberId] = member;
     if (memberId == '124733888177111041') console.log(member);
 
-    const creatorInfos = document.getElementsByClassName('creatorInfo');
-    for (let i = 0; i < creatorInfos.length; i++) {
-      if (creatorInfos[i].getAttribute('userId') !== memberId) continue;
-      creatorInfos[i].textContent = `Creator: ${findMember(memberId).name}`;
+    if ('querySelectorAll' in document) {
+      const creatorInfos =
+          document.querySelectorAll(`.creatorInfo[userId="${memberId}"]`);
+      creatorInfos.forEach((el) => {
+        el.textContent = `Creator: ${findMember(memberId).name}`;
+      });
+    } else {
+      const creatorInfos = document.getElementsByClassName('creatorInfo');
+      for (let i = 0; i < creatorInfos.length; i++) {
+        if (creatorInfos[i].getAttribute('userId') !== memberId) continue;
+        creatorInfos[i].textContent = `Creator: ${findMember(memberId).name}`;
+      }
     }
 
     if (selectedGuild !== guildId) return;
@@ -7332,15 +7357,15 @@
       icons.classList.add('dayEventRowIcons');
 
       let numNonUser = 0;
-      let guild = guilds[selectedGuild];
+      const guild = guilds[selectedGuild];
       for (let i = gameEvent.icons.length - 1; i >= 0; i--) {
-        let userName = guild.hg.currentGame.includedUsers
-                           .find((el) => el.id == gameEvent.icons[i].id)
-                           .name;
-        let container = makeAvatarIcon(
+        const userName = guild.hg.currentGame.includedUsers
+            .find((el) => el.id == gameEvent.icons[i].id)
+            .name;
+        const container = makeAvatarIcon(
             gameEvent.icons[i].id, gameEvent.icons[i].url, 32, [userName],
             false, gameEvent.icons[i].settings['hg:bar_color']);
-        let icon = container.children[0];
+        const icon = container.children[0];
         if (!gameEvent.icons[i]) {
           numNonUser++;
         } else if (i >= gameEvent.victim.count + numNonUser) {
@@ -7488,6 +7513,26 @@
 
     return getScrollParent(node.parentNode) || document.body;
   }
+
+  /**
+   * Find the first parent that is flagged as folded.
+   * @private
+   * @param {HTMLElement} node Node to start search.
+   * @return {?HTMLElement} The element or null if none.
+   */
+  function getFoldedParent(node) {
+    const isElement = node instanceof HTMLElement;
+    const isFolded = isElement && node.classList.contains('folded');
+
+    if (!node) {
+      return null;
+    } else if (isFolded) {
+      return node;
+    }
+
+    return getFoldedParent(node.parentNode);
+  }
+
   /**
    * Creates the icon and the hover elements for the current day control.
    * @private
@@ -7508,9 +7553,9 @@
     } else {
       console.warn(user, 'doesn\'t have an icon?');
     }
-    let container = document.createElement('span');
+    const container = document.createElement('span');
     container.classList.add('iconContainer');
-    let icon = document.createElement('img');
+    const icon = document.createElement('img');
     icon.setAttribute('decoding', 'async');
     icon.style.width = `${size}px`;
     icon.style.height = `${size}px`;
@@ -7518,7 +7563,7 @@
       const padded = ('00000000' + topColor.toString(16)).slice(-8);
       icon.style.borderTopColor = `#${padded}`;
     }
-    const interval = setInterval(function() {
+    const interval = setInterval(() => {
       if (!container.parentNode || !container.parentNode.parentNode) return;
       clearInterval(interval);
       const parent = getScrollParent(container);
@@ -7531,7 +7576,7 @@
         const par = parent.getBoundingClientRect();
         const visible = me.height > 0 && par.height >= me.height &&
             par.width >= me.width && me.top <= par.bottom &&
-            me.bottom >= par.top;
+            me.bottom >= par.top && !getFoldedParent(parent);
         if (visible || parent == document.body) {
           if (url) {
             icon.src = url;
@@ -7546,7 +7591,7 @@
       parent.addEventListener('scroll', update);
       parent.addEventListener('resize', update);
       update();
-    });
+    }, Math.random() * 100);
     icon.onerror = iconError;
     container.appendChild(icon);
 
@@ -7565,7 +7610,7 @@
         let buttonParent = document.createElement('div');
 
         let killButton = document.createElement('button');
-        killButton.innerHTML = 'Kill';
+        killButton.textContent = 'Kill';
         killButton.onclick = function() {
           console.log('Killing', user);
           socket.emit(
@@ -7580,7 +7625,7 @@
         };
         buttonParent.appendChild(killButton);
         let woundButton = document.createElement('button');
-        woundButton.innerHTML = 'Wound';
+        woundButton.textContent = 'Wound';
         woundButton.onclick = function() {
           console.log('Wounding', user);
           socket.emit(
@@ -7595,7 +7640,7 @@
         };
         buttonParent.appendChild(woundButton);
         let healButton = document.createElement('button');
-        healButton.innerHTML = 'Heal';
+        healButton.textContent = 'Heal';
         healButton.onclick = function() {
           console.log('Healing', user);
           socket.emit(
@@ -7644,7 +7689,7 @@
         weaponParent.appendChild(numInput);
 
         const giveButton = document.createElement('button');
-        giveButton.innerHTML = '+';
+        giveButton.textContent = '+';
         giveButton.onclick = function() {
           console.log('Giving', user, select.value, numInput.value);
           socket.emit(
@@ -7661,7 +7706,7 @@
         weaponParent.appendChild(giveButton);
 
         const takeButton = document.createElement('button');
-        takeButton.innerHTML = '-';
+        takeButton.textContent = '-';
         takeButton.onclick = function() {
           console.log('Take', user, select.value, numInput.value * -1);
           socket.emit(
@@ -7790,19 +7835,19 @@
    * @return {HTMLSectionElement} The slider parent.
    */
   function makeDeathRateSlider(option, disable = false) {
-    let section = document.createElement('section');
+    const section = document.createElement('section');
     section.classList.add('multiValueSliderParent');
 
-    let entries = Object.entries(option);
+    const entries = Object.entries(option);
 
     let sum = 0;
     entries.forEach((el) => sum += el[1]);
     sum = sum || 100;
-    let multiplier = 100 / sum;
+    const multiplier = 100 / sum;
 
-    let sliderUpdate = function(self, index) {
-      let parent = self.parentNode;
-      let sliders = parent.getElementsByTagName('input');
+    const sliderUpdate = function(self, index) {
+      const parent = self.parentNode;
+      const sliders = parent.getElementsByTagName('input');
 
       if (index == sliders.length - 1) {
         self.value = 100 + index + 1;
@@ -7833,7 +7878,7 @@
         }
       }
 
-      let backgrounds =
+      const backgrounds =
           parent.getElementsByClassName('multiValueSliderBackground');
 
       const width = parent.offsetWidth;
@@ -7848,14 +7893,14 @@
         }
         backgrounds[i].style.left = left + 'px';
 
-        let right = (1 * sliders[i].value / sliders[i].max) * width;
+        const right = (1 * sliders[i].value / sliders[i].max) * width;
         backgrounds[i].style.width = right - left + 'px';
       }
     };
 
     let runningSum = 0;
     for (let i = 0; i < entries.length; i++) {
-      let back = document.createElement('span');
+      const back = document.createElement('span');
       back.classList.add('multiValueSliderBackground');
       switch (entries[i][0]) {
         case 'kill':
@@ -7875,7 +7920,7 @@
           break;
       }
 
-      let slider = document.createElement('input');
+      const slider = document.createElement('input');
       slider.type = 'range';
       slider.min = 0;
       slider.max = 100 + entries.length - 1;
@@ -7897,7 +7942,7 @@
     }
 
     setTimeout(function() {
-      let parents = document.getElementsByClassName('multiValueSliderParent');
+      const parents = document.getElementsByClassName('multiValueSliderParent');
       for (let i = 0; i < parents.length; i++) {
         parents[i].getElementsByTagName('input')[0].oninput();
       }
@@ -8622,7 +8667,7 @@
     }
     const out = eventStore[id] || null;
     if (!out || force) {
-      const fetching = Date.now() - eventFetching[id] < 30000;
+      const fetching = force || Date.now() - eventFetching[id] < 30000;
       if (!fetching) {
         eventFetching[id] = Date.now();
         socket.emit('fetchEvent', id, (err, evt) => {
@@ -8632,50 +8677,77 @@
           }
           eventStore[evt.id] = evt;
 
-          if (['arena', 'weapon'].includes(evt.type)) {
-            const guild = guilds[selectedGuild];
-            const list = document.getElementsByClassName('eventPage');
-            for (let i = 0; i < list.length; i++) {
-              if (list[i].getAttribute('eventId') !== evt.id) continue;
-              const cat = list[i].getAttribute('eventCategory');
-              const type = list[i].getAttribute('eventType');
-              const events =
-                  ((cat === 'custom' ? guild.hg.customEventStore[type] :
-                                       defaultEvents[type]) ||
-                   []).map((el) => {
-                    return {id: el};
-                  });
-              const page = events.findIndex((el) => el.id === evt.id);
-
-              selectEventPage(page, list[i], events, cat, type);
-            }
-
-            if (evt.type === 'weapon') {
-              const avCells =
-                  document.getElementsByClassName('avWeaponNameCell');
-              for (let i = 0; i < avCells.length; i++) {
-                if (avCells[i].getAttribute('eventId') !== evt.id) continue;
-                avCells[i].textContent = evt.name;
-              }
-            }
-          }
-          const list = document.getElementsByClassName('eventRow');
-          for (let i = list.length - 1; i >= 0; i--) {
-            if (list[i].getAttribute('eventId') !== evt.id) continue;
-            makeEventRow(
-                list[i].id, evt, list[i].classList.contains('deletable'),
-                list[i].getAttribute('eventType'), list[i]);
-          }
-
-          const options = document.getElementsByTagName('option');
-          for (let i = 0; i < options.length; i++) {
-            if (options[i].value != evt.id) continue;
-            options[i].textContent = evt.name || evt.message;
-          }
+          updateEventData(evt);
         });
       }
     }
     return out;
+  }
+
+  /**
+   * @description Update UIs for the given event.
+   * @private
+   * @param {object} evt The event object to show.
+   */
+  function updateEventData(evt) {
+    if (['arena', 'weapon'].includes(evt.type)) {
+      const guild = guilds[selectedGuild];
+      const list = document.getElementsByClassName('eventPage');
+      for (let i = 0; i < list.length; i++) {
+        if (list[i].getAttribute('eventId') !== evt.id) continue;
+        const cat = list[i].getAttribute('eventCategory');
+        const type = list[i].getAttribute('eventType');
+        const events = ((cat === 'custom' ? guild.hg.customEventStore[type] :
+                                            defaultEvents[type]) ||
+                        []).map((el) => {
+          return {id: el};
+        });
+        const page = events.findIndex((el) => el.id === evt.id);
+
+        selectEventPage(page, list[i], events, cat, type);
+      }
+
+      if (evt.type === 'weapon') {
+        if ('querySelectorAll' in document) {
+          const avCells = document.querySelectorAll(
+              `.avWeaponNameCell[eventId="${evt.id}"]`);
+          avCells.forEach((el) => el.textContent = evt.name);
+        } else {
+          const avCells = document.getElementsByClassName('avWeaponNameCell');
+          for (let i = 0; i < avCells.length; i++) {
+            if (avCells[i].getAttribute('eventId') !== evt.id) continue;
+            avCells[i].textContent = evt.name;
+          }
+        }
+      }
+    }
+    if ('querySelectorAll' in document) {
+      const list = document.querySelectorAll(`.eventRow[eventId="${evt.id}"]`);
+      list.forEach((el) => {
+        makeEventRow(
+            el.id, evt, el.classList.contains('deletable'),
+            el.getAttribute('eventType'), el);
+      });
+    } else {
+      const list = document.getElementsByClassName('eventRow');
+      for (let i = list.length - 1; i >= 0; i--) {
+        if (list[i].getAttribute('eventId') !== evt.id) continue;
+        makeEventRow(
+            list[i].id, evt, list[i].classList.contains('deletable'),
+            list[i].getAttribute('eventType'), list[i]);
+      }
+    }
+
+    if ('querySelectorAll' in document) {
+      const options = document.querySelectorAll(`option[value="${evt.id}"]`);
+      options.forEach((el) => el.textContent = evt.name || evt.message);
+    } else {
+      const options = document.getElementsByTagName('option');
+      for (let i = 0; i < options.length; i++) {
+        if (options[i].value != evt.id) continue;
+        options[i].textContent = evt.name || evt.message;
+      }
+    }
   }
 
   /**
@@ -8858,7 +8930,7 @@
     console.error(...err);
     const stC = document.getElementById('stackTraceContainer');
     if (stC) {
-      const s = err[0].stack;
+      const s = err[2].stack;
       if (s) {
         stC.textContent = JSON.stringify(s, Object.getOwnPropertyNames(s), 2);
       }
