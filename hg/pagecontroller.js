@@ -38,6 +38,10 @@
 
   const weaponMessage = '{attacker} {action} {victim} with {weapon}.';
 
+  const textIcon = '＃';
+  const voiceIcon = '\uD83D\uDD0A';
+  const newsIcon = '\uD83D\uDCF0';
+
   const triggerCats = ['game', 'event', 'day'];
   const loginButton = document.getElementById('loginButton');
   const sessionState = document.getElementById('sessionState');
@@ -581,26 +585,30 @@
       // doms[i].innerHTML = '';
       // if (doms[i] instanceof HTMLElement) {
       if (channel.type === 'text') {
-        doms[i].textContent = `＃${channel.name}`;
-        // doms[i].innerHTML = `&#65283;${doms[i].innerHTML}`;
+        doms[i].textContent = `${textIcon}${channel.name}`;
+        const sI = doms[i].parentNode.selectedIndex;
+        if (sI >= 0 && doms[i].parentNode.children[sI].disabled) {
+          doms[i].parentNode.value = channelId;
+        }
+      } else if (channel.type === 'news') {
+        doms[i].textContent = `${newsIcon}${channel.name}`;
         const sI = doms[i].parentNode.selectedIndex;
         if (sI >= 0 && doms[i].parentNode.children[sI].disabled) {
           doms[i].parentNode.value = channelId;
         }
       } else if (channel.type === 'category') {
         doms[i].textContent = channel.name;
-        // doms[i].appendChild(document.createTextNode(channel.name));
         doms[i].disabled = true;
         doms[i].style.background = 'darkgrey';
         doms[i].style.fontWeight = 'bolder';
-      } else {
-        doms[i].textContent = `�${channel.name}`;
-        // const name = document.createTextNode(channel.name);
-        // doms[i].appendChild(name);
-        // doms[i].innerHTML = '&#128266; ' + doms[i].innerHTML;
+      } else if (channel.type === 'voice') {
+        doms[i].textContent = `${voiceIcon}${channel.name}`;
         doms[i].disabled = true;
         doms[i].style.background = 'grey';
         doms[i].style.color = '#DDD';
+      } else {
+        console.warn('Unknown channel type:', channel);
+        doms[i].textContent = channel.name;
       }
       sortChannelOptions(doms[i].parentNode);
       // }
@@ -720,9 +728,8 @@
     if (childRect.bottom <= rect.top + (rect.height * 1.5)) {
       const guild = guilds[selectedGuild];
       if (!guild) return;
-      const next = guild.members.find(function(el) {
-        return event.target.getElementsByClassName(el).length == 0;
-      });
+      const next = guild.members.find(
+          (el) => event.target.getElementsByClassName(el).length == 0);
       if (next) {
         const row = makePlayerRow(members[guild.id][next], guild);
         event.target.appendChild(row);
@@ -3895,8 +3902,8 @@
       submit.onclick = function(event) {
         const parent = this.parentNode;
         const sliders = parent.getElementsByTagName('input');
-        const probs =
-            (guild && guild.hg && guild.hg.options.arenaOutcomeProbs) || {};
+        const probs = Object.assign(
+            {}, guild && guild.hg && guild.hg.options.arenaOutcomeProbs);
         let anyDifferent = false;
         for (let i = 0; i < sliders.length; i++) {
           let val = sliders[i].value * 1;
