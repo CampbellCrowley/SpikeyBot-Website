@@ -18,7 +18,7 @@
   color: #AAA;
   margin: 0 -10px;
 }
-#copyright a:link {
+#copyright a:link, #tenKAlert a:link {
   color: #00b0f4;
 }
 #cookieAlert {
@@ -32,13 +32,36 @@
   padding: 1em;
   background: white;
   z-index: 1000;
+  box-shadow: 0 0 15px black;
 }
 #cookieAlert button {
-  background: lightblue;
+  background: white;
   border: 2px solid blue;
   border-radius: 1em;
   font-size: 1.1em;
   cursor: pointer;
+}
+#tenKAlert {
+  position: fixed;
+  bottom: 1em;
+  left: 1em;
+  margin-right: 1em;
+  width: auto;
+  z-index: 999;
+  background: black;
+  color: white;
+  border: 2px solid white;
+  border-radius: 1em;
+  padding: 1em;
+  box-shadow: 0 0 15px black;
+}
+#tenKAlert button {
+  background: transparent;
+  float: right;
+  text-decoration: underline;
+  color: white;
+  cursor: pointer;
+  border: 0;
 }
 @media screen and (max-width: 550px) {
   #cookieAlert {
@@ -52,6 +75,59 @@
   <br>
   <small>&copy; Copyright 2019-2020, Campbell Crowley. <a href="https://docs.google.com/document/d/1SAC2aPxxeNqRjlZzjwrnCyyWWyt09ZP-AP7BDBjjQDg/edit?usp=sharing">Privacy Policy</a></small>
 </footer>
+<div id="tenKAlert">
+  <h3>We're celebrating SpikeyBot on over 10k servers!</h3>
+  <p>Join our server for a chance to get featured here!</p>
+  <a href="https://discord.gg/u6U2WRD">discord.gg/u6U2WRD</a>
+  <button onclick="tenKClose()">close</button>
+  <script>
+    window.tenKClose = function() {
+      setCookie('tenKClose', true, Date.now() + 7 * 24 * 60 * 60 * 1000);
+      document.getElementById('tenKAlert').remove();
+    };
+    if (getCookie('tenKClose') == 'true') tenKClose();
+
+    /**
+     * Sets a browser cookie.
+     * @private
+     * @param {string} name The name of the cookie.
+     * @param {string} value The value of the cookie.
+     * @param {string|number} expiresAt Date value to pass into `Date`.
+     * @param {string} [path=/] Path value of the cookie.
+     */
+    function setCookie(name, value, expiresAt, path = '/') {
+      if (expiresAt) {
+        let d = new Date(expiresAt);
+        let expires = 'expires=' + d.toUTCString();
+        document.cookie =
+            name + '=' + value + ';' + expires + ';path=' + path + ';secure';
+      } else {
+        document.cookie = name + '=' + value + ';path=' + path + ';secure';
+      }
+    }
+    /**
+     * Fetches the value of a cookie.
+     * @private
+     * @param {string} name The name of the cookie to fetch the value of.
+     * @return {string} The cookie value.
+     */
+    function getCookie(name) {
+      name += '=';
+      let decodedCookie = decodeURIComponent(document.cookie);
+      let ca = decodedCookie.split(';');
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return '';
+    }
+  </script>
+</div>
 <div id="cookieAlert">
   <p>We use cookies.</p>
   <button onclick="cookieAgree()">I Understand</button>
