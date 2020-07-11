@@ -2411,9 +2411,9 @@
             };
             if (createEventValues.id) {
               evt.id = createEventValues.id;
-              socket.emit('replaceEvent', evt, (err) => {
+              socket.emit('replaceEvent', evt, (err, ...args) => {
                 if (err) {
-                  console.error(err);
+                  console.error(err, args);
                   showMessageBox('Failed to edit event.');
                   return;
                 }
@@ -2684,12 +2684,13 @@
         console.log(cachedArenaEvent);
         if (cachedArenaEvent.id) {
           const id = cachedArenaEvent.id;
-          socket.emit('replaceEvent', cachedArenaEvent, (err) => {
+          socket.emit('replaceEvent', cachedArenaEvent, (err, ...args) => {
             if (err) {
-              console.error(err);
+              console.error(err, args);
               showMessageBox('Failed to edit weapon event.');
               return;
             }
+            console.log('Replaced event', id);
             getEvent(id, true);
             cachedArenaEvent = {};
             makeChooseEventContainer(container);
@@ -2740,7 +2741,7 @@
             },
             null);
       } else if (
-        !(checksPassed & (1 << 3)) &&
+        !(checksPassed & (1 << 3)) && guild.hg &&
           guild.hg.customEventStore.weapon[cachedArenaEvent.id]) {
         showYesNoBox(
             'This weapon already exists. Do you wish to overwrite it?',
@@ -2877,12 +2878,13 @@
         cachedArenaEvent.outcomes.forEach((el) => el.creator = user.id);
         if (cachedArenaEvent.id) {
           const id = cachedArenaEvent.id;
-          socket.emit('replaceEvent', cachedArenaEvent, (err) => {
+          socket.emit('replaceEvent', cachedArenaEvent, (err, ...args) => {
             if (err) {
-              console.error(err);
+              console.error(err, args);
               showMessageBox('Failed to edit arena event.');
               return;
             }
+            console.log('Replaced event', id);
             getEvent(id, true);
             cachedArenaEvent = {};
             makeChooseEventContainer(container);
@@ -3901,9 +3903,9 @@
         }
         const evt = eventList[page];
         console.log('Replacing event', page, evt);
-        socket.emit('replaceEvent', evt, (err) => {
+        socket.emit('replaceEvent', evt, (err, ...args) => {
           if (err) {
-            console.error('Failed to replace event', evt.id, err);
+            console.error('Failed to replace event', evt.id, err, args);
             showMessageBox('Failed to edit event.');
             return;
           }
@@ -3927,9 +3929,9 @@
         const evt = eventList[page];
         evt.outcomeProbs = null;
         console.log('Replacing event', page, evt);
-        socket.emit('replaceEvent', evt, (err) => {
+        socket.emit('replaceEvent', evt, (err, ...args) => {
           if (err) {
-            console.error('Failed to replace event', evt.id, err);
+            console.error('Failed to replace event', evt.id, err, args);
             showMessageBox('Failed to edit event.');
             return;
           }
@@ -4314,9 +4316,9 @@
                   par.outcomes[index] =
                       Object.assign(createEventValues, evt);
                   console.log(par, evt, createEventValues);
-                  socket.emit('replaceEvent', par, (err) => {
+                  socket.emit('replaceEvent', par, (err, ...args) => {
                     if (err) {
-                      console.error(err);
+                      console.error(err, args);
                       showMessageBox('Failed to edit event.');
                       par.outcomes[index] = old;
                       return;
@@ -4328,9 +4330,9 @@
                         newRow, editContainer);
                   });
                 } else {
-                  socket.emit('replaceEvent', evt, (err) => {
+                  socket.emit('replaceEvent', evt, (err, ...args) => {
                     if (err) {
-                      console.error(err);
+                      console.error(err, args);
                       showMessageBox('Failed to edit event.');
                       return;
                     }
@@ -8349,14 +8351,14 @@
    * doesn't update if cached version is available.
    * @return {?object} The cached event, or null if not yet cached.
    */
-  function getEvent(id, force) {
+  function getEvent(id, force=false) {
     if (!id || !id.length) {
       console.error(new Error('Invalid ID requested'));
       return null;
     }
     const out = eventStore[id] || null;
     if (!out || force) {
-      const fetching = force || Date.now() - eventFetching[id] < 30000;
+      const fetching = !force && Date.now() - eventFetching[id] < 30000;
       if (!fetching) {
         eventFetching[id] = Date.now();
         socket.emit('fetchEvent', id, (err, evt) => {
@@ -8539,7 +8541,7 @@
     if (index > -1) {
       personalEvents.splice(index, 1);
     }
-    eventStore[eId].deleted = true;
+    if (eventStore[eId]) eventStore[eId].deleted = true;
 
     const personalEventList = document.getElementById('personalEventList');
     if (personalEventList) {
