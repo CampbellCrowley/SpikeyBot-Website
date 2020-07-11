@@ -18,7 +18,7 @@
   color: #AAA;
   margin: 0 -10px;
 }
-#copyright a:link, #tenKAlert a:link {
+#copyright a:link, #tenKAlert a:link, #copyright a:visited, #tenKAlert a:visited {
   color: #00b0f4;
 }
 #cookieAlert {
@@ -54,6 +54,7 @@
   border-radius: 1em;
   padding: 1em;
   box-shadow: 0 0 15px black;
+  text-align: left;
 }
 #tenKAlert button {
   background: transparent;
@@ -76,16 +77,16 @@
   <small>&copy; Copyright 2019-2020, Campbell Crowley. <a href="https://docs.google.com/document/d/1SAC2aPxxeNqRjlZzjwrnCyyWWyt09ZP-AP7BDBjjQDg/edit?usp=sharing">Privacy Policy</a></small>
 </footer>
 <div id="tenKAlert">
-  <h3>We're celebrating SpikeyBot on over 10k servers!</h3>
-  <p>Join our server for a chance to get featured here!</p>
-  <a href="https://discord.gg/u6U2WRD">discord.gg/u6U2WRD</a>
+  <h3>See the 10k celebration winner's submission!</h3>
+  <p>It includes fan art, memes, custom rules, NPCs, and even a fanfic or two!</p>
+  <a href="https://www.spikeybot.com/10k/">SpikeyBot.com/10k</a>
   <button onclick="tenKClose()">close</button>
   <script>
     window.tenKClose = function() {
-      setCookie('tenKClose', true, Date.now() + 7 * 24 * 60 * 60 * 1000);
+      setCookie('tenKClose2', true, Date.now() + 7 * 24 * 60 * 60 * 1000);
       document.getElementById('tenKAlert').remove();
     };
-    if (getCookie('tenKClose') == 'true') tenKClose();
+    if (getCookie('tenKClose2') == 'true') tenKClose();
 
     /**
      * Sets a browser cookie.
