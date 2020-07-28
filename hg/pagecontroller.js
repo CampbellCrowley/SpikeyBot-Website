@@ -8939,9 +8939,13 @@
     console.error(...err);
     const stC = document.getElementById('stackTraceContainer');
     if (stC) {
-      const s = err[2].stack;
+      const obj = err.find((el) => el.stack);
+      const s = obj && obj.stack;
       if (s) {
         stC.textContent = JSON.stringify(s, Object.getOwnPropertyNames(s), 2);
+        stC.innerHTML = stC.innerHTML.replace(/\\n/g, '<br>')
+            .replace(/\s/g, '&nbsp;')
+            .slice(1, -1);
       }
     }
     if (currentView === 'loading') setView('error');

@@ -323,6 +323,11 @@ header {
   color: white;
   margin: 0 -10px;
 }
+#stackTraceContainer {
+  text-align: left;
+  font-family: monospace;
+  margin: 0em 1em;
+}
 #mainBody {
   display: none;
   text-align: left;
@@ -350,10 +355,8 @@ header {
   transition: all 0.4s cubic-bezier(0.53, 0.06, 0.57, 1.46);
 }
 #guildBody {
-  /* padding-bottom: 30px; */
   padding-bottom: 0;
   position: relative;
-  /* color: black; */
   color: #DDD;
   background: #36393F;
 }
