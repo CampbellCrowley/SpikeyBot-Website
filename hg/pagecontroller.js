@@ -7,7 +7,7 @@
       '<br><small>Last Modified: %FILE_MODIFIED_TIMESTAMP%</small>';
 
   const authorizeUrl =
-      'https://discordapp.com/api/oauth2/authorize?client_id=4442935347204587' +
+      'https://discord.com/api/oauth2/authorize?client_id=4442935347204587' +
       '53&redirect_uri=https%3A%2F%2Fwww.spikeybot.com%2Fredirect&response_ty' +
       'pe=code&scope=identify%20guilds';
   const commands = [
@@ -455,7 +455,7 @@
     }
     sIcon.src =
         (obj.iconURL ||
-         'https://discordapp.com/assets/1c8a54f25d101bdc607cec7228247a9a' +
+         'https://discord.com/assets/1c8a54f25d101bdc607cec7228247a9a' +
              '.svg') +
         '?size=128';
 
@@ -4807,7 +4807,7 @@
       clearTimeout(updateMemberSearchTimeout);
       updateMemberSearchTimeout = setTimeout(() => {
         const data = members[selectedGuild];
-        if (!data) return;
+        if (!data || !Fuse) return;
         memberFuse = new Fuse(
             guild.members.map((el) => data[el]).filter((el) => el),
             memberSearchOpts);
@@ -5487,13 +5487,11 @@
 
       if (members[selectedGuild] && guild.members) {
         const data = members[selectedGuild];
-        memberFuse = new Fuse(
-            guild.members
-                .map((el) => {
-                  return data[el];
-                })
-                .filter((el) => el),
-            memberSearchOpts);
+        if (Fuse) {
+          memberFuse = new Fuse(
+              guild.members.map((el) => data[el]).filter((el) => el),
+              memberSearchOpts);
+        }
       }
 
       let playerListTutorial = document.getElementById('playerListTutorial');
@@ -6035,7 +6033,7 @@
   function onMemberSearchChange() {
     const container = document.getElementById('rightPlayerColumn');
     const guild = guilds[selectedGuild];
-    let result = memberFuse.search(this.value);
+    let result = memberFuse && memberFuse.search(this.value) || [];
     if (result.length > 0) {
       // Limit matches to first 10.
       result = result.slice(0, 10);

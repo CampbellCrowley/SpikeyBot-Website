@@ -3,7 +3,7 @@
 
 (function() {
   const discordAuthorizeUrl =
-      'https://discordapp.com/api/oauth2/authorize?client_id=4442935347204587' +
+      'https://discord.com/api/oauth2/authorize?client_id=4442935347204587' +
       '53&redirect_uri=https%3A%2F%2Fwww.spikeybot.com%2Fredirect&response_ty' +
       'pe=code&scope=identify%20guilds';
   const patreonOAuthId =

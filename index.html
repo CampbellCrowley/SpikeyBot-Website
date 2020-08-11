@@ -595,7 +595,7 @@
       <div class="thinline"></div>
       <br>
       <a href="https://discord.gg/u6U2WRD">
-        <img src="https://discordapp.com/api/guilds/420045052690169856/embed.png" alt="Discord Support Server">
+        <img src="https://discord.com/api/guilds/420045052690169856/embed.png" alt="Discord Support Server">
       </a>
       <a href="https://github.com/CampbellCrowley/SpikeyBot-Discord">
         <img alt="SpikeyBot-Discord on GitHub" src="https://img.shields.io/github/package-json/v/CampbellCrowley/SpikeyBot-Discord.svg">
@@ -628,7 +628,7 @@
       <a class="invite halfInvite" href="https://docs.spikeybot.com/">Code Docs</a>
       <!-- <a class="invite halfInvite" href="https://campbellcrowley.github.io/SpikeyBot-Discord/">Code Docs</a> -->
       <a class="invite halfInvite" href="https://github.com/CampbellCrowley/SpikeyBot-Discord/">GitHub</a>
-      <!-- <iframe id="discordIframe" src="https://discordapp.com/widget?id=420045052690169856&theme=light" width="100%" height="100%" allowtransparency="true" frameborder="0"></iframe> -->
+      <!-- <iframe id="discordIframe" src="https://discord.com/widget?id=420045052690169856&theme=light" width="100%" height="100%" allowtransparency="true" frameborder="0"></iframe> -->
     </div>
   </div>
   <!-- <div style="display: inline-block; width: 100%;"></div> -->
@@ -929,7 +929,7 @@ function newGuildCount(stats) {
 function fetchMemberCount() {
   var xhr = new XMLHttpRequest();
   xhr.open('GET',
-           'https://discordapp.com/api/guilds/420045052690169856/widget.json');
+           'https://discord.com/api/guilds/420045052690169856/widget.json');
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.onload = function() {
     if (xhr.status != 200) {
@@ -948,7 +948,7 @@ function newMemberCount(stats) {
   memberCountDom.innerHTML = '';
   var newCount = document.createElement('a');
   newCount.appendChild(
-      document.createTextNode(stats.members.length + ' online'));
+      document.createTextNode(stats.presence_count + ' online'));
   memberCountDom.appendChild(newCount);
 }
 
