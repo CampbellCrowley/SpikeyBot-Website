@@ -1,4 +1,5 @@
 User-agent: *
 Disallow: /redirect
 Disallow: /dev
+Disallow: /webhook
 Sitemap: https://www.spikeybot.com/sitemap.xml

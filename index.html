@@ -880,7 +880,7 @@ function newMemberCount(stats) {
   memberCountDom.innerHTML = '';
   var newCount = document.createElement('a');
   newCount.appendChild(
-      document.createTextNode(stats.members.length + ' online'));
+      document.createTextNode(stats.presence_count + ' online'));
   memberCountDom.appendChild(newCount);
 }
 

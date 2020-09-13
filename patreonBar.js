@@ -32,7 +32,8 @@
         progressBack.textContent = progress.style.width;
       } else {
         progressBack.textContent = goal.attributes.description.split('.')[0] +
-            ': ' + progress.style.width;
+            ': $' + patreonStatus.current / 100.0 + ' / $' +
+            Math.floor(patreonStatus.goal / 100.0) + '.00';
       }
     }
   };
