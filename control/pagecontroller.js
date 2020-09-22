@@ -1,9 +1,9 @@
-// Copyright 2018 Campbell Crowley. All rights reserved.
+// Copyright 2018-2020 Campbell Crowley. All rights reserved.
 // Author: Campbell Crowley (web@campbellcrowley.com)
 
 (function() {
   const authorizeUrl =
-      'https://discordapp.com/api/oauth2/authorize?client_id=4442935347204587' +
+      'https://discord.com/api/oauth2/authorize?client_id=4442935347204587' +
       '53&redirect_uri=https%3A%2F%2Fwww.spikeybot.com%2Fredirect&response_ty' +
       'pe=code&scope=identify%20guilds';
   const loginButton = document.getElementById('loginButton');
@@ -93,9 +93,9 @@
     loginButton.innerHTML = '<span>Sign Out</span>';
     loginButton.onclick = logout;
     sessionState.innerHTML = 'Connecting...';
-    socket =
-        io('www.spikeybot.com',
-           {path: isDev ? '/socket.io/dev/control' : '/socket.io/control'});
+    socket = io(isDev ? 'www.spikeybot.com' : 'kamino.spikeybot.com', {
+      path: isDev ? '/socket.io/control/hg' : '/socket.io/control',
+    });
     socket.on('connect', function() {
       console.log('Socket Connected');
       sessionState.innerHTML = 'Authenticating...';
@@ -299,7 +299,7 @@
     sIcon.classList.add('guildListIcon');
     sIcon.src =
         (el.iconURL ||
-         'https://discordapp.com/assets/1c8a54f25d101bdc607cec7228247a9a' +
+         'https://discord.com/assets/1c8a54f25d101bdc607cec7228247a9a' +
              '.svg') +
         '?size=128';
     row.appendChild(sIcon);
@@ -1649,7 +1649,7 @@
           channel.classList.add('channelLabel');
           channel.classList.add('channelOption');
           channel.href =
-              'https://discordapp.com/channels/' + selectedGuild + '/' + c;
+              'https://discord.com/channels/' + selectedGuild + '/' + c;
           channel.value = c;
           channel.textContent = c;
         }
