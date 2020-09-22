@@ -1,4 +1,4 @@
-// Copyright 2018 Campbell Crowley. All rights reserved.
+// Copyright 2018-2020 Campbell Crowley. All rights reserved.
 // Author: Campbell Crowley (web@campbellcrowley.com)
 
 (function() {
@@ -93,9 +93,9 @@
     loginButton.innerHTML = '<span>Sign Out</span>';
     loginButton.onclick = logout;
     sessionState.innerHTML = 'Connecting...';
-    socket =
-        io('www.spikeybot.com',
-           {path: isDev ? '/socket.io/dev/control' : '/socket.io/control'});
+    socket = io(isDev ? 'www.spikeybot.com' : 'kamino.spikeybot.com', {
+      path: isDev ? '/socket.io/control/hg' : '/socket.io/control',
+    });
     socket.on('connect', function() {
       console.log('Socket Connected');
       sessionState.innerHTML = 'Authenticating...';
