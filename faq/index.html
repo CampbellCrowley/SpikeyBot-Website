@@ -21,6 +21,13 @@
 #title {
   margin: 0;
 }
+.tocLine {
+  color: white;
+  text-decoration: none;
+}
+.tocLine:hover {
+  text-decoration: underline;
+}
 #faqParent {
   background: #36393F;
   /* color: #DDD; */
@@ -88,7 +95,11 @@
       <h1 id="title">Frequently Asked Questions</h1>
     </div>
   </header>
-  <div class="line"></div>
+  <div class="contentsection greycontent">
+    <h2 style="border-bottom: 2px solid #AA00AA; display: inline-block;margin-bottom:0;">FAQs:</h2>
+    <ul id="faqTOC">
+    </ul>
+  </div>
   <div class="contentsection transparentcontent">
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- HorizontalBar -->
@@ -106,7 +117,7 @@
     <div class="question" id="hgteams">
       <h1 class="Q">How do I create teams in HG?<a href="#hgteams" class="sectionLink">&#x1F517;</a></h1>
       <div class="A">
-        To enable teams, set the `teamSize` option to the size of teams you with to have.<br>
+        To enable teams, set the `teamSize` option to the size of teams you wish to have.<br>
         <a class="command" href="https://www.spikeybot.com/help/#hg_options">?hg opt teamSize 3</a> will automatically form teams with 3 players maximum.<br>
         After changing the team size, you can reset the teams to automatically create the teams using <a class="command" href="https://www.spikeybot.com/help/#hg_reset">?hg reset teams</a>. If you have manually created teams previously, you may not want to do this.<br>
         <br>
@@ -118,6 +129,15 @@
       <div class="A">
         To disable teams, set the `teamSize` option to 0.<br>
         <a class="command" href="https://www.spikeybot.com/help/#hg_options">?hg opt teamSize 0</a><br>
+      </div>
+    </div>
+    <div class="question" id="hgweaponslist">
+      <h1 class="Q">Is there a list of HG weapons somewhere?<a href="#hgweaponslist" class="sectionLink">&#x1F517;</a></h1>
+      <div class="A">
+        The <a href="https://www.spikeybot.com/hg/">HG webview</a> page has all default and custom events for your server under the Events tab.<br>
+        You can also customize your events and weapons here as well.<br>
+        <br>
+        Weapons by default may include: poison, throwing knives, rope, sword, toothbrush, hatchet, mace, wood, shovel, machete, knife, spear, explosive, grenade, gun, bow, slingshot, and alcohol.
       </div>
     </div>
     <div class="question" id="disablecommand">
@@ -185,3 +205,17 @@
 </div>
 </div>
 </div>
+<script>
+const questions = document.getElementsByClassName('Q');
+const toc = document.getElementById('faqTOC');
+
+for (let i = 0; i < questions.length; ++i) {
+  const li = document.createElement('li');
+  const link = document.createElement('a');
+  link.classList.add('tocLine');
+  link.href = `#${questions[i].parentNode.id}`;
+  link.innerHTML = questions[i].innerHTML;
+  li.appendChild(link);
+  toc.appendChild(li);
+}
+</script>
