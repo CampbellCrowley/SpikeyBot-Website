@@ -64,6 +64,9 @@ body {
   color: white;
   cursor: pointer;
 }
+#goodbyeRow {
+  background: #440044;
+}
 .contentsection {
   padding: 4px;
   margin-bottom: 25px;

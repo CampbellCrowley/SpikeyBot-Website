@@ -248,10 +248,10 @@
           console.warn('Forcing Patreon status to false.');
         }
 
-        document.getElementById('patreonButton')
-            .classList.toggle('hidden', data.isPatron);
-        document.getElementById('patreonThanks')
-            .classList.toggle('hidden', !data.isPatron);
+        // document.getElementById('patreonButton')
+        //     .classList.toggle('hidden', data.isPatron);
+        // document.getElementById('patreonThanks')
+        //     .classList.toggle('hidden', !data.isPatron);
       }
     });
     socket.on('disconnect', (reason) => {
