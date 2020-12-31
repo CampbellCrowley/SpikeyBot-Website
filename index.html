@@ -418,63 +418,6 @@
   /* margin-bottom: 1.25em; */
   display: inline-block;
 }
-#patreonRow {
-  text-align: right;
-  position: relative;
-  display: block;
-  height: 35px;
-}
-#patreonButton {
-  position: relative;
-  display: block;
-  margin-left: auto;
-  width: 175px;
-  height: 100%;
-  bottom: 0;
-  overflow: hidden;
-}
-#patreonStatus {
-  position: absolute;
-  left: 0;
-  top: 0;
-  margin-left: 4px;
-  text-align: left;
-  width: 50%;
-  width: calc(100% - 175px - 8px);
-  height: 100%;
-  height: calc(100% - 3px);
-}
-#patreonProgress, #patreonProgressBack {
-  position: absolute;
-  height: 100%;
-  border-radius: 17px;
-  background: #E85B46;
-  border: 1px solid black;
-}
-#patreonProgress {
-  width: 0px;
-  max-width: 100%;
-  transition: width ease-in-out 5s;
-  transition: width cubic-bezier(0.25, 0, 0, 1) 5s;
-}
-#patreonProgressBack {
-  padding-top: 7px;
-  height: calc(100% - 7px);
-  background: transparent;
-  font-weight: bold;
-  text-align: center;
-  width: 100%;
-}
-#patreonThanks {
-  padding-right: 1em;
-  position: absolute;
-  right: 0;
-  max-width: 175px;
-  font-style: italic;
-}
-#patreonRow .hidden {
-  display: none;
-}
 @media screen and (max-width: 550px) {
   .leftCol, .rightCol {
     width: 100%;
@@ -487,18 +430,6 @@
 <div id="maincontent">
 <div id="content">
   <div id="mainheader"></div>
-  <div id="patreonRow">
-    <div id="patreonButton">
-      <a href="https://www.patreon.com/bePatron?u=12105522" data-patreon-widget-type="become-patron-button">Become a Patron!</a><script async defer src="https://c6.patreon.com/becomePatronButton.bundle.js"></script>
-    </div>
-    <div id="patreonStatus" class="">
-      <span id="patreonProgress"></span>
-      <span id="patreonProgressBack"></span>
-    </div>
-    <div id="patreonThanks" class="hidden">
-      <a>Thank you for supporting SpikeyBot!</a>
-    </div>
-  </div>
   <header>
     <div class="contentsection transparentcontent">
       <h1 id="title">SpikeyBot for Discord</h1>
@@ -661,7 +592,6 @@
 </div>
 </div>
 </div>
-<script async defer src="https://www.spikeybot.com/patreonBar.js" type="text/javascript"></script>
 <script>
 (function() {
 var slideIndex = 1;

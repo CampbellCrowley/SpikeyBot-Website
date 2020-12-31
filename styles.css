@@ -64,6 +64,16 @@ body {
   color: white;
   cursor: pointer;
 }
+#goodbyeRow {
+  background: #cc77cc;
+  border: 3px solid black;
+  border-radius: 4px;
+  padding: 1em;
+}
+#goodbyeTitle {
+  font-size: 1.2em;
+  font-weight: bold;
+}
 .contentsection {
   padding: 4px;
   margin-bottom: 25px;
