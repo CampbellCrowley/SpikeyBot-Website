@@ -535,11 +535,12 @@
     <div class="contentsection transparentcontent">
       <h1 id="title">SpikeyBot for Discord</h1>
       <h3 id="subtitle">by SpikeyRobot</h3>
-      <div id="guildCount">#</div>
+      <!-- <div id="guildCount">#</div> -->
+      <div id="guildCount"><a>15,147 servers at peak</a></div>
       <img alt="SB Profile Picture" src="https://www.spikeybot.com/SBIconCropped-128.png">
     </div>
     <div class="contentsection greycontent">
-      SpikeyBot is a Bot for Discord that has grown to become a sort of all-in-one bot. Admin commands, raid protection, random stuff, and even a Hunger Games simulator that includes people on the server. The bot is still being worked on, so if you don't see a feature you want, tell SpikeyRobot!
+      SpikeyBot is a Bot for Discord that has grown to become a sort of all-in-one bot. Admin commands, raid protection, random stuff, and even a Hunger Games simulator that includes people on the server. <a style="text-decoration: line-through">The bot is still being worked on, so if you don't see a feature you want, tell SpikeyRobot!</a>
     </div>
     <!-- <div class="contentsection greycontent">
       SpikeyBot is a Bot for Discord that has grown to become a sort of all-in-one bot. Music, admin commands, raid protection, random stuff, and even a Hunger Games simulator that includes people on the server. The bot is still being worked on, so if you don't see a feature you want, tell SpikeyRobot!
@@ -574,7 +575,7 @@
       <br><br>
       <div class="thinline"></div>
       <br>
-      SpikeyBot is created by Campbell Crowley (aka SpikeyRobot) in his free time while he is at school. If you have any issues or feedback, feel free to contact him via discord or email.
+      SpikeyBot was created by Campbell Crowley (aka SpikeyRobot) in his free time while he is at school. If you have any issues or feedback, feel free to contact him via discord or email.
       <br><br>
       <div class="thinline"></div>
       <br>
@@ -619,7 +620,8 @@
     <div class="rightCol">
       <a class="bigInvite" href="https://www.spikeybot.com/dev/invite/" target="_blank">
         <span class="invite">Invite to your Discord server</span>
-        <span class="inviteCount" id="guildInviteCount"><span>??? servers</span></span>
+        <span class="inviteCount" id="guildInviteCount"><span>15,147 servers at peak</span></span>
+        <!-- <span class="inviteCount" id="guildInviteCount"><span>??? servers</span></span> -->
       </a>
       <a class="bigInvite" href="https://discord.gg/u6U2WRD" target="_blank">
         <span class="invite">Join our Discord server</span>
@@ -903,7 +905,7 @@ function fetchGuildCount() {
   };
   xhr.send();
 }
-fetchGuildCount();
+// fetchGuildCount();
 
 function newGuildCount(stats) {
   console.log(stats);
