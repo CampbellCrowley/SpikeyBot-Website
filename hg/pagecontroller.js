@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Campbell Crowley. All rights reserved.
+// Copyright 2018-2023 Campbell Crowley. All rights reserved.
 // Author: Campbell Crowley (web@campbellcrowley.com)
 
 (function() {
@@ -179,7 +179,8 @@
     loginButton.innerHTML = '<span>Sign Out</span>';
     loginButton.onclick = logout;
     sessionState.innerHTML = 'Connecting...';
-    socket = io(isDev ? 'www.spikeybot.com' : 'kamino.spikeybot.com', {
+    // socket = io(isDev ? 'www.spikeybot.com' : 'kamino.spikeybot.com', {
+    socket = io('www.spikeybot.com', {
       path: isDev ? '/socket.io/dev/hg' : '/socket.io/hg',
     });
     socket.on('connect', () => {
@@ -559,24 +560,26 @@
     channels[channelId] = channel;
     const doms = document.getElementsByClassName(channelId);
     for (let i = 0; i < doms.length; ++i) {
-      if (channel.type === 'text') {
+      if (channel.type === 'text' || channel.type === 0 ||
+          channel.type === 11 || channel.type === 12) {
         doms[i].textContent = `${textIcon}${channel.name}`;
         const sI = doms[i].parentNode.selectedIndex;
         if (sI >= 0 && doms[i].parentNode.children[sI].disabled) {
           doms[i].parentNode.value = channelId;
         }
-      } else if (channel.type === 'news') {
+      } else if (channel.type === 'news' || channel.type === 10 ||
+                 channel.type === 5) {
         doms[i].textContent = `${newsIcon}${channel.name}`;
         const sI = doms[i].parentNode.selectedIndex;
         if (sI >= 0 && doms[i].parentNode.children[sI].disabled) {
           doms[i].parentNode.value = channelId;
         }
-      } else if (channel.type === 'category') {
+      } else if (channel.type === 'category' || channel.type === 4) {
         doms[i].textContent = channel.name;
         doms[i].disabled = true;
         doms[i].style.background = 'darkgrey';
         doms[i].style.fontWeight = 'bolder';
-      } else if (channel.type === 'voice') {
+      } else if (channel.type === 'voice' || channel.type === 2) {
         doms[i].textContent = `${voiceIcon}${channel.name}`;
         doms[i].disabled = true;
         doms[i].style.background = 'grey';
@@ -1737,10 +1740,11 @@
             socket.emit('fetchChannel', guild.id, guild.channels[j].id);
           } else {
             const channel = channels[guild.channels[j].id];
-            if (channel.type === 'text') {
+            if (channel.type === 'text' || channel.type === 0 ||
+                channel.type === 5 || channel.type === 11 || channel.type === 12) {
               field.appendChild(document.createTextNode(channel.name));
               field.innerHTML = '&#65283;' + field.innerHTML;
-            } else if (channel.type === 'category') {
+            } else if (channel.type === 'category' || channel.type === 4) {
               field.appendChild(document.createTextNode(channel.name));
               field.disabled = true;
               field.style.background = 'darkgrey';
@@ -6704,11 +6708,11 @@
         if (channel) {
           channelOpt.disabled = channel.type != 'text';
           channelOpt.innerHTML = channel.name;
-          if (channel.type === 'category') {
+          if (channel.type === 'category' || channel.type === 4) {
             channelOpt.innerHTML = channel.name;
             channelOpt.style.background = 'darkgrey';
             channelOpt.style.fontWeight = 'bolder';
-          } else if (channel.type === 'voice') {
+          } else if (channel.type === 'voice' || channel.type === 2) {
             channelOpt.innerHTML = '&#128266; ' + channelOpt.innerHTML;
             channelOpt.style.background = 'lightgrey';
           } else {

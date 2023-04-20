@@ -546,6 +546,7 @@ header {
 }
 #leftPlayerColumn .playerCell {
   float: right;
+  pointer-events: all;
 }
 .playerColumn {
   text-align: center;

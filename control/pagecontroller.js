@@ -1,4 +1,4 @@
-// Copyright 2018-2020 Campbell Crowley. All rights reserved.
+// Copyright 2018-2023 Campbell Crowley. All rights reserved.
 // Author: Campbell Crowley (web@campbellcrowley.com)
 
 (function() {
@@ -93,8 +93,9 @@
     loginButton.innerHTML = '<span>Sign Out</span>';
     loginButton.onclick = logout;
     sessionState.innerHTML = 'Connecting...';
-    socket = io(isDev ? 'www.spikeybot.com' : 'kamino.spikeybot.com', {
-      path: isDev ? '/socket.io/control/hg' : '/socket.io/control',
+    // socket = io(isDev ? 'www.spikeybot.com' : 'kamino.spikeybot.com', {
+    socket = io('www.spikeybot.com', {
+      path: isDev ? '/socket.io/dev/control' : '/socket.io/control',
     });
     socket.on('connect', function() {
       console.log('Socket Connected');
@@ -1112,10 +1113,11 @@
         channelOption.appendChild(document.createTextNode(cId));
       } else {
         const channel = channels[guild.id][cId];
-        if (channel.type === 'text') {
+        if (channel.type === 'text' || channel.type === 0 ||
+            channel.type === 5 || channel.type === 11 || channel.type === 12) {
           channelOption.appendChild(document.createTextNode(channel.name));
           channelOption.innerHTML = '&#65283;' + channelOption.innerHTML;
-        } else if (channel.type === 'category') {
+        } else if (channel.type === 'category' || channel.type === 4) {
           channelOption.appendChild(document.createTextNode(channel.name));
           channelOption.disabled = true;
           channelOption.style.background = 'darkgrey';
@@ -1713,7 +1715,8 @@
       if (!channel) continue;
       if (opts[i].innerHTML.endsWith(channel.name)) continue;
       opts[i].firstChild.remove();
-      if (channel.type === 'text') {
+      if (channel.type === 'text' || channel.type === 0 ||
+          channel.type === 5 || channel.type === 11 || channel.type === 12) {
         opts[i].appendChild(document.createTextNode(channel.name));
         opts[i].innerHTML = '&#65283;' + opts[i].innerHTML;
         if (opts[i].parentNode.selectedIndex > -1 &&
@@ -1722,7 +1725,7 @@
                 .disabled) {
           opts[i].parentNode.value = channel.id;
         }
-      } else if (channel.type === 'voice') {
+      } else if (channel.type === 'voice' || channel.type === 2) {
         const name = document.createTextNode(channel.name);
         opts[i].appendChild(name);
         opts[i].innerHTML = '&#128266; ' + opts[i].innerHTML;
