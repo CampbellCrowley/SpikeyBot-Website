@@ -41,6 +41,7 @@
   const textIcon = '＃';
   const voiceIcon = '\uD83D\uDD0A';
   const newsIcon = '\uD83D\uDCF0';
+  const forumIcon = '\uD83D\uDCAC';
 
   const triggerCats = ['game', 'event', 'day'];
   const loginButton = document.getElementById('loginButton');
@@ -122,7 +123,6 @@
       'user.id',
       'nickname',
       'user.username',
-      'user.descriminator',
     ],
   };
   window.Fuse = window.Fuse || null;
@@ -584,6 +584,11 @@
         doms[i].disabled = true;
         doms[i].style.background = 'grey';
         doms[i].style.color = '#DDD';
+      } else if (channel.type === 'forum' || channel.type === 15) {
+        doms[i].textContent = `${forumIcon}${channel.name}`;
+        doms[i].disabled = true;
+        doms[i].style.background = 'grey';
+        doms[i].style.color = '#DDD';
       } else {
         console.warn('Unknown channel type:', channel);
         doms[i].textContent = channel.name;
@@ -979,13 +984,6 @@
 
     if (!member.user.isNPC) {
       nameDom.appendChild(document.createTextNode(username));
-      if (member.user.descriminator) {
-        const descrim = document.createElement('a');
-        descrim.appendChild(
-            document.createTextNode(`#${member.user.descriminator}`));
-        descrim.classList.add('descriminator');
-        nameDom.appendChild(descrim);
-      }
     }
     if (member.color) {
       nameDom.style.color =
